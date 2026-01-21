@@ -1,6 +1,5 @@
 import "./SynthEraHero.css";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import SocialLinks from "../../components/socialLinks/SocialLinks";
 import gsap from "gsap";
 const SynthEraHero = () => {
