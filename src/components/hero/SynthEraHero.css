@@ -50,7 +50,7 @@
   left: -5%;
   width: 110%;
   height: 110%;
-  background-image: linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(17,17,17,0.9) 50%, rgba(26,26,26,0.55) 100%), url('/images/pp.png');
+  background-image: linear-gradient(180deg, rgba(10,10,10,0.8) 0%, rgba(17,17,17,1) 50%, rgba(26,26,26,0.4) 100%), url('/images/pp.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -337,7 +337,7 @@
   font-size: clamp(3rem, 12vw, 12rem);
   background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 50%, #7d3c98 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: white;
+  -webkit-text-fill-color: #d9d2db;
   background-clip: text;
   line-height: 1.1;
   transition: all 0.3s ease;
