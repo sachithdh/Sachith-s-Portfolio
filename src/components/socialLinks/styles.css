@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    column-gap: 28px;
+  }
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    min-width: 22px;
+    min-height: 22px;
+    text-decoration: none;
+    font-size: 25px;
+    outline: 2px solid white;
+    border-radius: 50%;
+    box-sizing: border-box;
+    transition: outline-offset 0.25s ease, outline-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    color: white;
+  }
+
+  .icon:hover {
+    outline-offset: 8px; /* pushes outline outward */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .icon svg {
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  .icon-instagram:hover {
+    background-color: red;
+    outline-color: red;
+  }
+
+  .icon-dis:hover {
+    background-color: rgb(76, 0, 255);
+    outline-color: rgb(76, 0, 255);
+  }
+
+  .icon-github:hover {
+    background-color: #555555;
+    outline-color: #555555;
+  }
+
+  .icon-in:hover {
+    background-color: #0a66c2;
+    outline-color: #0a66c2;
+  }
+
+  .icon:hover svg {
+    animation: shake 0.25s;
+  }
+
+  @keyframes shake {
+    10% {
+      transform: rotate(15deg);
+    }
+    20% {
+      transform: rotate(-15deg);
+    }
+  }
