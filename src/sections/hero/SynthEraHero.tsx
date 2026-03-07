@@ -1,9 +1,8 @@
 import "./SynthEraHero.css";
 import { useState, useEffect, useRef } from "react";
-import RoleCard from "../RoleCard";
-import SocialLinks from "../socialLinks/SocialLinks";
+import RoleCard from "../../components/RoleCard";
+import SocialLinks from "../../components/socialLinks/SocialLinks";
 import gsap from "gsap";
-
 const SynthEraHero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);

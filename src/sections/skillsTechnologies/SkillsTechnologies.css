@@ -1,0 +1,445 @@
+.st-section {
+    position: relative;
+    background: #0c0c0c;
+    overflow: hidden;
+}
+
+.st-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 10% 30%, rgba(207, 246, 114, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 90% 70%, rgba(49, 120, 198, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.st-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 100px 5% 120px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Main Title ── */
+.st-main-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 80px;
+    position: relative;
+}
+
+.st-main-title::after {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-lime), transparent);
+    margin-top: 24px;
+    border-radius: 2px;
+}
+
+/* ── Main Content Grid (columns + color bar) ── */
+.st-content {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 60px;
+    margin-bottom: 80px;
+}
+
+/* ── Two-column Text Area ── */
+.st-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+/* Individual column */
+.st-col {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Bracketed Headers */
+.st-col-header {
+    font-family: var(--font-header);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+/* Text blocks */
+.st-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.st-text {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    text-align: justify;
+}
+
+/* Highlighted text (pink underline like the image) */
+.st-highlight {
+    color: var(--accent-pink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-pink);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+    cursor: default;
+    transition: text-decoration-color 0.3s ease;
+}
+
+.st-highlight:hover {
+    text-decoration-color: transparent;
+}
+
+/* Underlined text (subtle) */
+.st-underline {
+    text-decoration: underline;
+    text-decoration-color: rgba(207, 246, 114, 0.5);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+    cursor: default;
+}
+
+/* ── Tag Clouds ── */
+.st-tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.st-tag-cloud--secondary {
+    margin-top: 4px;
+}
+
+.st-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: var(--font-sans);
+    letter-spacing: 0.02em;
+    cursor: default;
+    transition: all 0.3s ease;
+}
+
+.st-tag:hover {
+    background: rgba(207, 246, 114, 0.08);
+    border-color: rgba(207, 246, 114, 0.3);
+    color: var(--accent-lime);
+    transform: translateY(-2px);
+}
+
+.st-tag--accent {
+    border-color: rgba(49, 120, 198, 0.25);
+}
+
+.st-tag--accent:hover {
+    background: rgba(49, 120, 198, 0.1);
+    border-color: rgba(49, 120, 198, 0.5);
+    color: #5ba4e6;
+}
+
+.st-tag--tool {
+    border-color: rgba(255, 45, 143, 0.2);
+}
+
+.st-tag--tool:hover {
+    background: rgba(255, 45, 143, 0.08);
+    border-color: rgba(255, 45, 143, 0.4);
+    color: var(--accent-pink);
+}
+
+/* ═══════════════════════════════════════════════
+   Right Color Bar (Programming Languages)
+   Mimics the color palette swatch strip
+   ═══════════════════════════════════════════════ */
+.st-color-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 8px;
+}
+
+.st-color-swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: default;
+}
+
+.st-swatch-line {
+    height: 10px;
+    width: var(--swatch-width, 80%);
+    border-radius: 5px;
+    background: var(--swatch-color);
+    position: relative;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--swatch-color) 40%, transparent);
+}
+
+.st-color-swatch:hover .st-swatch-line {
+    width: 100% !important;
+    filter: brightness(1.2);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--swatch-color) 60%, transparent);
+}
+
+.st-swatch-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.st-swatch-name {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.st-swatch-hex {
+    font-family: var(--font-header);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+}
+
+/* ═══════════════════════════════════════════════
+   Tools & Methodology Bar
+   ═══════════════════════════════════════════════ */
+.st-tools-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    margin-bottom: 80px;
+}
+
+.st-tag-cloud--tools {
+    gap: 12px;
+}
+
+/* ═══════════════════════════════════════════════
+   Framework Showcase Row
+   (Mirrors the font/typography specimen section)
+   ═══════════════════════════════════════════════ */
+.st-techstack-title {
+    margin-bottom: 28px;
+    font-size: 1.1rem;
+}
+
+/* ── Carousel Wrapper ── */
+.st-carousel-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(to right,
+            transparent 0%,
+            black 5%,
+            black 95%,
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(to right,
+            transparent 0%,
+            black 5%,
+            black 95%,
+            transparent 100%);
+}
+
+.st-carousel-track {
+    display: inline-flex;
+    gap: 24px;
+    will-change: transform;
+}
+
+.st-showcase-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background 0.4s ease, border-color 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 260px;
+    flex-shrink: 0;
+}
+
+.st-showcase-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-lime), var(--accent-pink));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.st-showcase-card:hover::before {
+    transform: scaleX(1);
+}
+
+.st-showcase-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.st-showcase-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.st-showcase-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.st-showcase-name {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+}
+
+.st-showcase-variants {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.st-showcase-variant {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Bottom container for large icon + versions */
+.st-showcase-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+/* Big letter typography specimen / Icon */
+.st-showcase-big-letter {
+    font-size: 5.5rem;
+    line-height: 1;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.st-showcase-big-letter svg {
+    display: block;
+}
+
+.st-showcase-versions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.st-showcase-version {
+    font-family: var(--font-header);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════════════
+   Responsive Breakpoints
+   ═══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .st-content {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .st-color-bar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .st-color-swatch {
+        flex: 1 1 calc(25% - 16px);
+        min-width: 100px;
+    }
+
+    .st-swatch-line {
+        width: 100% !important;
+        height: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .st-container {
+        padding: 80px 5% 80px;
+    }
+
+    .st-main-title {
+        margin-bottom: 48px;
+    }
+
+    .st-columns {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .st-text {
+        text-align: left;
+    }
+
+    .st-showcase-card {
+        min-width: 220px;
+    }
+
+    .st-showcase-big-letter {
+        font-size: 4rem;
+    }
+
+    .st-color-swatch {
+        flex: 1 1 calc(50% - 16px);
+    }
+
+    .st-tools-bar {
+        margin-bottom: 48px;
+    }
+}

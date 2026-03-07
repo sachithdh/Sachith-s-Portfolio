@@ -1,8 +1,8 @@
 import WorkExperience from "./sections/workExperience/WorkExperience";
-import FeaturedProjects from "./components/FeaturedProjects";
+import FeaturedProjects from "./sections/featuredProjects/FeaturedProjects";
 import SynthEraHero from "./sections/hero/SynthEraHero";
 import AboutMe from "./sections/aboutMe/AboutMe";
-import Skills from "./components/Skills";
+import SkillsTechnologies from "./sections/skillsTechnologies/SkillsTechnologies";
 import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -14,7 +14,7 @@ function App() {
       <AboutMe />
       <WorkExperience />
       <FeaturedProjects />
-      <Skills />
+      <SkillsTechnologies />
       <Testimonials />
       <Contact />
       <Footer />
