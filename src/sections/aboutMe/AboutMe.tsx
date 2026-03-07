@@ -1,14 +1,12 @@
 import "./AboutMe.css";
-import ScrollAnimation from "../utils/scrollAnimation";
-import { useFadeInUp, useStaggerChildren, useExitAnimation } from "../utils/gsapAnimations";
+import ScrollAnimation from "../../utils/scrollAnimation";
+import { useFadeInUp, useExitAnimation } from "../../utils/gsapAnimations";
 
 const AboutMe = () => {
   const titleRef = useFadeInUp(0);
   const profileRef = useFadeInUp(0.2);
-  const leftContentRef = useStaggerChildren(0.3, 0.15);
-  const rightContentRef = useStaggerChildren(0.5, 0.15);
-  const leftExitRef = useExitAnimation('left');
-  const rightExitRef = useExitAnimation('right');
+  const leftExitRef = useExitAnimation("left");
+  const rightExitRef = useExitAnimation("right");
 
   return (
     <div className="about-me-section">

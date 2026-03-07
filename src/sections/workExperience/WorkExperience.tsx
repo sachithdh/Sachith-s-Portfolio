@@ -1,5 +1,5 @@
 import "./WorkExperience.css";
-import { useFadeInUp, useStaggerChildren } from "../utils/gsapAnimations";
+import { useFadeInUp, useStaggerChildren } from "../../utils/gsapAnimations";
 
 const experiences = [
   {
