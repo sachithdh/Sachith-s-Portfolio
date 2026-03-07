@@ -440,14 +440,6 @@
   gap: 12px;
 }
 
-.fp-modal__gallery-row--top {
-  /* Two items: one wider, one taller */
-}
-
-.fp-modal__gallery-row--bottom {
-  /* Two equal items */
-}
-
 .fp-modal__gallery-item {
   flex: 1;
   border-radius: 12px;
