@@ -250,10 +250,27 @@
     font-size: 1.1rem;
 }
 
-.st-showcase-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+/* ── Carousel Wrapper ── */
+.st-carousel-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(to right,
+            transparent 0%,
+            black 5%,
+            black 95%,
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(to right,
+            transparent 0%,
+            black 5%,
+            black 95%,
+            transparent 100%);
+}
+
+.st-carousel-track {
+    display: inline-flex;
     gap: 24px;
+    will-change: transform;
 }
 
 .st-showcase-card {
@@ -264,9 +281,11 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    transition: all 0.4s ease;
+    transition: background 0.4s ease, border-color 0.4s ease;
     position: relative;
     overflow: hidden;
+    min-width: 260px;
+    flex-shrink: 0;
 }
 
 .st-showcase-card::before {
@@ -289,7 +308,6 @@
 .st-showcase-card:hover {
     background: rgba(255, 255, 255, 0.04);
     border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-4px);
 }
 
 .st-showcase-top {
@@ -326,7 +344,7 @@
     letter-spacing: 0.06em;
 }
 
-/* Big letter typography specimen ── */
+/* Big letter typography specimen */
 .st-showcase-big-letter {
     font-family: var(--font-display);
     font-size: 4.5rem;
@@ -364,12 +382,6 @@
 /* ═══════════════════════════════════════════════
    Responsive Breakpoints
    ═══════════════════════════════════════════════ */
-@media (max-width: 1200px) {
-    .st-showcase-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
 @media (max-width: 1024px) {
     .st-content {
         grid-template-columns: 1fr;
@@ -411,9 +423,8 @@
         text-align: left;
     }
 
-    .st-showcase-row {
-        grid-template-columns: 1fr;
-        gap: 16px;
+    .st-showcase-card {
+        min-width: 220px;
     }
 
     .st-showcase-big-letter {

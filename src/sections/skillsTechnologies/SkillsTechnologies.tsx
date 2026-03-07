@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import { useFadeInUp, useStaggerChildren, useFadeInLeft, useFadeInRight } from "../../utils/gsapAnimations";
 import "./SkillsTechnologies.css";
 
@@ -78,12 +80,90 @@ const frameworkShowcases = [
     },
 ];
 
+/* ── Carousel Card Component ── */
+function ShowcaseCard({ fw }: { fw: typeof frameworkShowcases[number] }) {
+    return (
+        <div className="st-showcase-card">
+            <div className="st-showcase-top">
+                <span className="st-showcase-icon">{fw.icon}</span>
+                <h4 className="st-showcase-name">{fw.name}</h4>
+            </div>
+            <div className="st-showcase-variants">
+                {fw.variants.map((v, vi) => (
+                    <span key={vi} className="st-showcase-variant">{v}</span>
+                ))}
+            </div>
+            <div className="st-showcase-big-letter">
+                {fw.name.charAt(0)}
+                <span className="st-showcase-small-letter">{fw.name.charAt(1)}</span>
+            </div>
+            <div className="st-showcase-versions">
+                {fw.versions.map((ver, vi) => (
+                    <span key={vi} className="st-showcase-version">{ver}</span>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 export default function SkillsTechnologies() {
     const headerRef = useFadeInUp(0);
     const leftColRef = useFadeInLeft(0.2);
     const rightColRef = useFadeInRight(0.2);
     const colorBarRef = useStaggerChildren(0.1, 0.08);
-    const showcaseRef = useStaggerChildren(0.3, 0.15);
+
+    /* ── GSAP Carousel refs ── */
+    const carouselTrackRef = useRef<HTMLDivElement>(null);
+    const tweenRef = useRef<gsap.core.Tween | null>(null);
+
+    useEffect(() => {
+        const track = carouselTrackRef.current;
+        if (!track) return;
+
+        // Wait a frame so the browser can lay out the duplicated cards
+        requestAnimationFrame(() => {
+            const cards = track.querySelectorAll(".st-showcase-card");
+            const totalCards = frameworkShowcases.length;
+            // The first half of cards is the "original" set
+            // We measure the width of that original set so we know when to loop
+            let setWidth = 0;
+            for (let i = 0; i < totalCards; i++) {
+                const card = cards[i] as HTMLElement;
+                setWidth += card.offsetWidth + 24; // 24px = gap
+            }
+
+            // Set the track width so all cards sit in one line
+            track.style.width = `${setWidth * 2}px`;
+
+            // Infinite scroll tween: translate by exactly one set's width, then repeat
+            tweenRef.current = gsap.to(track, {
+                x: -setWidth,
+                duration: 20,
+                ease: "none",
+                repeat: -1,
+                modifiers: {
+                    x: gsap.utils.unitize((x: number) => {
+                        return x % setWidth;
+                    }),
+                },
+            });
+
+            // Pause on hover
+            const handleEnter = () => tweenRef.current?.pause();
+            const handleLeave = () => tweenRef.current?.resume();
+            track.addEventListener("mouseenter", handleEnter);
+            track.addEventListener("mouseleave", handleLeave);
+
+            return () => {
+                track.removeEventListener("mouseenter", handleEnter);
+                track.removeEventListener("mouseleave", handleLeave);
+            };
+        });
+
+        return () => {
+            tweenRef.current?.kill();
+        };
+    }, []);
 
     return (
         <section className="st-section" id="skills">
@@ -178,30 +258,19 @@ export default function SkillsTechnologies() {
                     </div>
                 </div>
 
-                {/* ── Framework Showcase ── */}
+                {/* ── Tech Stack Carousel ── */}
                 <h3 className="st-col-header st-techstack-title">[TECH STACK]</h3>
-                <div className="st-showcase-row" ref={showcaseRef as any}>
-                    {frameworkShowcases.map((fw, i) => (
-                        <div className="st-showcase-card" key={i}>
-                            <div className="st-showcase-top">
-                                <span className="st-showcase-icon">{fw.icon}</span>
-                                <h4 className="st-showcase-name">{fw.name}</h4>
-                            </div>
-                            <div className="st-showcase-variants">
-                                {fw.variants.map((v, vi) => (
-                                    <span key={vi} className="st-showcase-variant">{v}</span>
-                                ))}
-                            </div>
-                            <div className="st-showcase-big-letter">
-                                {fw.name.charAt(0)}<span className="st-showcase-small-letter">{fw.name.charAt(1)}</span>
-                            </div>
-                            <div className="st-showcase-versions">
-                                {fw.versions.map((ver, vi) => (
-                                    <span key={vi} className="st-showcase-version">{ver}</span>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
+                <div className="st-carousel-wrapper">
+                    <div className="st-carousel-track" ref={carouselTrackRef}>
+                        {/* Original set */}
+                        {frameworkShowcases.map((fw, i) => (
+                            <ShowcaseCard fw={fw} key={`orig-${i}`} />
+                        ))}
+                        {/* Duplicate set for seamless loop */}
+                        {frameworkShowcases.map((fw, i) => (
+                            <ShowcaseCard fw={fw} key={`dup-${i}`} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
