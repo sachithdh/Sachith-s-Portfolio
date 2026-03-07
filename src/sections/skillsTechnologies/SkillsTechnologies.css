@@ -344,32 +344,36 @@
     letter-spacing: 0.06em;
 }
 
-/* Big letter typography specimen */
-.st-showcase-big-letter {
-    font-family: var(--font-display);
-    font-size: 4.5rem;
-    font-weight: 900;
-    line-height: 1;
-    color: var(--text-primary);
-    margin: 4px 0 0;
-    letter-spacing: -0.03em;
-    user-select: none;
+/* Bottom container for large icon + versions */
+.st-showcase-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 10px;
 }
 
-.st-showcase-small-letter {
-    font-family: var(--font-sans);
-    font-size: 3rem;
-    font-weight: 400;
-    color: var(--text-secondary);
-    letter-spacing: 0;
+/* Big letter typography specimen / Icon */
+.st-showcase-big-letter {
+    font-size: 5.5rem;
+    line-height: 1;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.st-showcase-big-letter svg {
+    display: block;
 }
 
 .st-showcase-versions {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 2px;
-    margin-top: auto;
+    justify-content: flex-end;
+    gap: 4px;
 }
 
 .st-showcase-version {
@@ -428,11 +432,7 @@
     }
 
     .st-showcase-big-letter {
-        font-size: 3.5rem;
-    }
-
-    .st-showcase-small-letter {
-        font-size: 2.2rem;
+        font-size: 4rem;
     }
 
     .st-color-swatch {

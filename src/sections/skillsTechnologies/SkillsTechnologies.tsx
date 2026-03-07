@@ -2,6 +2,13 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useFadeInUp, useStaggerChildren, useFadeInLeft, useFadeInRight } from "../../utils/gsapAnimations";
 import "./SkillsTechnologies.css";
+import { FaReact, FaNodeJs, FaVuejs, FaDocker, FaGitAlt } from "react-icons/fa";
+import { RiNextjsFill } from "react-icons/ri";
+import { BiLogoSpringBoot } from "react-icons/bi";
+import { SiNestjs, SiDjango, SiExpress, SiMongodb, SiKeycloak } from "react-icons/si";
+
+
+
 
 /* ── Programming Language Color Bar Data ── */
 const languageColors = [
@@ -45,38 +52,74 @@ const frameworkShowcases = [
     {
         name: "React",
         variants: ["Hooks", "Context", "Server Components"],
-        icon: "⚛",
+        icon: <FaReact />,
         versions: ["18", "17", "16"],
     },
     {
         name: "Node.js",
         variants: ["Express", "NestJS", "Fastify"],
-        icon: "⬡",
+        icon: <FaNodeJs />,
         versions: ["20", "18", "16"],
     },
     {
         name: "Next.js",
         variants: ["App Router", "API Routes", "SSR"],
-        icon: "▲",
+        icon: <RiNextjsFill />,
         versions: ["14", "13", "12"],
     },
     {
         name: "Spring",
         variants: ["Boot", "Security", "Data JPA"],
-        icon: "🍃",
+        icon: <BiLogoSpringBoot />,
         versions: ["3.x", "2.x", "1.x"],
     },
     {
         name: "NestJS",
         variants: ["Modules", "Guards", "Interceptors"],
-        icon: "🐈",
+        icon: <SiNestjs />,
         versions: ["10", "9", "8"],
     },
     {
         name: "Django",
         variants: ["REST Framework", "ORM", "Flask"],
-        icon: "🐍",
+        icon: <SiDjango />,
         versions: ["5.x", "4.x", "3.x"],
+    },
+    {
+        name: "Express",
+        variants: ["Middleware", "Routing", "Rest API"],
+        icon: <SiExpress />,
+        versions: ["4.x", "5.x"],
+    },
+    {
+        name: "MongoDB",
+        variants: ["Mongoose", "Aggregation", "NoSQL"],
+        icon: <SiMongodb />,
+        versions: ["8.x", "7.x", "6.x"],
+    },
+    {
+        name: "Vue.js",
+        variants: ["Composition API", "Vuex", "Pinia"],
+        icon: <FaVuejs />,
+        versions: ["3.x", "2.x"],
+    },
+    {
+        name: "Docker",
+        variants: ["Images", "Containers", "Compose"],
+        icon: <FaDocker />,
+        versions: ["24.x", "20.x"],
+    },
+    {
+        name: "Keycloak",
+        variants: ["OAuth 2.0", "OpenID Connect", "SSO"],
+        icon: <SiKeycloak />,
+        versions: ["23.x", "22.x"],
+    },
+    {
+        name: "Git",
+        variants: ["GitHub", "GitLab", "Version Control"],
+        icon: <FaGitAlt />,
+        versions: ["2.x"],
     },
 ];
 
@@ -85,7 +128,6 @@ function ShowcaseCard({ fw }: { fw: typeof frameworkShowcases[number] }) {
     return (
         <div className="st-showcase-card">
             <div className="st-showcase-top">
-                <span className="st-showcase-icon">{fw.icon}</span>
                 <h4 className="st-showcase-name">{fw.name}</h4>
             </div>
             <div className="st-showcase-variants">
@@ -93,14 +135,15 @@ function ShowcaseCard({ fw }: { fw: typeof frameworkShowcases[number] }) {
                     <span key={vi} className="st-showcase-variant">{v}</span>
                 ))}
             </div>
-            <div className="st-showcase-big-letter">
-                {fw.name.charAt(0)}
-                <span className="st-showcase-small-letter">{fw.name.charAt(1)}</span>
-            </div>
-            <div className="st-showcase-versions">
-                {fw.versions.map((ver, vi) => (
-                    <span key={vi} className="st-showcase-version">{ver}</span>
-                ))}
+            <div className="st-showcase-bottom">
+                <div className="st-showcase-big-letter">
+                    {fw.icon}
+                </div>
+                <div className="st-showcase-versions">
+                    {fw.versions.map((ver, vi) => (
+                        <span key={vi} className="st-showcase-version">{ver}</span>
+                    ))}
+                </div>
             </div>
         </div>
     );
@@ -118,7 +161,8 @@ export default function SkillsTechnologies() {
 
     useEffect(() => {
         const track = carouselTrackRef.current;
-        if (!track) return;
+        const wrapper = track?.parentElement;
+        if (!track || !wrapper) return;
 
         // Wait a frame so the browser can lay out the duplicated cards
         requestAnimationFrame(() => {
@@ -135,33 +179,54 @@ export default function SkillsTechnologies() {
             // Set the track width so all cards sit in one line
             track.style.width = `${setWidth * 2}px`;
 
-            // Infinite scroll tween: translate by exactly one set's width, then repeat
-            tweenRef.current = gsap.to(track, {
-                x: -setWidth,
-                duration: 20,
-                ease: "none",
-                repeat: -1,
-                modifiers: {
-                    x: gsap.utils.unitize((x: number) => {
-                        return x % setWidth;
-                    }),
-                },
-            });
+            // Handle wheel events directly on the wrapper
+            const handleWheel = (e: WheelEvent) => {
+                // Determine if the scroll is primarily vertical
+                const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
 
-            // Pause on hover
-            const handleEnter = () => tweenRef.current?.pause();
-            const handleLeave = () => tweenRef.current?.resume();
-            track.addEventListener("mouseenter", handleEnter);
-            track.addEventListener("mouseleave", handleLeave);
+                // If the user scrolls vertically over the cards, prevent window scroll 
+                // and translate it to horizontal carousel movement instead.
+                if (isVerticalScroll) {
+                    e.preventDefault();
+                }
 
-            return () => {
-                track.removeEventListener("mouseenter", handleEnter);
-                track.removeEventListener("mouseleave", handleLeave);
+                // Get base delta, but clamp it to prevent massive spikes 
+                // from fast trackpad flings or heavy mouse wheels
+                let delta = (e.deltaY + e.deltaX) * 5;
+                if (delta > 400) delta = 400;
+                if (delta < -400) delta = -400;
+
+                // Tween to the new relative position from wherever it CURRENTLY is mid-flight.
+                // Because we use overwrite: true, rapid scrolls won't "accumulate" thousand-pixel targets,
+                // which prevents the runaway speed behavior.
+                tweenRef.current = gsap.to(track, {
+                    x: `-=${delta}`,
+                    duration: 0.4,
+                    ease: "power1.out", // A stronger ease-out makes it feel grounded
+                    overwrite: true,
+                    modifiers: {
+                        x: gsap.utils.unitize((x: number) => {
+                            // Infinite wrap around logic using GSAP
+                            return gsap.utils.wrap(-setWidth, 0, x);
+                        }),
+                    },
+                });
+            };
+
+            // Needs passive: false so we can preventDefault
+            wrapper.addEventListener("wheel", handleWheel, { passive: false });
+
+            // Store cleanly
+            (wrapper as any)._cleanupWheel = () => {
+                wrapper.removeEventListener("wheel", handleWheel);
             };
         });
 
         return () => {
             tweenRef.current?.kill();
+            if (wrapper && (wrapper as any)._cleanupWheel) {
+                (wrapper as any)._cleanupWheel();
+            }
         };
     }, []);
 
