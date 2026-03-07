@@ -3,8 +3,7 @@ import FeaturedProjects from "./sections/featuredProjects/FeaturedProjects";
 import SynthEraHero from "./sections/hero/SynthEraHero";
 import AboutMe from "./sections/aboutMe/AboutMe";
 import SkillsTechnologies from "./sections/skillsTechnologies/SkillsTechnologies";
-import Testimonials from "./components/Testimonials";
-import Contact from "./components/Contact";
+import ContactMe from "./sections/contactMe/ContactMe";
 import Footer from "./components/Footer";
 
 function App() {
@@ -15,9 +14,7 @@ function App() {
       <WorkExperience />
       <FeaturedProjects />
       <SkillsTechnologies />
-      <Testimonials />
-      <Contact />
-      <Footer />
+      <ContactMe />
     </main>
   );
 }
