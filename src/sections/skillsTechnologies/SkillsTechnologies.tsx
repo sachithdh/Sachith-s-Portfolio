@@ -179,46 +179,77 @@ export default function SkillsTechnologies() {
             // Set the track width so all cards sit in one line
             track.style.width = `${setWidth * 2}px`;
 
-            // Handle wheel events directly on the wrapper
+            // ── Helper: move the carousel by `delta` pixels ──────────────────
+            const moveCarousel = (delta: number) => {
+                tweenRef.current = gsap.to(track, {
+                    x: `-=${delta}`,
+                    duration: 0.4,
+                    ease: "power1.out",
+                    overwrite: true,
+                    modifiers: {
+                        x: gsap.utils.unitize((x: number) =>
+                            gsap.utils.wrap(-setWidth, 0, x)
+                        ),
+                    },
+                });
+            };
+
+            // ── 1. Hover-wheel handler (existing behaviour) ──────────────────
             const handleWheel = (e: WheelEvent) => {
-                // Determine if the scroll is primarily vertical
                 const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
+                if (isVerticalScroll) e.preventDefault();
 
-                // If the user scrolls vertically over the cards, prevent window scroll 
-                // and translate it to horizontal carousel movement instead.
-                if (isVerticalScroll) {
-                    e.preventDefault();
-                }
-
-                // Get base delta, but clamp it to prevent massive spikes 
-                // from fast trackpad flings or heavy mouse wheels
                 let delta = (e.deltaY + e.deltaX) * 5;
                 if (delta > 400) delta = 400;
                 if (delta < -400) delta = -400;
 
-                // Tween to the new relative position from wherever it CURRENTLY is mid-flight.
-                // Because we use overwrite: true, rapid scrolls won't "accumulate" thousand-pixel targets,
-                // which prevents the runaway speed behavior.
-                tweenRef.current = gsap.to(track, {
-                    x: `-=${delta}`,
-                    duration: 0.4,
-                    ease: "power1.out", // A stronger ease-out makes it feel grounded
-                    overwrite: true,
-                    modifiers: {
-                        x: gsap.utils.unitize((x: number) => {
-                            // Infinite wrap around logic using GSAP
-                            return gsap.utils.wrap(-setWidth, 0, x);
-                        }),
-                    },
-                });
+                moveCarousel(delta);
             };
 
             // Needs passive: false so we can preventDefault
             wrapper.addEventListener("wheel", handleWheel, { passive: false });
 
-            // Store cleanly
+            // ── 2. Global vertical-scroll handler ────────────────────────────
+            // When the page is scrolled AND the carousel section is in the viewport,
+            // translate vertical scroll movement into horizontal carousel movement.
+            let lastScrollY = window.scrollY;
+            let rafId: number | null = null;
+
+            const handleWindowScroll = () => {
+                if (rafId !== null) return; // already queued
+
+                rafId = requestAnimationFrame(() => {
+                    rafId = null;
+
+                    const rect = wrapper.getBoundingClientRect();
+                    const viewH = window.innerHeight;
+
+                    // Only drive the carousel when it is actually visible
+                    const isVisible = rect.bottom > 0 && rect.top < viewH;
+                    if (!isVisible) {
+                        lastScrollY = window.scrollY;
+                        return;
+                    }
+
+                    const scrollDelta = window.scrollY - lastScrollY;
+                    lastScrollY = window.scrollY;
+
+                    // Scale factor — tweaked so a normal page scroll feels natural
+                    let delta = scrollDelta * 3;
+                    if (delta > 300) delta = 300;
+                    if (delta < -300) delta = -300;
+
+                    if (delta !== 0) moveCarousel(delta);
+                });
+            };
+
+            window.addEventListener("scroll", handleWindowScroll, { passive: true });
+
+            // Store cleanup
             (wrapper as any)._cleanupWheel = () => {
                 wrapper.removeEventListener("wheel", handleWheel);
+                window.removeEventListener("scroll", handleWindowScroll);
+                if (rafId !== null) cancelAnimationFrame(rafId);
             };
         });
 
