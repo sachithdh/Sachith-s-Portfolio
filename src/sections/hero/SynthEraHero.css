@@ -30,9 +30,9 @@
 }
 
 .btn--primary {
-  background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.1));
-  border: 1px solid rgba(155, 89, 182, 0.3);
-  color: #ffffff;
+  background: linear-gradient(135deg, rgba(207, 246, 114, 0.15), rgba(207, 246, 114, 0.05));
+  border: 1px solid rgba(207, 246, 114, 0.3);
+  color: #cff672;
   font-weight: 600;
 }
 
@@ -210,9 +210,7 @@
 .social-links {
   position: absolute;
   bottom: 4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  right: 1%;
 }
 
 .card-right {
@@ -227,7 +225,7 @@
   color: #ffffff;
   margin: 0 0 1rem 0;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  background: linear-gradient(135deg, #89c204, #89c204);
   -webkit-background-clip: text;
   -webkit-text-fill-color: white;
   background-clip: text;
@@ -246,8 +244,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.1));
-  border: 1px solid rgba(155, 89, 182, 0.3);
+  background: linear-gradient(135deg, rgba(207, 246, 114, 0.15), rgba(207, 246, 114, 0.05));
+  border: 1px solid rgba(207, 246, 114, 0.3);
   color: #ffffff;
   padding: 0.7rem 1.2rem;
   border-radius: 25px;
@@ -259,9 +257,9 @@
 }
 
 .see-more-btn:hover {
-  background: linear-gradient(135deg, rgba(155, 89, 182, 0.2), rgba(142, 68, 173, 0.2));
-  border-color: rgba(155, 89, 182, 0.6);
-  box-shadow: 0 4px 16px rgba(155, 89, 182, 0.2);
+  background: linear-gradient(135deg, rgba(207, 246, 114, 0.25), rgba(207, 246, 114, 0.15));
+  border-color: rgba(207, 246, 114, 0.8);
+  box-shadow: 0 4px 16px rgba(207, 246, 114, 0.3);
   transform: translateX(3px);
 }
 
@@ -271,9 +269,10 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  background: rgba(155, 89, 182, 0.2);
+  background: rgba(207, 246, 114, 0.2);
   border-radius: 50%;
   font-size: 0.75rem;
+  color: #cff672;
   transition: transform 0.3s ease;
 }
 
@@ -301,8 +300,8 @@
 }
 
 .download-btn:hover {
-  border-color: rgba(155, 89, 182, 0.6);
-  box-shadow: 0 8px 24px rgba(155, 89, 182, 0.12);
+  border-color: rgba(207, 246, 114, 0.6);
+  box-shadow: 0 8px 24px rgba(207, 246, 114, 0.12);
   transform: translateY(-3px);
 }
 

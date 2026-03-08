@@ -1,6 +1,5 @@
 import "./SynthEraHero.css";
 import { useState, useEffect, useRef } from "react";
-import RoleCard from "../../components/RoleCard";
 import SocialLinks from "../../components/socialLinks/SocialLinks";
 import gsap from "gsap";
 const SynthEraHero = () => {
@@ -97,7 +96,7 @@ const SynthEraHero = () => {
             <a href="#about">About</a>
           </li>
           <li>
-            <a href="#blog">Blog</a>
+            <a href="/blog">Blog</a>
           </li>
           <li>
             <a href="#contact">Contact</a>
@@ -145,11 +144,6 @@ const SynthEraHero = () => {
             </svg>
             <span>Explore projects and skills below</span>
           </div>
-        </div>
-
-        {/* Right Card - Absolute Position */}
-        <div className="role-card-absolute">
-          <RoleCard />
         </div>
         <div className="social-links">
           <SocialLinks />
