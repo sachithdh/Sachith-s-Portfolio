@@ -50,7 +50,7 @@
   left: -5%;
   width: 110%;
   height: 110%;
-  background-image: linear-gradient(180deg, rgba(10, 10, 10, 0.8) 0%, rgba(17, 17, 17, 1) 50%, rgba(26, 26, 26, 0.4) 100%), url('/images/pp.png');
+  background-image: linear-gradient(180deg, rgba(10, 10, 10, 0.99) 0%, rgba(17, 17, 17, 0.98) 50%, rgba(26, 26, 26, 0.7) 100%), url('/images/pp.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -244,8 +244,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: linear-gradient(135deg, rgba(207, 246, 114, 0.15), rgba(207, 246, 114, 0.05));
-  border: 1px solid rgba(207, 246, 114, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: #ffffff;
   padding: 0.7rem 1.2rem;
   border-radius: 25px;
@@ -257,9 +257,9 @@
 }
 
 .see-more-btn:hover {
-  background: linear-gradient(135deg, rgba(207, 246, 114, 0.25), rgba(207, 246, 114, 0.15));
-  border-color: rgba(207, 246, 114, 0.8);
-  box-shadow: 0 4px 16px rgba(207, 246, 114, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
   transform: translateX(3px);
 }
 
@@ -269,10 +269,10 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  background: rgba(207, 246, 114, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   font-size: 0.75rem;
-  color: #cff672;
+  color: #ffffff;
   transition: transform 0.3s ease;
 }
 
@@ -343,10 +343,10 @@
 
 .headline-armor {
   font-family: var(--font-display);
-  font-style: italic;
+  /* font-style: italic; */
   font-weight: 500;
-  font-size: clamp(3rem, 12vw, 12rem);
-  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 50%, #7d3c98 100%);
+  /* font-size: 13vw; */
+  font-size: clamp(4rem, 13vw, 15rem);
   -webkit-background-clip: text;
   -webkit-text-fill-color: #d9d2db;
   background-clip: text;
@@ -370,6 +370,7 @@
 }
 
 .tagline {
+  /* font-family: var(--font-display); */
   font-family: 'Playfair Display', serif;
   font-style: italic;
   font-size: 1.2rem;
@@ -383,6 +384,7 @@
   animation: fadeInUp 0.8s ease-out 0.3s forwards;
   opacity: 0;
   text-align: center;
+
 }
 
 /* Ambient Glow Effects */
@@ -394,7 +396,6 @@
   transform: translateX(-50%);
   width: 800px;
   height: 500px;
-  background: radial-gradient(ellipse, rgba(155, 89, 182, 0.12) 0%, transparent 70%);
   pointer-events: none;
   z-index: 1;
   animation: pulse 8s ease-in-out infinite;

@@ -53,6 +53,11 @@
     outline-color: #0a66c2;
   }
 
+  .icon-gmail:hover {
+    background-color: #ea4335;
+    outline-color: #ea4335;
+  }
+
   .icon:hover svg {
     animation: shake 0.25s;
   }

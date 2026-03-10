@@ -125,16 +125,9 @@ const SynthEraHero = () => {
           </p>
           {/* Call-to-action buttons */}
           <div className="cta-group" ref={ctaRef}>
-            <a href="#work" className="see-more-btn">
+            <a href="#projects" className="see-more-btn">
               View Projects
               <span className="btn-arrow">→</span>
-            </a>
-            <a
-              href="/resume.pdf"
-              className="see-more-btn download-btn"
-              download
-            >
-              Download CV
             </a>
           </div>
           <div className="scroll-indicator">
@@ -142,7 +135,7 @@ const SynthEraHero = () => {
               <rect x="1" y="1" width="18" height="28" rx="9" strokeWidth="2" />
               <circle cx="10" cy="10" r="3" />
             </svg>
-            <span>Explore projects and skills below</span>
+            <span>Explore more</span>
           </div>
         </div>
         <div className="social-links">

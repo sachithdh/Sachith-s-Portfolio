@@ -101,10 +101,8 @@ const MarqueeBanner = () => {
 const socialLinks = [
   { label: "GitHub", href: "https://www.github.com/sachithdh" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/sachithdh/" },
-  { label: "Twitter", href: "https://twitter.com/" },
-  { label: "Instagram", href: "https://instagram.com/" },
-  { label: "Dribbble", href: "https://dribbble.com/" },
-  { label: "Medium", href: "https://medium.com/" },
+  { label: "X", href: "https://x.com/_Sachith__" },
+  { label: "Instagram", href: "https://www.instagram.com/sachee.10" },
 ];
 
 const ContactMe = () => {
@@ -175,7 +173,7 @@ const ContactMe = () => {
 
         {/* CTA Button */}
         <a
-          href="mailto:sachithdhanushka@gmail.com"
+          href="mailto:sachith.devx@gmail.com"
           className="cm-btn"
           ref={btnRef}
         >
@@ -208,7 +206,7 @@ const ContactMe = () => {
       {/* Bottom tagline */}
       <div className="cm-footer-strip">
         <span className="cm-footer-text">
-          Sachith Dhanushka &nbsp;·&nbsp; Full Stack Developer &nbsp;·&nbsp;{" "}
+          Sachith Dhanushka &nbsp;·&nbsp; Software Engineer &nbsp;·&nbsp;{" "}
           {new Date().getFullYear()}
         </span>
       </div>
