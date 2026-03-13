@@ -10,7 +10,7 @@ const experiences = [
     location: "Port City, Colombo, SL",
     description:
       "Developing digital infrastructure for climate markets, carbon finance and Article 6 implementation.",
-    skills: ["React.js", "NestJs", "Cloud Services"],
+    skills: ["React.js", "NestJs", "Docker", "Block Chain", "KeyCloak"],
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const experiences = [
     location: "Kandy, SL",
     description:
       "Designing and delivering scalable software solutions for global clients.",
-    skills: ["React.js", "PHP", "Cloud Services"],
+    skills: ["React.js", "PHP", "Wordpress", "Cloud Services"],
   },
 ];
 
