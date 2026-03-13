@@ -105,9 +105,6 @@ const SynthEraHero = () => {
         </ul>
       </nav>
 
-      {/* Background Text */}
-      {/* <div className="bg-text">DHANUSHKA</div> */}
-
       {/* Main Content */}
       <div className="content">
         {/* Tech Stack Card - Absolute Position */}
