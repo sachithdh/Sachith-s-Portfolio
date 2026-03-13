@@ -34,6 +34,20 @@
   --section-padding: 100px 5%;
 }
 
+/* ── Light Theme Overrides ────────────────────────────────── */
+[data-theme="light"] {
+  --bg-dark: #f0f1ec;
+  --bg-black: #e4e5e0;
+  --bg-card: #ffffff;
+  --bg-olive: #e8f0d0;
+
+  --text-primary: #0a0a0a;
+  --text-secondary: #2a2c20;
+  --text-muted: #555750;
+
+  color-scheme: light;
+}
+
 * {
   margin: 0;
   padding: 0;

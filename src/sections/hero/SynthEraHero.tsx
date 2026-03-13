@@ -1,5 +1,6 @@
 import "./SynthEraHero.css";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import SocialLinks from "../../components/socialLinks/SocialLinks";
 import gsap from "gsap";
 const SynthEraHero = () => {
@@ -95,17 +96,14 @@ const SynthEraHero = () => {
           <li>
             <a href="#about">About</a>
           </li>
-          {/* <li>
-            <a href="/blog">Blog</a>
-          </li> */}
+          <li>
+            <Link to="/blog">Blog</Link>
+          </li>
           <li>
             <a href="#contact">Contact</a>
           </li>
         </ul>
       </nav>
-
-      {/* Background Text */}
-      {/* <div className="bg-text">DHANUSHKA</div> */}
 
       {/* Main Content */}
       <div className="content">
@@ -115,7 +113,7 @@ const SynthEraHero = () => {
           <p className="card-description">{techStack.join(" • ")}</p>
         </div>
 
-        {/* Center Content - Moved Left */}
+        {/* Center Content */}
         <div className="center">
           <h1 className="headline" ref={headlineRef}>
             <span className="headline-armor">SACHITH</span>
