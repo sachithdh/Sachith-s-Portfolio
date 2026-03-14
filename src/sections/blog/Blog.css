@@ -1,22 +1,16 @@
-/* ───────────────────────────────────────────────────────────────
-   BLOG PAGE — palette aligned with portfolio sections
-   Dark: black/dark bg + lime accent  |  Light: off-white + lime
-─────────────────────────────────────────────────────────────── */
-
-/* ── Blog-specific scoped variables ──────────────────────────── */
 .blog-page {
-  --blog-bg:           var(--bg-black, #000000);
-  --blog-surface:      rgba(255, 255, 255, 0.02);
-  --blog-border:       rgba(255, 255, 255, 0.08);
-  --blog-accent:       var(--accent-lime, #cff672);
+  --blog-bg: var(--bg-black, #000000);
+  --blog-surface: rgba(255, 255, 255, 0.02);
+  --blog-border: rgba(255, 255, 255, 0.08);
+  --blog-accent: var(--accent-lime, #cff672);
   --blog-accent-muted: rgba(207, 246, 114, 0.1);
-  --blog-accent-glow:  rgba(207, 246, 114, 0.18);
-  --blog-muted-txt:    var(--text-muted, #888);
-  --blog-primary-txt:  var(--text-primary, #fff);
-  --blog-card-bg:      rgba(255, 255, 255, 0.03);
-  --blog-nav-bg:       rgba(0, 0, 0, 0.85);
-  --blog-glow-a:       rgba(207, 246, 114, 0.06);
-  --blog-glow-b:       rgba(0, 229, 255, 0.04);
+  --blog-accent-glow: rgba(207, 246, 114, 0.18);
+  --blog-muted-txt: var(--text-muted, #888);
+  --blog-primary-txt: var(--text-primary, #fff);
+  --blog-card-bg: rgba(255, 255, 255, 0.03);
+  --blog-nav-bg: rgba(0, 0, 0, 0.85);
+  --blog-glow-a: rgba(207, 246, 114, 0.06);
+  --blog-glow-b: rgba(0, 229, 255, 0.04);
 
   min-height: 100vh;
   background-color: var(--blog-bg);
@@ -27,18 +21,19 @@
 
 /* Light overrides */
 [data-theme="light"] .blog-page {
-  --blog-bg:           var(--bg-dark, #f0f1ec);
-  --blog-surface:      rgba(0, 0, 0, 0.03);
-  --blog-border:       rgba(0, 0, 0, 0.1);
-  --blog-accent:       #789a00;   /* darker lime for light bg readability */
+  --blog-bg: var(--bg-dark, #f0f1ec);
+  --blog-surface: rgba(0, 0, 0, 0.03);
+  --blog-border: rgba(0, 0, 0, 0.1);
+  --blog-accent: #789a00;
+  /* darker lime for light bg readability */
   --blog-accent-muted: rgba(120, 154, 0, 0.1);
-  --blog-accent-glow:  rgba(120, 154, 0, 0.15);
-  --blog-muted-txt:    var(--text-muted, #555750);
-  --blog-primary-txt:  var(--text-primary, #0a0a0a);
-  --blog-card-bg:      rgba(255, 255, 255, 0.7);
-  --blog-nav-bg:       rgba(240, 241, 236, 0.88);
-  --blog-glow-a:       rgba(120, 154, 0, 0.06);
-  --blog-glow-b:       rgba(0, 229, 255, 0.03);
+  --blog-accent-glow: rgba(120, 154, 0, 0.15);
+  --blog-muted-txt: var(--text-muted, #555750);
+  --blog-primary-txt: var(--text-primary, #0a0a0a);
+  --blog-card-bg: rgba(255, 255, 255, 0.7);
+  --blog-nav-bg: rgba(240, 241, 236, 0.88);
+  --blog-glow-a: rgba(120, 154, 0, 0.06);
+  --blog-glow-b: rgba(0, 229, 255, 0.03);
 }
 
 /* Ambient glow blobs */
@@ -75,7 +70,7 @@
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   padding: 16px 5%;
   background: var(--blog-nav-bg);
   backdrop-filter: blur(20px);
@@ -122,8 +117,17 @@
 }
 
 @keyframes brandPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
 }
 
 /* ── Theme Toggle Button ──────────────────────────────────────── */
@@ -399,8 +403,8 @@
   background: var(--blog-card-bg);
   border: 1px solid var(--blog-border);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.3s ease,
-              background 0.3s ease;
+    border-color 0.3s ease,
+    background 0.3s ease;
 }
 
 .blog-card:hover {
@@ -674,7 +678,9 @@
   color: var(--blog-muted-txt);
 }
 
-.clap-icon { font-size: 1.1rem; }
+.clap-icon {
+  font-size: 1.1rem;
+}
 
 /* ═════════════════════════════════════════════════════════════════
    MARKDOWN BODY STYLES
@@ -741,7 +747,9 @@
   line-height: 1.8;
 }
 
-.md-body .md-spacer { height: 0.5rem; }
+.md-body .md-spacer {
+  height: 0.5rem;
+}
 
 .md-body .md-blockquote {
   border-left: 3px solid var(--blog-accent);
@@ -834,9 +842,17 @@
   line-height: 1.7;
 }
 
-.md-body .md-ul .md-li { list-style-type: disc; }
-.md-body .md-ul .md-li::marker { color: var(--blog-accent); }
-.md-body .md-ol .md-li  { list-style-type: decimal; }
+.md-body .md-ul .md-li {
+  list-style-type: disc;
+}
+
+.md-body .md-ul .md-li::marker {
+  color: var(--blog-accent);
+}
+
+.md-body .md-ol .md-li {
+  list-style-type: decimal;
+}
 
 .md-body .md-task-list {
   list-style: none;

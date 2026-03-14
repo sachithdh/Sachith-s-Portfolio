@@ -89,22 +89,6 @@ export default function Blog() {
       <div className="blog-page">
         {/* ── Nav ── */}
         <header className="blog-page-nav">
-          <Link to="/" className="blog-page-nav__back">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path
-                d="M11 14L6 9l5-5"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Portfolio
-          </Link>
-          <div className="blog-page-nav__brand">
-            <div className="blog-page-nav__brand-dot" />
-            <span>Sachith's Blog</span>
-          </div>
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             {/* Theme Toggle */}
             {/* <button
