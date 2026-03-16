@@ -69,8 +69,8 @@ const SynthEraHero = () => {
 
   // Calculate 3D transform values based on mouse position
   const getTransformStyle = () => {
-    const moveX = (mousePosition.x - 0.5) * 120; // Max 20px movement
-    const moveY = (mousePosition.y - 0.5) * 120; // Max 20px movement
+    const moveX = (mousePosition.x - 0.5) * 100; // Max 20px movement
+    const moveY = (mousePosition.y - 0.5) * 100; // Max 20px movement
     return {
       transform: `translate(${moveX}px, ${moveY}px) scale(1.05)`,
     };
