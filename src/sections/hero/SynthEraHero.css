@@ -58,6 +58,8 @@
 .hero-bg-overlay {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-bg-video {
@@ -552,6 +554,13 @@
 /* } */
 
 @media (max-width: 768px) {
+  .hero-bg {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .hero-nav {
     flex-wrap: wrap;
     gap: 1rem;
