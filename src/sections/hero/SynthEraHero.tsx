@@ -69,8 +69,8 @@ const SynthEraHero = () => {
 
   // Calculate 3D transform values based on mouse position
   const getTransformStyle = () => {
-    const moveX = (mousePosition.x - 0.5) * 30; // Max 20px movement
-    const moveY = (mousePosition.y - 0.5) * 30; // Max 20px movement
+    const moveX = (mousePosition.x - 0.5) * 120; // Max 20px movement
+    const moveY = (mousePosition.y - 0.5) * 120; // Max 20px movement
     return {
       transform: `translate(${moveX}px, ${moveY}px) scale(1.05)`,
     };
@@ -78,7 +78,19 @@ const SynthEraHero = () => {
 
   return (
     <section className="hero" id="hero" ref={heroRef}>
-      <div className="hero-bg" style={getTransformStyle()}></div>
+      <div className="hero-bg" style={getTransformStyle()}>
+        <video
+          className="hero-bg-video"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+        >
+          <source src="/videos/bg.mp4" type="video/mp4" />
+        </video>
+        <div className="hero-bg-overlay"></div>
+      </div>
       {/* Main Content */}
       <div className="content" id="content">
         {/* Tech Stack Card - Absolute Position */}
