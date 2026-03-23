@@ -7,6 +7,7 @@ import AboutMe from "./sections/aboutMe/AboutMe";
 import SkillsTechnologies from "./sections/skillsTechnologies/SkillsTechnologies";
 import ContactMe from "./sections/contactMe/ContactMe";
 import Blog from "./sections/blog/Blog";
+import BlogOverview from "./sections/blog/BlogOverview";
 import CreatePost from "./sections/blog/CreatePost";
 import BlogPostPage from "./sections/blog/BlogPostPage";
 import Login from "./sections/auth/Login";
@@ -19,6 +20,7 @@ function Portfolio() {
       <WorkExperience />
       <FeaturedProjects />
       <SkillsTechnologies />
+      <BlogOverview />
       <ContactMe />
     </main>
   );
