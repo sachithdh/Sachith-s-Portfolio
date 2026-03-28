@@ -24,7 +24,7 @@ export function parseMarkdown(markdown: string): string {
           lines[i]
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
+            .replace(/>/g, "&gt;"),
         );
         i++;
       }
@@ -33,8 +33,8 @@ export function parseMarkdown(markdown: string): string {
         `<pre class="md-code-block"><div class="md-code-header"><span class="md-code-lang">${
           lang || "code"
         }</span><button class="md-copy-btn">Copy</button></div><code class="md-code">${codeLines.join(
-          "\n"
-        )}</code></pre>`
+          "\n",
+        )}</code></pre>`,
       );
       i++;
       continue;
@@ -84,7 +84,7 @@ export function parseMarkdown(markdown: string): string {
         i++;
       }
       result.push(
-        `<blockquote class="md-blockquote">${ql.join("<br>")}</blockquote>`
+        `<blockquote class="md-blockquote">${ql.join("<br>")}</blockquote>`,
       );
       continue;
     }
@@ -97,8 +97,8 @@ export function parseMarkdown(markdown: string): string {
           `<li class="md-task-item ${
             checked ? "md-task--done" : ""
           }"><span class="md-checkbox">${checked ? "✓" : ""}</span>${inlineMD(
-            text
-          )}</li>`
+            text,
+          )}</li>`,
         );
         i++;
       }
@@ -109,7 +109,7 @@ export function parseMarkdown(markdown: string): string {
       const ll: string[] = [];
       while (i < lines.length && lines[i].match(/^[-*+]\s/)) {
         ll.push(
-          `<li class="md-li">${inlineMD(lines[i].replace(/^[-*+]\s/, ""))}</li>`
+          `<li class="md-li">${inlineMD(lines[i].replace(/^[-*+]\s/, ""))}</li>`,
         );
         i++;
       }
@@ -120,7 +120,7 @@ export function parseMarkdown(markdown: string): string {
       const ll: string[] = [];
       while (i < lines.length && lines[i].match(/^\d+\.\s/)) {
         ll.push(
-          `<li class="md-li">${inlineMD(lines[i].replace(/^\d+\.\s/, ""))}</li>`
+          `<li class="md-li">${inlineMD(lines[i].replace(/^\d+\.\s/, ""))}</li>`,
         );
         i++;
       }
@@ -135,7 +135,7 @@ export function parseMarkdown(markdown: string): string {
     if (line.match(/^!\[\[(.+)\]\]/)) {
       const url = line.match(/^!\[\[(.+)\]\]/)![1];
       result.push(
-        `<figure class="md-figure"><img src="${url}" alt="" class="md-img" loading="lazy" /></figure>`
+        `<figure class="md-figure"><img src="${url}" alt="" class="md-img" loading="lazy" /></figure>`,
       );
       i++;
       continue;
@@ -162,7 +162,7 @@ export function parseMarkdown(markdown: string): string {
         })
         .join("");
       result.push(
-        `<div class="md-table-wrapper"><table class="md-table">${tableHtml}</table></div>`
+        `<div class="md-table-wrapper"><table class="md-table">${tableHtml}</table></div>`,
       );
       continue;
     }
@@ -183,17 +183,17 @@ export function inlineMD(text: string): string {
     .replace(
       /!\[\[(.+?)\]\]/g,
       (_m, url) =>
-        `<img src="${url}" alt="Image" class="md-img-inline" loading="lazy" />`
+        `<img src="${url}" alt="Image" class="md-img-inline" loading="lazy" />`,
     )
     .replace(
       /!\[([^\]]*)\]\(([^)]+)\)/g,
       (_m, alt, url) =>
-        `<img src="${url}" alt="${alt}" class="md-img-inline" loading="lazy" />`
+        `<img src="${url}" alt="${alt}" class="md-img-inline" loading="lazy" />`,
     )
     .replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
       (_m, txt, url) =>
-        `<a href="${url}" target="_blank" rel="noopener noreferrer" class="md-link">${txt}</a>`
+        `<a href="${url}" target="_blank" rel="noopener noreferrer" class="md-link">${txt}</a>`,
     )
     .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
@@ -430,20 +430,16 @@ export default function BlogPostPage() {
             </div>
             <h1 className="blog-reader__title">{post.title}</h1>
             <div className="blog-reader__meta">
-              <img
+              {/* <img
                 src={post.authorAvatar}
                 alt={post.author}
                 className="blog-reader__avatar"
-              />
+              /> */}
               <div className="blog-reader__meta-info">
-                <span className="blog-reader__author">{post.author}</span>
+                {/* <span className="blog-reader__author">Sachith</span> */}
                 <span className="blog-reader__date-read">
                   {post.publishedAt} · {post.readTime}
                 </span>
-              </div>
-              <div className="blog-reader__claps">
-                <span className="clap-icon">👏</span>
-                <span>{post.claps}</span>
               </div>
             </div>
             <div
