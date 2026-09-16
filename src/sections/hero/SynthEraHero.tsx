@@ -33,37 +33,37 @@ const SynthEraHero = () => {
     tl.fromTo(
       headlineRef.current,
       { opacity: 0, y: 100, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power4.out" }
+      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power4.out" },
     )
       .fromTo(
         taglineRef.current,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.6"
+        "-=0.6",
       )
       .fromTo(
         ctaRef.current,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.4"
+        "-=0.4",
       )
       .fromTo(
         ".tech-card",
         { opacity: 0, x: -50 },
         { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.6"
+        "-=0.6",
       )
       .fromTo(
         ".role-card-absolute",
         { opacity: 0, x: 50 },
         { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.6"
+        "-=0.6",
       )
       .fromTo(
         ".social-links",
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-        "-=0.4"
+        "-=0.4",
       );
   }, []);
 
@@ -79,7 +79,7 @@ const SynthEraHero = () => {
   return (
     <section className="hero" id="hero" ref={heroRef}>
       <div className="hero-bg" style={getTransformStyle()}>
-        <video
+        {/* <video
           className="hero-bg-video"
           autoPlay
           loop
@@ -88,7 +88,7 @@ const SynthEraHero = () => {
           aria-hidden="true"
         >
           <source src="/videos/bg.mp4" type="video/mp4" />
-        </video>
+        </video> */}
         <div className="hero-bg-overlay"></div>
       </div>
       {/* Main Content */}
