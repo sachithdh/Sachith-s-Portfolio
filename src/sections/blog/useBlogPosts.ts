@@ -14,6 +14,25 @@ const markdownFiles = import.meta.glob("./posts/*.md", {
   eager: true,
 }) as Record<string, { default: string }>;
 
+// import all image files from the posts directory as resolved URLs
+const imageFiles = import.meta.glob(
+  "./posts/**/*.{png,jpg,jpeg,gif,svg,webp,avif}",
+  { eager: true }
+) as Record<string, { default: string }>;
+
+/**
+ * Map of image path (relative to posts/) to resolved asset URL.
+ */
+export const blogImageMap: Record<string, string> = {};
+for (const [path, mod] of Object.entries(imageFiles)) {
+  const relativePath = path.replace(/^\.\/posts\//, "");
+  blogImageMap[relativePath] = mod.default;
+  const filename = path.split("/").pop() || "";
+  if (!blogImageMap[filename]) {
+    blogImageMap[filename] = mod.default;
+  }
+}
+
 function parseFrontmatter(raw: string): {
   meta: Record<string, string | string[]>;
   content: string;

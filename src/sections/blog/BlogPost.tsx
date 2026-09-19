@@ -1,8 +1,38 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import Markdown from "react-markdown";
+import Markdown, { type Components } from "react-markdown";
 import { LuArrowLeft } from "react-icons/lu";
-import { useBlogPosts } from "./useBlogPosts";
+import { useBlogPosts, blogImageMap } from "./useBlogPosts";
 import "./Blog.css";
+
+/**
+ * Resolve a markdown image src to a Vite-processed asset URL.
+ */
+function resolveImageSrc(src: string | undefined): string {
+  if (!src) return "";
+  // Absolute URLs or root-relative paths - use as-is
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) {
+    return src;
+  }
+  // Strip leading "./" if present, and decode URI components (e.g. %20 -> space)
+  const decoded = decodeURIComponent(src.replace(/^\.\//, ""));
+  return blogImageMap[decoded] || src;
+}
+
+// Custom react-markdown components with image resolution
+const markdownComponents: Components = {
+  img: ({ src, alt, ...props }) => (
+    <figure className="blog-reader__figure">
+      <img
+        {...props}
+        src={resolveImageSrc(src)}
+        alt={alt || ""}
+        loading="lazy"
+        decoding="async"
+      />
+      {alt && <figcaption className="blog-reader__figcaption">{alt}</figcaption>}
+    </figure>
+  ),
+};
 
 export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
@@ -77,7 +107,7 @@ export default function BlogPost() {
         </header>
 
         <article className="blog-reader__body">
-          <Markdown>{post.content}</Markdown>
+          <Markdown components={markdownComponents}>{post.content}</Markdown>
         </article>
       </div>
     </div>

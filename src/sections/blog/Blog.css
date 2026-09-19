@@ -421,11 +421,39 @@
   margin: 48px 0;
 }
 
-/* Images */
+/* Images & Figures */
 .blog-reader__body img {
+  display: block;
   max-width: 100%;
-  border-radius: 6px;
-  margin: 32px 0;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 8px;
+  border: 1px solid var(--blog-border);
+}
+
+.blog-reader__figure {
+  margin: 36px auto;
+  padding: 0;
+  text-align: center;
+}
+
+.blog-reader__figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 8px;
+  border: 1px solid var(--blog-border);
+}
+
+.blog-reader__figcaption {
+  margin-top: 10px;
+  font-family: var(--blog-font-sans);
+  font-size: 0.78rem;
+  color: var(--blog-text-muted);
+  text-align: center;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
 }
 
 /* ── Not Found───── */
