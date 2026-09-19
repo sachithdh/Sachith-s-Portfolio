@@ -120,7 +120,7 @@ const SynthEraHero = () => {
               className="blog-cta-btn"
               onClick={() => navigate("/blog")}
             >
-              Read the Blog
+              READ MY BLOG
               <LuExternalLink size={16} className="blog-cta-icon" />
             </button>
           </div>

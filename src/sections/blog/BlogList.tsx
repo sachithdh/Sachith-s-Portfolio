@@ -12,7 +12,7 @@ export default function BlogList() {
       <nav className="blog-topbar">
         <Link to="/" className="blog-back-to-portfolio">
           <LuArrowLeft size={16} />
-          <span>Back to Portfolio</span>
+          <span>Go to Portfolio</span>
         </Link>
       </nav>
 
