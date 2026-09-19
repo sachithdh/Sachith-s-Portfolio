@@ -11,28 +11,29 @@ import BlogPost from "./sections/blog/BlogPost";
 
 function Portfolio() {
   return (
-    <main className="app-container">
-      <SynthEraHero />
-      <AboutMe />
-      <WorkExperience />
-      <FeaturedProjects />
-      <SkillsTechnologies />
-      <ContactMe />
-    </main>
+    <>
+      <TopNavBar />
+      <main className="app-container">
+        <SynthEraHero />
+        <AboutMe />
+        <WorkExperience />
+        <FeaturedProjects />
+        <SkillsTechnologies />
+        <ContactMe />
+      </main>
+    </>
   );
 }
 
 function App() {
   return (
-    <>
-      <TopNavBar />
-      <Routes>
-        <Route path="/" element={<Portfolio />} />
-        <Route path="/blog" element={<BlogList />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Portfolio />} />
+      <Route path="/blog" element={<BlogList />} />
+      <Route path="/blog/:id" element={<BlogPost />} />
+    </Routes>
   );
 }
 
 export default App;
+

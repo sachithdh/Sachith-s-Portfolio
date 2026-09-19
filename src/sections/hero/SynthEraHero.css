@@ -332,12 +332,11 @@
 }
 
 .blog-cta-icon {
-  font-size: 0.7rem;
   transition: transform 0.3s ease;
 }
 
 .blog-cta-btn:hover .blog-cta-icon {
-  transform: rotate(90deg) scale(1.2);
+  transform: translate(2px, -2px);
 }
 
 /* Light theme */

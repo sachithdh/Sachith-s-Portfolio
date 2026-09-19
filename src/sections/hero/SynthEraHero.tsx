@@ -1,6 +1,7 @@
 import "./SynthEraHero.css";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { LuExternalLink } from "react-icons/lu";
 import SocialLinks from "../../components/socialLinks/SocialLinks";
 import gsap from "gsap";
 const SynthEraHero = () => {
@@ -120,7 +121,7 @@ const SynthEraHero = () => {
               onClick={() => navigate("/blog")}
             >
               Read the Blog
-              <span className="blog-cta-icon">✦</span>
+              <LuExternalLink size={16} className="blog-cta-icon" />
             </button>
           </div>
           <div className="scroll-indicator">
