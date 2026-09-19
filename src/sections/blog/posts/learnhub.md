@@ -6,8 +6,6 @@ tags: ["php","MySQL", "MVC", "web-dev"]
 readTime: "12 min read"
 ---
 
-# How We Built LearnHub, a Tutoring Platform, and Our Own Web Framework Completely from Scratch
-
 As a team of 4 second-year students, we identified a gap in Sri Lanka's tutoring industry and decided to build something impactful. The result? **LearnHub** - a comprehensive web platform connecting independent tutors with students seeking personalized education.
 
 # **The Problem We Wanted to Solve**
