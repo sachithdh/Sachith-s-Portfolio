@@ -108,7 +108,7 @@ const SynthEraHero = () => {
             <span className="headline-armor">SACHITH</span>
           </h1>
           <p className="tagline" ref={taglineRef}>
-            Computer Science Undergratuate.
+            Computer Science Undergraduate.
           </p>
           {/* Call-to-action buttons */}
           <div className="cta-group" ref={ctaRef}>
@@ -116,10 +116,7 @@ const SynthEraHero = () => {
               View Projects
               <span className="btn-arrow">→</span>
             </a> */}
-            <button
-              className="blog-cta-btn"
-              onClick={() => navigate("/blog")}
-            >
+            <button className="blog-cta-btn" onClick={() => navigate("/blog")}>
               READ MY BLOG
               <LuExternalLink size={16} className="blog-cta-icon" />
             </button>
