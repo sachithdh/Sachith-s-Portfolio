@@ -34,7 +34,8 @@
 .about-profile .info-text {
   font-size: 1rem;
   line-height: 1.7;
-  color: var(--text-secondary);
+  /* color: var(--text-secondary); */
+  color: white;
   font-weight: 300;
   margin: 0;
   opacity: 0.95;
@@ -75,8 +76,9 @@
 .info-text {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--text-secondary);
-  font-weight: 300;
+  /* color: var(--text-secondary); */
+  color: white;
+  font-weight: 400;
 }
 
 .scroll-indicator {
@@ -99,9 +101,12 @@
 }
 
 @keyframes bounce {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(8px);
   }

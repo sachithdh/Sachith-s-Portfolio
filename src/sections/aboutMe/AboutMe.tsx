@@ -30,28 +30,28 @@ const AboutMe = () => {
             <div className="info-block">
               <h3 className="info-label">UNDERGRADUATE</h3>
               <p className="info-text">
-                University of Colombo School of Computing — BSc (Hons) in
+                University of Colombo School of Computing - BSc (Hons) in
                 Computer Science
               </p>
             </div>
             <div className="info-block">
               <h3 className="info-label">PROFESSIONAL EXPERIENCE</h3>
               <p className="info-text">
-                Intern Software Engineer — Xeptagon (Nov 2025 - Present)
+                Intern Software Engineer - Xeptagon (Nov 2025 - Present)
                 <br />
-                Associate Software Engineer (Part time) — TheWeb Agency (Oct
+                Associate Software Engineer (Part time) - TheWeb Agency (Oct
                 2024 - Nov 2025)
               </p>
             </div>
             <div className="info-block">
               <h3 className="info-label">PROJECT HIGHLIGHTS</h3>
               <p className="info-text">
-                brainMap — Project Management & Mentoring (Java, Spring Boot,
+                brainMap - Project Management & Mentoring (Java, Spring Boot,
                 Next.js, Supabase, Docker, AWS)
                 <br />
-                LearnHub — Custom PHP MVC e-learning platform (PHP, MySQL)
+                LearnHub - Custom PHP MVC e-learning platform (PHP, MySQL)
                 <br />
-                Eventer — Event management system (MERN + Material-UI)
+                Eventer - Event management system (MERN + Material-UI)
               </p>
             </div>
           </div>
