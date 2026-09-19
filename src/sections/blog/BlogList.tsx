@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { LuArrowLeft } from "react-icons/lu";
 import { useBlogPosts, type BlogPostMeta } from "./useBlogPosts";
 import "./Blog.css";
 
@@ -8,11 +9,19 @@ export default function BlogList() {
 
   return (
     <div className="blog-page">
+      <nav className="blog-topbar">
+        <Link to="/" className="blog-back-to-portfolio">
+          <LuArrowLeft size={16} />
+          <span>Back to Portfolio</span>
+        </Link>
+      </nav>
+
       <div className="blog-list">
         <header className="blog-list__header">
-          <h1 className="blog-list__title">Writing</h1>
+          <h1 className="blog-list__title">Sachith's Blog</h1>
           <p className="blog-list__subtitle">
-            {posts.length} {posts.length === 1 ? "post" : "posts"}
+            Thoughts, ideas &amp; things I've learned · {posts.length}{" "}
+            {posts.length === 1 ? "post" : "posts"}
           </p>
         </header>
 

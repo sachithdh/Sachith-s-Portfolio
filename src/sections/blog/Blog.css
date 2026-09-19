@@ -42,8 +42,37 @@
 .blog-page {
   min-height: 100vh;
   background: var(--blog-bg);
-  padding-top: 80px;
-  /* space for fixed nav */
+}
+
+/* Top Bar — Back to Portfolio */
+.blog-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--blog-bg);
+  border-bottom: 1px solid var(--blog-border-subtle);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.blog-back-to-portfolio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--blog-font-sans);
+  font-size: 0.8rem;
+  color: var(--blog-text-muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.blog-back-to-portfolio:hover {
+  color: var(--blog-text-heading);
+  gap: 10px;
 }
 
 /* Blog List Page */
@@ -431,6 +460,10 @@
 /* Responsive */
 
 @media (max-width: 640px) {
+  .blog-topbar {
+    padding: 14px 18px;
+  }
+
   .blog-list {
     padding: 40px 18px 80px;
   }

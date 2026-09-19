@@ -1,5 +1,6 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Markdown from "react-markdown";
+import { LuArrowLeft } from "react-icons/lu";
 import { useBlogPosts } from "./useBlogPosts";
 import "./Blog.css";
 
@@ -13,6 +14,13 @@ export default function BlogPost() {
   if (!post) {
     return (
       <div className="blog-page">
+        <nav className="blog-topbar">
+          <Link to="/" className="blog-back-to-portfolio">
+            <LuArrowLeft size={16} />
+            <span>Back to Portfolio</span>
+          </Link>
+        </nav>
+
         <div className="blog-reader">
           <button
             className="blog-reader__back"
@@ -34,6 +42,13 @@ export default function BlogPost() {
 
   return (
     <div className="blog-page">
+      <nav className="blog-topbar">
+        <Link to="/" className="blog-back-to-portfolio">
+          <LuArrowLeft size={16} />
+          <span>Back to Portfolio</span>
+        </Link>
+      </nav>
+
       <div className="blog-reader">
         <button
           className="blog-reader__back"
