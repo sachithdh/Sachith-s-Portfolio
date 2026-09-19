@@ -292,9 +292,65 @@
 .cta-group {
   display: flex;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 3rem;
   align-items: center;
   justify-content: center;
+}
+
+/* Blog CTA — matte black & white, stands out */
+.blog-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: #0a0a0a;
+  padding: 0.7rem 1.4rem;
+  border-radius: 25px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.blog-cta-btn:hover {
+  background: #0a0a0a;
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.15), 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.blog-cta-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.blog-cta-icon {
+  transition: transform 0.3s ease;
+}
+
+.blog-cta-btn:hover .blog-cta-icon {
+  transform: translate(2px, -2px);
+}
+
+/* Light theme */
+[data-theme="light"] .blog-cta-btn {
+  background: #0a0a0a;
+  border-color: #0a0a0a;
+  color: #ffffff;
+}
+
+[data-theme="light"] .blog-cta-btn:hover {
+  background: #ffffff;
+  color: #0a0a0a;
+  border-color: #0a0a0a;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .download-btn {

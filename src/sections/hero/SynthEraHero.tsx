@@ -1,8 +1,11 @@
 import "./SynthEraHero.css";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { LuExternalLink } from "react-icons/lu";
 import SocialLinks from "../../components/socialLinks/SocialLinks";
 import gsap from "gsap";
 const SynthEraHero = () => {
+  const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -105,14 +108,18 @@ const SynthEraHero = () => {
             <span className="headline-armor">SACHITH</span>
           </h1>
           <p className="tagline" ref={taglineRef}>
-            Building the future.
+            Computer Science Undergraduate.
           </p>
           {/* Call-to-action buttons */}
           <div className="cta-group" ref={ctaRef}>
-            <a href="#projects" className="see-more-btn">
+            {/* <a href="#projects" className="see-more-btn">
               View Projects
               <span className="btn-arrow">→</span>
-            </a>
+            </a> */}
+            <button className="blog-cta-btn" onClick={() => navigate("/blog")}>
+              READ MY BLOG
+              <LuExternalLink size={16} className="blog-cta-icon" />
+            </button>
           </div>
           <div className="scroll-indicator">
             <svg width="20" height="30" viewBox="0 0 20 30" fill="none">

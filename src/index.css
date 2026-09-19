@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&family=Oswald:wght@500;700&family=Petit+Formal+Script&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&family=Oswald:wght@500;700&family=Petit+Formal+Script&display=swap");
 
 :root {
   /* Colors */
@@ -18,10 +18,10 @@
   --text-muted: #888888;
 
   /* Typography */
-  --font-sans: 'Inter', sans-serif;
-  --font-header: 'Oswald', sans-serif;
-  --font-display: 'Archivo Black', sans-serif;
-  --font-script: 'Petit Formal Script', cursive;
+  --font-sans: "Inter", sans-serif;
+  --font-header: "Oswald", sans-serif;
+  --font-display: "Archivo Black", sans-serif;
+  --font-script: "Petit Formal Script", cursive;
 
   /* Borders */
   --radius-sm: 8px;
@@ -77,8 +77,8 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #cff672 0%, #a8d450 100%);
-  border-radius: 5px;
+  /* background: linear-gradient(180deg, #cff672 0%, #a8d450 100%); */
+  /* border-radius: 5px; */
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { LuExternalLink } from "react-icons/lu";
 import "./TopNavBar.css";
 
 interface NavLink {
@@ -104,6 +105,7 @@ export default function TopNavBar() {
                 aria-current={activeLink === link.label ? "page" : undefined}
               >
                 {link.label}
+                {link.label === "Blog" && <LuExternalLink size={12} style={{ marginLeft: 4 }} />}
                 {activeLink === link.label && link.label !== "Blog" && (
                   <span className="topnav-active-dot" aria-hidden="true" />
                 )}
@@ -137,6 +139,7 @@ export default function TopNavBar() {
                 style={link.label === "Blog" ? { color: "var(--text-primary)", fontWeight: "bold" } : {}}
               >
                 {link.label}
+                {link.label === "Blog" && <LuExternalLink size={12} style={{ marginLeft: 4 }} />}
               </button>
             </li>
           ))}
