@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap");
 
 .blog-page {
   --blog-bg: #0e0e0e;
@@ -14,9 +14,9 @@
 
   --blog-accent: #888888;
 
-  --blog-font-serif: 'Literata', Georgia, 'Times New Roman', serif;
-  --blog-font-sans: 'Inter', -apple-system, sans-serif;
-  --blog-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --blog-font-serif: "Literata", Georgia, "Times New Roman", serif;
+  --blog-font-sans: "Inter", -apple-system, sans-serif;
+  --blog-font-mono: "JetBrains Mono", "Fira Code", monospace;
 
   --blog-reading-width: 680px;
   --blog-page-width: 860px;
@@ -67,7 +67,9 @@
   color: var(--blog-text-muted);
   text-decoration: none;
   letter-spacing: 0.03em;
-  transition: color 0.2s ease, gap 0.2s ease;
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
 }
 
 .blog-back-to-portfolio:hover {
@@ -102,7 +104,6 @@
   font-size: 0.875rem;
   color: var(--blog-text-muted);
   letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 /* Post Entries */

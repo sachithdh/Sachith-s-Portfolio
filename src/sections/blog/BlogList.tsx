@@ -18,7 +18,7 @@ export default function BlogList() {
 
       <div className="blog-list">
         <header className="blog-list__header">
-          <h1 className="blog-list__title">Sachith's Blog</h1>
+          <h1 className="blog-list__title">My Lores</h1>
           <p className="blog-list__subtitle">
             Thoughts, ideas &amp; things I've learned · {posts.length}{" "}
             {posts.length === 1 ? "post" : "posts"}
