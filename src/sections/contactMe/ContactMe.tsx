@@ -5,7 +5,6 @@ import "./ContactMe.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── marquee items rendered inside each track ─── */
 const MARQUEE_ITEMS = [
   { text: "LET'S CONNECT", style: "filled" },
   { text: "✦", style: "sep" },
@@ -21,7 +20,6 @@ const MARQUEE_ITEMS = [
   { text: "✦", style: "sep" },
 ];
 
-/* Renders one full copy of the marquee list */
 const MarqueeList = () => (
   <>
     {MARQUEE_ITEMS.map((item, i) => (
@@ -35,7 +33,6 @@ const MarqueeList = () => (
   </>
 );
 
-/* ─── Infinite Marquee Banner component ─── */
 const MarqueeBanner = () => {
   const track1Ref = useRef<HTMLDivElement>(null);
   const track2Ref = useRef<HTMLDivElement>(null);

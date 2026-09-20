@@ -241,16 +241,12 @@
     gap: 12px;
 }
 
-/* ═══════════════════════════════════════════════
-   Framework Showcase Row
-   (Mirrors the font/typography specimen section)
-   ═══════════════════════════════════════════════ */
 .st-techstack-title {
     margin-bottom: 28px;
     font-size: 1.1rem;
 }
 
-/* ── Carousel Wrapper ── */
+/* Carousel Wrapper */
 .st-carousel-wrapper {
     overflow: hidden;
     position: relative;
@@ -442,4 +438,85 @@
     .st-tools-bar {
         margin-bottom: 48px;
     }
+}
+
+/* Light Theme */
+
+[data-theme="light"] .st-section {
+    background: var(--bg-dark);
+}
+
+[data-theme="light"] .st-section::before {
+    background:
+        radial-gradient(circle at 10% 30%, rgba(0, 0, 0, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 90% 70%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
+}
+
+[data-theme="light"] .st-main-title::after {
+    background: linear-gradient(90deg, var(--text-muted), transparent);
+}
+
+[data-theme="light"] .st-highlight {
+    color: var(--text-primary);
+    text-decoration-color: var(--text-muted);
+    font-weight: 600;
+}
+
+[data-theme="light"] .st-underline {
+    text-decoration-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .st-tag {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .st-tag:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .st-tag--accent {
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .st-tag--accent:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .st-tag--tool {
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .st-tag--tool:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .st-color-swatch:hover .st-swatch-line {
+    box-shadow: none;
+}
+
+[data-theme="light"] .st-tools-bar {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .st-showcase-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .st-showcase-card::before {
+    background: linear-gradient(90deg, var(--text-muted), rgba(0, 0, 0, 0.2));
+}
+
+[data-theme="light"] .st-showcase-card:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.15);
 }
