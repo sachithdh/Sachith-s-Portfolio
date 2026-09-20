@@ -274,3 +274,27 @@
     height: 300px;
   }
 }
+
+/* Light theme */
+[data-theme="light"] .about-me-section {
+  background: linear-gradient(to bottom, var(--bg-black), var(--bg-dark));
+}
+
+[data-theme="light"] .about-profile .info-text,
+[data-theme="light"] .info-text {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .profile-image-container {
+  border-color: var(--text-muted);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .stat-value {
+  color: var(--accent-lime);
+}
+
+[data-theme="light"] .about-me-section::before,
+[data-theme="light"] .about-me-section::after {
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.06) 20%, rgba(0, 0, 0, 0.06) 80%, transparent);
+}

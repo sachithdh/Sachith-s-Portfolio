@@ -10,7 +10,6 @@ import { SiNestjs, SiDjango, SiExpress, SiMongodb, SiKeycloak } from "react-icon
 
 
 
-/* ── Programming Language Color Bar Data ── */
 const languageColors = [
     { name: "JavaScript", color: "#F7DF1E", level: 95 },
     { name: "TypeScript", color: "#3178C6", level: 90 },
@@ -123,7 +122,7 @@ const frameworkShowcases = [
     },
 ];
 
-/* ── Carousel Card Component ── */
+
 function ShowcaseCard({ fw }: { fw: typeof frameworkShowcases[number] }) {
     return (
         <div className="st-showcase-card">
@@ -155,7 +154,6 @@ export default function SkillsTechnologies() {
     const rightColRef = useFadeInRight(0.2);
     const colorBarRef = useStaggerChildren(0.1, 0.08);
 
-    /* ── GSAP Carousel refs ── */
     const carouselTrackRef = useRef<HTMLDivElement>(null);
     const tweenRef = useRef<gsap.core.Tween | null>(null);
 
@@ -176,10 +174,8 @@ export default function SkillsTechnologies() {
                 setWidth += card.offsetWidth + 24; // 24px = gap
             }
 
-            // Set the track width so all cards sit in one line
             track.style.width = `${setWidth * 2}px`;
 
-            // ── Helper: move the carousel by `delta` pixels ──────────────────
             const moveCarousel = (delta: number) => {
                 tweenRef.current = gsap.to(track, {
                     x: `-=${delta}`,
@@ -194,7 +190,6 @@ export default function SkillsTechnologies() {
                 });
             };
 
-            // ── 1. Hover-wheel handler (existing behaviour) ──────────────────
             const handleWheel = (e: WheelEvent) => {
                 const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
                 if (isVerticalScroll) e.preventDefault();
@@ -206,17 +201,13 @@ export default function SkillsTechnologies() {
                 moveCarousel(delta);
             };
 
-            // Needs passive: false so we can preventDefault
             wrapper.addEventListener("wheel", handleWheel, { passive: false });
 
-            // ── 2. Global vertical-scroll handler ────────────────────────────
-            // When the page is scrolled AND the carousel section is in the viewport,
-            // translate vertical scroll movement into horizontal carousel movement.
             let lastScrollY = window.scrollY;
             let rafId: number | null = null;
 
             const handleWindowScroll = () => {
-                if (rafId !== null) return; // already queued
+                if (rafId !== null) return;
 
                 rafId = requestAnimationFrame(() => {
                     rafId = null;
@@ -234,7 +225,6 @@ export default function SkillsTechnologies() {
                     const scrollDelta = window.scrollY - lastScrollY;
                     lastScrollY = window.scrollY;
 
-                    // Scale factor — tweaked so a normal page scroll feels natural
                     let delta = scrollDelta * 3;
                     if (delta > 300) delta = 300;
                     if (delta < -300) delta = -300;
@@ -264,16 +254,12 @@ export default function SkillsTechnologies() {
     return (
         <section className="st-section" id="skills">
             <div className="st-container">
-                {/* ── Section Title ── */}
                 <h2 className="st-main-title" ref={headerRef as any}>
                     SKILLS & TECH
                 </h2>
 
-                {/* ── Main Content Grid ── */}
                 <div className="st-content">
-                    {/* ── Left + Center Columns ── */}
                     <div className="st-columns">
-                        {/* Left Column */}
                         <div className="st-col" ref={leftColRef as any}>
                             <h3 className="st-col-header">[FRONTEND & BACKEND]</h3>
                             <div className="st-text-block">
@@ -322,7 +308,7 @@ export default function SkillsTechnologies() {
                         </div>
                     </div>
 
-                    {/* ── Right Color Bar (Programming Languages) ── */}
+                    {/* Right Color Bar (Programming Languages) */}
                     <div className="st-color-bar" ref={colorBarRef as any}>
                         {languageColors.map((lang, i) => (
                             <div className="st-color-swatch" key={i}>
@@ -344,7 +330,7 @@ export default function SkillsTechnologies() {
                     </div>
                 </div>
 
-                {/* ── Tools & Methodology Bar ── */}
+                {/* Tools & Methodology Bar */}
                 <div className="st-tools-bar">
                     <h3 className="st-col-header">[TOOLS & METHODOLOGY]</h3>
                     <div className="st-tag-cloud st-tag-cloud--tools">
@@ -354,7 +340,7 @@ export default function SkillsTechnologies() {
                     </div>
                 </div>
 
-                {/* ── Tech Stack Carousel ── */}
+                {/* Tech Stack Carousel */}
                 <h3 className="st-col-header st-techstack-title">[TECH STACK]</h3>
                 <div className="st-carousel-wrapper">
                     <div className="st-carousel-track" ref={carouselTrackRef}>

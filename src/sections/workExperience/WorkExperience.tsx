@@ -41,9 +41,8 @@ export default function WorkExperience() {
       <div className="work-header" ref={headerRef as any}>
         <div className="work-header-top">
           <div className="work-header-left">
-            <span className="work-label">• Experiences</span>
             <h2 className="work-heading">
-              Explore My Work
+              Explore My Working
               <br />
               Journey
             </h2>

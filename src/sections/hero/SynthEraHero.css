@@ -660,3 +660,123 @@
     font-size: 0.8rem;
   }
 }
+
+/* Light Theme */
+
+[data-theme="light"] .hero-bg-overlay {
+  background: linear-gradient(180deg, rgba(245, 241, 235, 0.85) 0%, rgba(245, 241, 235, 0.9) 50%, rgba(237, 232, 224, 0.95) 100%);
+}
+
+[data-theme="light"] .tech-card--glass {
+  background: rgba(250, 248, 245, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .tech-card:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  background: rgba(250, 248, 245, 0.95);
+}
+
+[data-theme="light"] .btn--primary {
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .bg-text {
+  color: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .headline-armor {
+  -webkit-text-fill-color: var(--text-primary);
+}
+
+[data-theme="light"] .tagline {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .card-title {
+  color: var(--text-primary);
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: var(--text-primary);
+  background-clip: unset;
+}
+
+[data-theme="light"] .card-description {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .nav-links a {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .see-more-btn {
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .see-more-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .btn-arrow {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .download-btn {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .download-btn:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .hero::before {
+  display: none;
+}
+
+[data-theme="light"] .hero::after {
+  background: linear-gradient(to top, var(--bg-dark), transparent);
+}
+
+[data-theme="light"] .brand-icon {
+  background-color: var(--text-primary);
+}
+
+[data-theme="light"] .tech-card-highlight {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .tech-card-highlight::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+}
+
+[data-theme="light"] .highlight-badge {
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .scroll-indicator {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .scroll-indicator svg rect {
+  stroke: var(--text-muted);
+}
+
+[data-theme="light"] .scroll-indicator svg circle {
+  fill: var(--text-muted);
+}

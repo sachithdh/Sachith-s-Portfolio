@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LuExternalLink } from "react-icons/lu";
+import { LuExternalLink, LuSun, LuMoon } from "react-icons/lu";
+import { useTheme } from "../../utils/ThemeContext";
 import "./TopNavBar.css";
 
 interface NavLink {
@@ -22,6 +23,7 @@ export default function TopNavBar() {
   const [activeLink, setActiveLink] = useState("Home");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -113,6 +115,16 @@ export default function TopNavBar() {
             </li>
           ))}
         </ul>
+
+        {/* Theme toggle */}
+        <button
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={theme === "dark" ? "Light mode" : "Dark mode"}
+        >
+          {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
+        </button>
 
         {/* Mobile hamburger */}
         <button
