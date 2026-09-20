@@ -25,7 +25,7 @@
 /* Light Theme */
 [data-theme="light"] .blog-page {
   --blog-bg: #f7f5f2;
-  --blog-bg-elevated: #ffffff;
+  --blog-bg-elevated: #fcfcfc;
   --blog-bg-hover: #f0ede8;
   --blog-border: #e0ddd8;
   --blog-border-subtle: #ebe8e3;
@@ -456,7 +456,7 @@
   line-height: 1.5;
 }
 
-/* ── Not Found───── */
+/* Not Found */
 .blog-not-found {
   text-align: center;
   padding: 120px 24px;
