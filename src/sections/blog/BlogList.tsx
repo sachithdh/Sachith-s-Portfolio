@@ -1,11 +1,13 @@
 import { useNavigate, Link } from "react-router-dom";
-import { LuArrowLeft } from "react-icons/lu";
+import { LuArrowLeft, LuSun, LuMoon } from "react-icons/lu";
+import { useTheme } from "../../utils/ThemeContext";
 import { useBlogPosts, type BlogPostMeta } from "./useBlogPosts";
 import "./Blog.css";
 
 export default function BlogList() {
   const posts = useBlogPosts();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="blog-page">
@@ -14,11 +16,21 @@ export default function BlogList() {
           <LuArrowLeft size={16} />
           <span>Go to Portfolio</span>
         </Link>
+
+        {/* Theme toggle */}
+        <button
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={theme === "dark" ? "Light mode" : "Dark mode"}
+        >
+          {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
+        </button>
       </nav>
 
       <div className="blog-list">
         <header className="blog-list__header">
-          <h1 className="blog-list__title">My Lores</h1>
+          <h1 className="blog-list__title">Blog</h1>
           <p className="blog-list__subtitle">
             Thoughts, ideas &amp; things I've learned · {posts.length}{" "}
             {posts.length === 1 ? "post" : "posts"}

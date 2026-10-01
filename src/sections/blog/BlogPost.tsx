@@ -1,6 +1,7 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Markdown, { type Components } from "react-markdown";
-import { LuArrowLeft } from "react-icons/lu";
+import { LuArrowLeft, LuSun, LuMoon } from "react-icons/lu";
+import { useTheme } from "../../utils/ThemeContext";
 import { useBlogPosts, blogImageMap } from "./useBlogPosts";
 import "./Blog.css";
 
@@ -38,6 +39,7 @@ export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const posts = useBlogPosts();
+  const { theme, toggleTheme } = useTheme();
 
   const post = posts.find((p) => p.slug === id);
 
@@ -49,6 +51,14 @@ export default function BlogPost() {
             <LuArrowLeft size={16} />
             <span>Go to Portfolio</span>
           </Link>
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Light mode" : "Dark mode"}
+          >
+            {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
+          </button>
         </nav>
 
         <div className="blog-reader">
@@ -77,6 +87,14 @@ export default function BlogPost() {
           <LuArrowLeft size={16} />
           <span>Go to Portfolio</span>
         </Link>
+        <button
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={theme === "dark" ? "Light mode" : "Dark mode"}
+        >
+          {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
+        </button>
       </nav>
 
       <div className="blog-reader">
