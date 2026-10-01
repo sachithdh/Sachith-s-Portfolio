@@ -51,6 +51,7 @@
   z-index: 100;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 16px 32px;
   background: var(--blog-bg);
   border-bottom: 1px solid var(--blog-border-subtle);
