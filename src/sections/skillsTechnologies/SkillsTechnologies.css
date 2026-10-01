@@ -251,6 +251,11 @@
     overflow: hidden;
     position: relative;
     width: 100%;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    padding: 8px 0;
     mask-image: linear-gradient(to right,
             transparent 0%,
             black 5%,
@@ -261,6 +266,16 @@
             black 5%,
             black 95%,
             transparent 100%);
+}
+
+.st-carousel-wrapper.is-dragging {
+    cursor: grabbing;
+}
+
+.st-carousel-wrapper.is-dragging * {
+    cursor: grabbing !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
 }
 
 .st-carousel-track {
@@ -282,6 +297,8 @@
     overflow: hidden;
     min-width: 260px;
     flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .st-showcase-card::before {
