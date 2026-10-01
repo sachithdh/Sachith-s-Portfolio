@@ -37,7 +37,7 @@ const AboutMe = () => {
             <div className="info-block">
               <h3 className="info-label">PROFESSIONAL EXPERIENCE</h3>
               <p className="info-text">
-                Intern Software Engineer - Xeptagon (Nov 2025 - Present)
+                Intern Software Engineer - Xeptagon (Nov 2025 - May 2026)
                 <br />
                 Associate Software Engineer (Part time) - TheWeb Agency (Oct
                 2024 - Nov 2025)

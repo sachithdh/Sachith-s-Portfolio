@@ -4,7 +4,7 @@ import { useFadeInUp, useStaggerChildren } from "../../utils/gsapAnimations";
 const experiences = [
   {
     id: 1,
-    date: "NOVEMBER 2025 - PRESENT",
+    date: "NOVEMBER 2025 - MAY 2026",
     role: "Intern Software Engineer",
     company: "Xeptogon",
     location: "Port City, Colombo, SL",
