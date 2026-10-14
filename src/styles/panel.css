@@ -1,0 +1,278 @@
+/*
+ * Instrument-panel section system, shared by About, Experience, Blog and
+ * Projects. Consecutive sections stack into one continuous framed column:
+ * each section ends on a hairline, and the next opens with a mono header bar
+ * whose corners carry "+" crosshairs.
+ */
+
+.ac-section {
+  position: relative;
+  padding: 0 1.5rem;
+  background: var(--ac-bg);
+  color: var(--ac-ink);
+  font-family: 'Inter', sans-serif;
+}
+
+.ac-frame {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  border-left: 1px solid var(--ac-line);
+  border-right: 1px solid var(--ac-line);
+  border-bottom: 1px solid var(--ac-line);
+}
+
+/* Corner crosshairs, centred on the frame's top corners */
+.ac-frame::before,
+.ac-frame::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--ac-line-strong), var(--ac-line-strong)) center / 1px 100% no-repeat,
+    linear-gradient(var(--ac-line-strong), var(--ac-line-strong)) center / 100% 1px no-repeat;
+  z-index: 1;
+}
+
+.ac-frame::before {
+  left: -6px;
+}
+
+.ac-frame::after {
+  right: -6px;
+}
+
+/* Mono header strip: "02 / Experience" … aside */
+.ac-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 2.5rem;
+  border-bottom: 1px solid var(--ac-line);
+}
+
+.ac-label,
+.ac-bar {
+  font-family: var(--ac-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ac-ink);
+}
+
+.ac-bar__index,
+.ac-faint {
+  color: var(--ac-faint);
+}
+
+.ac-bar__index {
+  margin-right: 0.35rem;
+}
+
+.ac-bar__aside {
+  color: var(--ac-faint);
+  text-align: right;
+}
+
+/* Headline + lede block */
+.ac-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 5rem 2.5rem;
+}
+
+.ac-title {
+  max-width: 44rem;
+  margin: 0;
+  font-family: var(--ac-font-wide);
+  font-stretch: 112%;
+  font-variation-settings: 'wdth' 112;
+  font-size: clamp(2.25rem, 4.6vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ac-ink-strong);
+}
+
+/* The serif italic accent word */
+.ac-title em,
+.ac-heading em {
+  font-family: var(--ac-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: normal;
+  font-variation-settings: normal;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+}
+
+.ac-lede {
+  max-width: 38rem;
+  margin: 1.75rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--ac-muted);
+}
+
+/* Card-level heading in the wide face */
+.ac-heading {
+  margin: 0;
+  font-family: var(--ac-font-wide);
+  font-stretch: 112%;
+  font-variation-settings: 'wdth' 112;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ac-ink-strong);
+}
+
+.ac-body {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ac-muted);
+}
+
+/* Square mono chip for tech / tags */
+.ac-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--ac-line);
+  font-family: var(--ac-font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ac-muted);
+  white-space: nowrap;
+}
+
+.ac-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* Square mono buttons, matching the hero CTAs */
+.ac-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 1.1rem;
+  border-radius: 0;
+  font-family: var(--ac-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background-color 0.15s ease,
+    border-color 0.15s ease, color 0.15s ease;
+}
+
+.ac-btn--solid {
+  background: var(--ac-invert-bg);
+  color: var(--ac-invert-fg);
+  border: 1px solid var(--ac-invert-bg);
+}
+
+.ac-btn--solid:hover {
+  opacity: 0.8;
+}
+
+.ac-btn--outline {
+  background: transparent;
+  color: var(--ac-ink);
+  border: 1px solid var(--ac-line-strong);
+}
+
+.ac-btn--outline:hover {
+  background: var(--ac-invert-bg);
+  color: var(--ac-invert-fg);
+  border-color: transparent;
+}
+
+.ac-btn:focus-visible,
+.ac-focus:focus-visible {
+  outline: 2px solid var(--ac-accent);
+  outline-offset: 3px;
+}
+
+/* Full-width link row that closes a section ("All posts →") */
+.ac-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2.5rem;
+  border-top: 1px solid var(--ac-line);
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.ac-link-row:hover {
+  background: var(--ac-invert-bg);
+  color: var(--ac-invert-fg);
+}
+
+.ac-link-row:hover .ac-faint {
+  color: inherit;
+}
+
+.ac-link-row svg {
+  transition: transform 0.2s ease;
+}
+
+.ac-link-row:hover svg {
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 768px) {
+  .ac-intro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .ac-section {
+    padding: 0 1rem;
+  }
+
+  .ac-bar {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .ac-bar__aside {
+    display: none;
+  }
+
+  .ac-intro {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .ac-lede {
+    font-size: 1rem;
+  }
+
+  .ac-heading {
+    font-size: 1.3rem;
+  }
+
+  .ac-link-row {
+    padding: 1rem 1.25rem;
+  }
+}

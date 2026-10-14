@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LuExternalLink, LuSun, LuMoon } from "react-icons/lu";
+import { LuArrowUpRight, LuSun, LuMoon, LuMenu, LuX } from "react-icons/lu";
+import { FaGithub } from "react-icons/fa";
 import { useTheme } from "../../utils/ThemeContext";
 import { scrollToTarget } from "../../utils/smoothScroll";
 import "./TopNavBar.css";
@@ -19,6 +20,8 @@ const NAV_LINKS: NavLink[] = [
   { label: "Contact", href: "/#contact" },
   { label: "Blog", href: "/blog" },
 ];
+const SECTION_LINKS = NAV_LINKS.filter((link) => link.href.startsWith("/#"));
+const BLOG_LINK = NAV_LINKS[NAV_LINKS.length - 1];
 
 export default function TopNavBar() {
   const [activeLink, setActiveLink] = useState("Home");
@@ -70,6 +73,15 @@ export default function TopNavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
   const handleNavClick = (link: NavLink) => {
     setMenuOpen(false);
 
@@ -94,62 +106,90 @@ export default function TopNavBar() {
   };
 
   return (
-    <header className={`topnav-wrapper${scrolled ? " topnav-scrolled" : ""}`}>
-      <nav className="topnav-pill" role="navigation" aria-label="Main navigation">
-        <ul className="topnav-links" role="list">
-          {NAV_LINKS.map((link) => (
+    <header className={`topnav${scrolled ? " topnav--scrolled" : ""}`}>
+      <nav className="topnav__bar" aria-label="Main navigation">
+        <button
+          type="button"
+          className="topnav__cell topnav__logo"
+          onClick={() => handleNavClick(NAV_LINKS[0])}
+          aria-label="Sachith Dhanushka, back to top"
+        >
+          SD
+        </button>
+
+        <ul className="topnav__links" role="list">
+          {SECTION_LINKS.map((link) => (
             <li key={link.label}>
               <button
-                className={link.label === "Blog" ? "topnav-cta" : `topnav-link${activeLink === link.label ? " topnav-link--active" : ""}`}
+                type="button"
+                className={`topnav__link${activeLink === link.label ? " is-active" : ""}`}
                 onClick={() => handleNavClick(link)}
-                aria-current={activeLink === link.label ? "page" : undefined}
+                aria-current={activeLink === link.label ? "location" : undefined}
               >
                 {link.label}
-                {link.label === "Blog" && <LuExternalLink size={12} style={{ marginLeft: 4 }} />}
-                {activeLink === link.label && link.label !== "Blog" && (
-                  <span className="topnav-active-dot" aria-hidden="true" />
-                )}
               </button>
             </li>
           ))}
         </ul>
 
-        {/* Theme toggle */}
-        <button
-          className="theme-toggle"
-          onClick={toggleTheme}
-          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-          title={theme === "dark" ? "Light mode" : "Dark mode"}
-        >
-          {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
-        </button>
-
-        {/* Mobile hamburger */}
-        <button
-          className={`topnav-hamburger${menuOpen ? " open" : ""}`}
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="topnav__right">
+          <a
+            href="https://www.github.com/sachithdh"
+            className="topnav__cell topnav__icon"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <FaGithub size={16} />
+          </a>
+          <button
+            type="button"
+            className="topnav__cell topnav__icon"
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Light mode" : "Dark mode"}
+          >
+            {theme === "dark" ? <LuSun size={16} /> : <LuMoon size={16} />}
+          </button>
+          <button
+            type="button"
+            className={`topnav__cell topnav__cta${activeLink === "Blog" ? " is-active" : ""}`}
+            onClick={() => handleNavClick(BLOG_LINK)}
+          >
+            Blog
+            <LuArrowUpRight size={14} />
+          </button>
+          <button
+            type="button"
+            className={`topnav__cell topnav__icon topnav__burger${menuOpen ? " is-open" : ""}`}
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="topnav-menu"
+          >
+            {menuOpen ? <LuX size={18} /> : <LuMenu size={18} />}
+          </button>
+        </div>
       </nav>
 
-      {/* Mobile dropdown */}
-      <div className={`topnav-mobile-menu${menuOpen ? " topnav-mobile-menu--open" : ""}`} aria-hidden={!menuOpen}>
+      {/* Mobile menu: numbered rows dropping from the bar */}
+      <div
+        id="topnav-menu"
+        className={`topnav__menu${menuOpen ? " is-open" : ""}`}
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
+      >
         <ul role="list">
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.map((link, i) => (
             <li key={link.label}>
               <button
-                className={`topnav-mobile-link${activeLink === link.label ? " topnav-link--active" : ""}`}
+                type="button"
+                className={`topnav__menu-link${activeLink === link.label ? " is-active" : ""}`}
                 onClick={() => handleNavClick(link)}
-                tabIndex={menuOpen ? 0 : -1}
-                style={link.label === "Blog" ? { color: "var(--text-primary)", fontWeight: "bold" } : {}}
               >
-                {link.label}
-                {link.label === "Blog" && <LuExternalLink size={12} style={{ marginLeft: 4 }} />}
+                <span className="topnav__menu-num">{String(i + 1).padStart(2, "0")}</span>
+                <span className="topnav__menu-label">{link.label}</span>
+                <LuArrowUpRight size={16} />
               </button>
             </li>
           ))}

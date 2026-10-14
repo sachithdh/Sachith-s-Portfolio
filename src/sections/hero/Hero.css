@@ -1,0 +1,394 @@
+.hero,
+.hero-marquee {
+  --hv-pulse: #2d81ff;
+  --hv-tile-bg: #18191d;
+  --hv-tile-border: rgba(242, 241, 238, 0.14);
+  --hv-tile-shadow: rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] .hero,
+[data-theme="light"] .hero-marquee {
+  --hv-pulse: #2d81ff;
+  --hv-tile-bg: #faf9f7;
+  --hv-tile-border: rgba(16, 16, 20, 0.12);
+  --hv-tile-shadow: rgba(16, 16, 20, 0.1);
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--ac-bg);
+  color: var(--ac-ink);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Vortex background ── */
+
+.hero-vortex {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-vortex__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-vortex__tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  border-radius: 14px;
+  background: var(--hv-tile-bg);
+  border: 1px solid var(--hv-tile-border);
+  box-shadow: 0 18px 40px var(--hv-tile-shadow);
+  color: var(--logo-color, var(--ac-ink));
+  will-change: transform, opacity, filter;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-vortex__icon {
+  display: flex;
+  font-size: 44px;
+  line-height: 0;
+}
+
+.hero-vortex__icon svg {
+  display: block;
+}
+
+/* Name tag, shown only on the tile the cursor is holding */
+.hero-vortex__label {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  padding: 3px 7px;
+  white-space: nowrap;
+  font-family: var(--ac-font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ac-invert-fg);
+  background: var(--ac-invert-bg);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero-vortex__tile.is-held {
+  border-color: color-mix(in srgb, var(--logo-color, var(--ac-ink)) 55%, transparent);
+  box-shadow:
+    0 18px 40px var(--hv-tile-shadow),
+    0 0 32px color-mix(in srgb, var(--logo-color, var(--ac-ink)) 25%, transparent);
+}
+
+.hero-vortex__tile.is-held .hero-vortex__label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.hero-vortex__sprites {
+  display: none;
+}
+
+/* Fade the tunnel into the next section */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 25%;
+  background: linear-gradient(to top, var(--ac-bg), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Copy ── */
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 760px;
+  padding: 7rem 1.5rem 4rem;
+  text-align: center;
+}
+
+/* Soft pool of background colour behind the copy so it reads over the vortex */
+.hero-copy__glow {
+  position: absolute;
+  inset: 0 -120px;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--ac-bg) 80%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.hero-wordmark {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.hero-wordmark__blur {
+  position: absolute;
+  inset: -34% -6%;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  mask-image: radial-gradient(closest-side, black 45%, transparent 100%);
+  -webkit-mask-image: radial-gradient(closest-side, black 45%, transparent 100%);
+}
+
+.hero-wordmark__text {
+  position: relative;
+  margin: 0;
+  white-space: nowrap;
+  font-family: var(--ac-font-wide);
+  font-weight: 750;
+  font-stretch: 125%;
+  font-variation-settings: 'wdth' 125;
+  font-size: 17cqw;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ac-ink-strong);
+}
+
+.hero-wordmark__letter {
+  display: inline-block;
+  will-change: transform, opacity;
+  text-shadow:
+    0 0 0.6vw color-mix(in srgb, var(--ac-bg) 92%, transparent),
+    0 0.25vw 2.4vw color-mix(in srgb, var(--ac-bg) 78%, transparent),
+    0 0.4vw 5vw color-mix(in srgb, var(--ac-bg) 55%, transparent);
+}
+
+.hero-title {
+  position: relative;
+  margin: 2rem 0 0;
+  font-family: var(--ac-font-wide);
+  font-stretch: 112%;
+  font-variation-settings: 'wdth' 112;
+  font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ac-ink-strong);
+}
+
+.hero-title__serif {
+  font-family: var(--ac-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: normal;
+  font-variation-settings: normal;
+  letter-spacing: -0.01em;
+  font-size: 1.12em;
+  color: var(--ac-muted);
+}
+
+.hero-lede {
+  position: relative;
+  max-width: 28rem;
+  margin: 1rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ac-muted);
+}
+
+.hero-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 1.5rem;
+  border-radius: 0;
+  font-family: var(--ac-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background-color 0.15s ease,
+    border-color 0.15s ease, color 0.15s ease;
+}
+
+.hero-btn--solid {
+  background: var(--ac-invert-bg);
+  color: var(--ac-invert-fg);
+  border: 1px solid var(--ac-invert-bg);
+}
+
+.hero-btn--solid:hover {
+  opacity: 0.8;
+}
+
+.hero-btn--outline {
+  background: var(--ac-bg);
+  color: var(--ac-ink);
+  border: 1px solid var(--ac-line-strong);
+}
+
+.hero-btn--outline:hover {
+  background: var(--ac-invert-bg);
+  color: var(--ac-invert-fg);
+  border-color: transparent;
+}
+
+.hero-btn:focus-visible,
+.hero-meta__item:focus-visible {
+  outline: 2px solid var(--ac-accent);
+  outline-offset: 3px;
+}
+
+/* HUD-style meta row */
+.hero-meta {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.hero-meta__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+  font-family: var(--ac-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ac-faint);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.hero-meta__clamp {
+  max-width: min(20rem, 80vw);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hero-meta__item:hover {
+  color: var(--ac-ink);
+}
+
+/* ── Tech stack marquee ── */
+
+.hero-marquee {
+  display: flex;
+  overflow: hidden;
+  background: var(--ac-bg);
+  border-top: 1px solid var(--ac-line);
+  border-bottom: 1px solid var(--ac-line);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.hero-marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: hero-marquee-scroll 40s linear infinite;
+}
+
+.hero-marquee:hover .hero-marquee__track {
+  animation-play-state: paused;
+}
+
+.hero-marquee__item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  white-space: nowrap;
+  font-family: var(--ac-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ac-muted);
+}
+
+.hero-marquee__dot {
+  margin-right: 1.5rem;
+  color: var(--ac-accent);
+}
+
+@keyframes hero-marquee-scroll {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee__track {
+    animation: none;
+  }
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .hero-copy {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .hero-wordmark__blur {
+    inset: -20% -4%;
+  }
+
+  .hero-lede {
+    font-size: 1rem;
+  }
+
+}
+
+@media (max-width: 420px) {
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btn {
+    width: 100%;
+  }
+}
