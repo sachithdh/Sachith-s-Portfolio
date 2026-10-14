@@ -8,6 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 let lenis: Lenis | null = null;
 
+// Height of the fixed top nav (keep in sync with --nav-h in TopNavBar.css)
+const NAV_HEIGHT = 48;
+
 // Inertia-based smooth scrolling, driven by GSAP's ticker so ScrollTrigger
 // animations stay perfectly in sync with the scroll position.
 export const useSmoothScroll = () => {
@@ -30,7 +33,8 @@ export const useSmoothScroll = () => {
 // Smoothly scroll to a selector or element, falling back to native scrolling
 export const scrollToTarget = (target: string | HTMLElement) => {
   if (lenis) {
-    lenis.scrollTo(target, { duration: 1.4 });
+    // Land each section's header bar just under the fixed nav
+    lenis.scrollTo(target, { duration: 1.4, offset: -NAV_HEIGHT });
     return;
   }
   const el =
