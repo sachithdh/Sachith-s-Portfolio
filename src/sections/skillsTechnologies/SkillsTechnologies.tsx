@@ -3,6 +3,7 @@ import gsap from "gsap";
 import {
     useGsap,
     revealLines,
+    fadeLines,
     pauseTransitions,
     EASE_OUT,
     REVEAL_START,
@@ -12,9 +13,6 @@ import { FaReact, FaNodeJs, FaVuejs, FaDocker, FaGitAlt } from "react-icons/fa";
 import { RiNextjsFill } from "react-icons/ri";
 import { BiLogoSpringBoot } from "react-icons/bi";
 import { SiNestjs, SiDjango, SiExpress, SiMongodb, SiKeycloak } from "react-icons/si";
-
-
-
 
 const languageColors = [
     { name: "JavaScript", color: "#F7DF1E", level: 95 },
@@ -45,7 +43,7 @@ const databaseSkills = [
 
 const devopsSkills = [
     "Docker", "AWS", "CI/CD", "GitHub Actions",
-    "Vercel", "KeyCloack", "Nginx", "Linux",
+    "Vercel", "Keycloak", "Nginx", "Linux",
 ];
 
 const toolsSkills = [
@@ -156,75 +154,78 @@ function ShowcaseCard({ fw }: { fw: typeof frameworkShowcases[number] }) {
 
 export default function SkillsTechnologies() {
     const sectionRef = useGsap<HTMLElement>(() => {
-        revealLines(".st-main-title", ".st-main-title");
+        gsap.from(".ac-bar, .st-cells, .st-langs, .st-tools, .st-stack", {
+            clipPath: "inset(0 100% 0 0)",
+            duration: 1.2,
+            stagger: 0.1,
+            ease: EASE_OUT,
+            scrollTrigger: { trigger: ".ac-frame", start: REVEAL_START, once: true },
+        });
+        revealLines(".st-title", ".st-title");
+        fadeLines(".st-lede", ".st-title", { delay: 0.3 });
 
-        // Columns: header and copy rise in, then the tags pop in one by one
-        gsap.utils.toArray<HTMLElement>(".st-col, .st-tools-bar").forEach((block) => {
-            const tags = block.querySelectorAll(".st-tag");
+        // Cells: heading and copy rise in, then the chips follow one by one
+        gsap.utils.toArray<HTMLElement>(".st-cell, .st-tools").forEach((block) => {
+            const chips = block.querySelectorAll(".ac-chip");
             gsap.timeline({
                 scrollTrigger: { trigger: block, start: REVEAL_START, once: true },
             })
-                .from(block.querySelectorAll(".st-col-header, .st-text"), {
+                .from(block.querySelectorAll(".ac-heading, .ac-body"), {
                     opacity: 0,
-                    y: 40,
+                    y: 30,
                     duration: 1,
-                    stagger: 0.1,
+                    stagger: 0.08,
                     ease: EASE_OUT,
                 })
                 .from(
-                    tags,
+                    chips,
                     {
                         opacity: 0,
-                        y: 16,
-                        scale: 0.85,
-                        duration: 0.6,
-                        stagger: 0.03,
-                        ease: "back.out(2)",
-                        ...pauseTransitions(tags),
-                        clearProps: "transition,transform",
+                        y: 8,
+                        duration: 0.5,
+                        stagger: 0.025,
+                        ease: "power3.out",
+                        ...pauseTransitions(chips),
                     },
-                    0.3,
+                    0.25,
                 );
         });
 
-        // Language bars grow from the left while their percentages count up
-        const bars = gsap.timeline({
-            scrollTrigger: { trigger: ".st-color-bar", start: REVEAL_START, once: true },
+        gsap.from(".st-carousel-wrapper", {
+            opacity: 0,
+            y: 40,
+            duration: 1.2,
+            ease: EASE_OUT,
+            scrollTrigger: { trigger: ".st-stack", start: REVEAL_START, once: true },
         });
-        gsap.utils.toArray<HTMLElement>(".st-color-swatch").forEach((swatch, i) => {
-            const label = swatch.querySelector<HTMLElement>(".st-swatch-hex")!;
+
+        // Language meters fill from the left while their percentages count up
+        const bars = gsap.timeline({
+            scrollTrigger: { trigger: ".st-langs", start: REVEAL_START, once: true },
+        });
+        gsap.utils.toArray<HTMLElement>(".st-lang").forEach((row, i) => {
+            const label = row.querySelector<HTMLElement>(".st-lang__value")!;
             const level = Number(label.dataset.level);
             const counter = { value: 0 };
             label.textContent = "0%";
 
             bars.fromTo(
-                swatch.querySelector(".st-swatch-line"),
+                row.querySelector(".st-lang__fill"),
                 { scaleX: 0 },
                 { scaleX: 1, duration: 1.4, ease: "power4.out" },
-                i * 0.08,
-            )
-                .from(swatch.querySelector(".st-swatch-name"), { opacity: 0, x: -12, duration: 0.8, ease: EASE_OUT }, i * 0.08)
-                .to(
-                    counter,
-                    {
-                        value: level,
-                        duration: 1.4,
-                        ease: "power4.out",
-                        onUpdate: () => {
-                            label.textContent = `${Math.round(counter.value)}%`;
-                        },
+                i * 0.06,
+            ).to(
+                counter,
+                {
+                    value: level,
+                    duration: 1.4,
+                    ease: "power4.out",
+                    onUpdate: () => {
+                        label.textContent = `${Math.round(counter.value)}%`;
                     },
-                    i * 0.08,
-                );
-        });
-
-        gsap.from(".st-techstack-title, .st-carousel-wrapper", {
-            opacity: 0,
-            y: 50,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: EASE_OUT,
-            scrollTrigger: { trigger: ".st-techstack-title", start: REVEAL_START, once: true },
+                },
+                i * 0.06,
+            );
         });
     });
 
@@ -257,11 +258,12 @@ export default function SkillsTechnologies() {
         const updateSetWidth = () => {
             const cards = track.querySelectorAll(".st-showcase-card");
             const totalCards = frameworkShowcases.length;
+            const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
             let width = 0;
             for (let i = 0; i < totalCards; i++) {
                 const card = cards[i] as HTMLElement;
                 if (card) {
-                    width += card.offsetWidth + 24; // 24px = gap
+                    width += card.offsetWidth + gap;
                 }
             }
             if (width > 0) {
@@ -545,109 +547,134 @@ export default function SkillsTechnologies() {
         };
     }, []);
 
+    const categories = [
+        {
+            key: "A",
+            label: "Frontend & backend",
+            title: "Modern web applications",
+            body: "Clean architecture and scalable design patterns, from component-based frontends to server-side rendering and APIs.",
+            groups: [
+                { name: "Frontend", skills: frontendSkills },
+                { name: "Backend", skills: backendSkills },
+            ],
+        },
+        {
+            key: "B",
+            label: "Database & DevOps",
+            title: "Data and delivery",
+            body: "SQL and NoSQL schemas tuned for query performance, deployed and managed in containerised cloud environments.",
+            groups: [
+                { name: "Database", skills: databaseSkills },
+                { name: "DevOps", skills: devopsSkills },
+            ],
+        },
+    ];
+
     return (
-        <section className="st-section" id="skills" ref={sectionRef}>
-            <div className="st-container">
-                <h2 className="st-main-title">
-                    SKILLS & TECH
-                </h2>
+        <section className="ac-section" id="skills" ref={sectionRef}>
+            <div className="ac-frame">
+                <div className="ac-bar">
+                    <span>
+                        <span className="ac-bar__index">05 /</span> Skills & tech
+                    </span>
+                    <span className="ac-bar__aside">Languages · stack · tooling</span>
+                </div>
 
-                <div className="st-content">
-                    <div className="st-columns">
-                        <div className="st-col">
-                            <h3 className="st-col-header">[FRONTEND & BACKEND]</h3>
-                            <div className="st-text-block">
-                                <p className="st-text">
-                                    Building <span className="st-highlight">modern web applications</span> with
-                                    a focus on clean architecture and
-                                    scalable <span className="st-underline">design patterns</span>. Proficient in
-                                    component-based frameworks and
-                                    server-side rendering techniques.
-                                </p>
-                                <div className="st-tag-cloud">
-                                    {frontendSkills.map((skill, i) => (
-                                        <span key={i} className="st-tag">{skill}</span>
-                                    ))}
-                                </div>
-                                <div className="st-tag-cloud st-tag-cloud--secondary">
-                                    {backendSkills.map((skill, i) => (
-                                        <span key={i} className="st-tag st-tag--accent">{skill}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                <div className="ac-intro">
+                    <h2 className="ac-title st-title">
+                        The <em>tools</em> I build with.
+                    </h2>
+                    <p className="ac-lede st-lede">
+                        A full-stack toolkit, from the database schema to the
+                        deploy pipeline, picked for building systems that stay
+                        reliable as they grow.
+                    </p>
+                </div>
 
-                        {/* Right Column */}
-                        <div className="st-col">
-                            <h3 className="st-col-header">[DATABASE & DEVOPS]</h3>
-                            <div className="st-text-block">
-                                <p className="st-text">
-                                    Experienced with both <span className="st-highlight">SQL and NoSQL</span>{" "}
-                                    databases, designing efficient schemas
-                                    and optimizing <span className="st-underline">query performance</span>.
-                                    Comfortable deploying and managing
-                                    applications in cloud environments.
-                                </p>
-                                <div className="st-tag-cloud">
-                                    {databaseSkills.map((skill, i) => (
-                                        <span key={i} className="st-tag">{skill}</span>
-                                    ))}
+                <div className="st-cells">
+                    {categories.map((cat) => (
+                        <article className="st-cell" key={cat.key}>
+                            <span className="ac-label ac-faint">
+                                {cat.key} · {cat.label}
+                            </span>
+                            <h3 className="ac-heading st-cell__title">{cat.title}</h3>
+                            <p className="ac-body">{cat.body}</p>
+                            {cat.groups.map((group) => (
+                                <div className="st-group" key={group.name}>
+                                    <span className="ac-label ac-faint">{group.name}</span>
+                                    <div className="ac-chips">
+                                        {group.skills.map((skill) => (
+                                            <span key={skill} className="ac-chip">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="st-tag-cloud st-tag-cloud--secondary">
-                                    {devopsSkills.map((skill, i) => (
-                                        <span key={i} className="st-tag st-tag--accent">{skill}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                            ))}
+                        </article>
+                    ))}
+                </div>
+
+                {/* Languages: proficiency meters */}
+                <div className="st-langs">
+                    <div className="ac-label st-subbar">
+                        <span>Languages</span>
+                        <span className="ac-faint">Proficiency</span>
                     </div>
-
-                    {/* Right Color Bar (Programming Languages) */}
-                    <div className="st-color-bar">
+                    <ul className="st-lang-list">
                         {languageColors.map((lang, i) => (
-                            <div className="st-color-swatch" key={i}>
-                                <div
-                                    className="st-swatch-line"
-                                    style={
-                                        {
-                                            "--swatch-color": lang.color,
-                                            "--swatch-width": `${lang.level}%`,
-                                        } as React.CSSProperties
-                                    }
-                                />
-                                <div className="st-swatch-info">
-                                    <span className="st-swatch-name">{lang.name}</span>
-                                    <span className="st-swatch-hex" data-level={lang.level}>
-                                        {lang.level}%
-                                    </span>
-                                </div>
-                            </div>
+                            <li
+                                className="st-lang"
+                                key={lang.name}
+                                style={{ "--lang-color": lang.color } as React.CSSProperties}
+                            >
+                                <span className="ac-label ac-faint st-lang__num">
+                                    {String(i + 1).padStart(2, "0")}
+                                </span>
+                                <span className="st-lang__name">{lang.name}</span>
+                                <span className="st-lang__track" aria-hidden="true">
+                                    <span
+                                        className="st-lang__fill"
+                                        style={{ width: `${lang.level}%` }}
+                                    />
+                                </span>
+                                <span className="ac-label st-lang__value" data-level={lang.level}>
+                                    {lang.level}%
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Tools & methodology */}
+                <div className="st-tools">
+                    <span className="ac-label ac-faint st-tools__label">C · Tools & methodology</span>
+                    <div className="ac-chips">
+                        {toolsSkills.map((skill) => (
+                            <span key={skill} className="ac-chip">
+                                {skill}
+                            </span>
                         ))}
                     </div>
                 </div>
 
-                {/* Tools & Methodology Bar */}
-                <div className="st-tools-bar">
-                    <h3 className="st-col-header">[TOOLS & METHODOLOGY]</h3>
-                    <div className="st-tag-cloud st-tag-cloud--tools">
-                        {toolsSkills.map((skill, i) => (
-                            <span key={i} className="st-tag st-tag--tool">{skill}</span>
-                        ))}
+                {/* Tech stack carousel */}
+                <div className="st-stack">
+                    <div className="ac-label st-subbar">
+                        <span>Tech stack</span>
+                        <span className="ac-faint">Drag ↔</span>
                     </div>
-                </div>
-
-                {/* Tech Stack Carousel */}
-                <h3 className="st-col-header st-techstack-title">[TECH STACK]</h3>
-                <div className="st-carousel-wrapper">
-                    <div className="st-carousel-track" ref={carouselTrackRef}>
-                        {/* Original set */}
-                        {frameworkShowcases.map((fw, i) => (
-                            <ShowcaseCard fw={fw} key={`orig-${i}`} />
-                        ))}
-                        {/* Duplicate set for seamless loop */}
-                        {frameworkShowcases.map((fw, i) => (
-                            <ShowcaseCard fw={fw} key={`dup-${i}`} />
-                        ))}
+                    <div className="st-carousel-wrapper">
+                        <div className="st-carousel-track" ref={carouselTrackRef}>
+                            {/* Original set */}
+                            {frameworkShowcases.map((fw, i) => (
+                                <ShowcaseCard fw={fw} key={`orig-${i}`} />
+                            ))}
+                            {/* Duplicate set for seamless loop */}
+                            {frameworkShowcases.map((fw, i) => (
+                                <ShowcaseCard fw={fw} key={`dup-${i}`} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
