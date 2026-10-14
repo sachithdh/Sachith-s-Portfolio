@@ -120,7 +120,9 @@ export default function FeaturedProjects() {
       start: REVEAL_START,
       once: true,
       onEnter: (batch) => {
-        const images = batch.map((card) => card.querySelector(".fp-card__image"));
+        const images = batch.map((card) =>
+          card.querySelector(".fp-card__image"),
+        );
         const wrappers = batch.map((card) =>
           card.querySelector(".fp-card__image-wrapper"),
         );
@@ -204,9 +206,7 @@ export default function FeaturedProjects() {
     <section className="fp-section" id="projects" ref={sectionRef}>
       <div className="fp-container">
         {/* Heading */}
-        <h2 className="fp-heading">
-          FEATURED PROJECTS
-        </h2>
+        <h2 className="fp-heading">FEATURED PROJECTS</h2>
 
         {/* Filter Tabs */}
         {/* <div className="fp-tabs">
@@ -372,7 +372,7 @@ export default function FeaturedProjects() {
                       rel="noopener noreferrer"
                     >
                       See Code
-                      <span className="fp-modal__cta-arrow">↗</span>
+                      <LuExternalLink size={12} className="blog-cta-icon" />
                     </a>
                   </div>
 
