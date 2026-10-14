@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist+Mono:wght@400;500;700&family=Instrument+Serif:ital@1&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&family=Oswald:wght@500;700&family=Petit+Formal+Script&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap");
 
 :root {
@@ -33,6 +34,21 @@
   /* Spacing */
   --space-unit: 8px;
   --section-padding: 100px 5%;
+
+  /* Instrument-panel design system (hero, about, …) */
+  --ac-bg: #121316;
+  --ac-ink: #f2f1ee;
+  --ac-ink-strong: #ffffff;
+  --ac-muted: rgba(242, 241, 238, 0.6);
+  --ac-faint: rgba(242, 241, 238, 0.38);
+  --ac-line: rgba(242, 241, 238, 0.15);
+  --ac-line-strong: rgba(242, 241, 238, 0.4);
+  --ac-invert-bg: #ffffff;
+  --ac-invert-fg: #0b0b0c;
+  --ac-accent: #74aaff;
+  --ac-font-wide: 'Archivo', system-ui, sans-serif;
+  --ac-font-serif: 'Instrument Serif', Georgia, serif;
+  --ac-font-mono: 'Geist Mono', ui-monospace, monospace;
 }
 
 /* Light Theme */
@@ -53,6 +69,17 @@
   --text-muted: #6b6b6b;
 
   --font-reading: "Merriweather", Georgia, serif;
+
+  --ac-bg: #f2f1ee;
+  --ac-ink: #101014;
+  --ac-ink-strong: #000000;
+  --ac-muted: rgba(16, 16, 20, 0.62);
+  --ac-faint: rgba(16, 16, 20, 0.42);
+  --ac-line: rgba(16, 16, 20, 0.16);
+  --ac-line-strong: rgba(16, 16, 20, 0.4);
+  --ac-invert-bg: #101014;
+  --ac-invert-fg: #f2f1ee;
+  --ac-accent: #1659c4;
 
   color-scheme: light;
 }

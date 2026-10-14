@@ -294,9 +294,9 @@ const HeroVortex = () => {
 
     const readTheme = () => {
       const cs = getComputedStyle(root);
-      colors.line = cs.getPropertyValue("--hero-line-strong").trim() || colors.line;
+      colors.line = cs.getPropertyValue("--ac-line-strong").trim() || colors.line;
       colors.accent = cs.getPropertyValue("--hv-pulse").trim() || colors.accent;
-      colors.ink = cs.getPropertyValue("--hero-ink").trim() || colors.ink;
+      colors.ink = cs.getPropertyValue("--ac-ink").trim() || colors.ink;
       colors.light =
         document.documentElement.getAttribute("data-theme") === "light";
     };
