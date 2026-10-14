@@ -304,3 +304,14 @@
 [data-theme="light"] .about-me-section::after {
   background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.06) 20%, rgba(0, 0, 0, 0.06) 80%, transparent);
 }
+[data-theme="light"] .scroll-indicator {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .scroll-indicator svg rect {
+  stroke: var(--text-muted);
+}
+
+[data-theme="light"] .scroll-indicator svg circle {
+  fill: var(--text-muted);
+}

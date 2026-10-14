@@ -1,57 +1,78 @@
 import "./SynthEraHero.css";
-import { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { LuExternalLink, LuArrowUpRight } from "react-icons/lu";
-import SocialLinks from "../../components/socialLinks/SocialLinks";
-import { useBlogPosts, formatDate } from "../blog/useBlogPosts";
+import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { LuArrowUpRight, LuBookOpen } from "react-icons/lu";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+import { useBlogPosts } from "../blog/useBlogPosts";
+import HeroVortex from "./HeroVortex";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SynthEraHero = () => {
-  const navigate = useNavigate();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const heroRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const taglineRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const subRef = useRef<HTMLDivElement>(null);
+const WORDMARK = "SACHITH";
 
-  const techStack = ["React", "Node.js", "Nest.js", "SpringBoot", "Next.js"];
+const techStack = [
+  "React",
+  "Node.js",
+  "Nest.js",
+  "Spring Boot",
+  "Next.js",
+  "TypeScript",
+  "Java",
+  "Docker",
+  "AWS",
+  "Supabase",
+];
+
+const SynthEraHero = () => {
+  const heroRef = useRef<HTMLElement>(null);
   const [latestPost] = useBlogPosts();
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
-
-      const rect = heroRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-
-      setMousePosition({ x, y });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  // GSAP entrance animations, followed by scroll-driven exit
+  // GSAP entrance: wordmark letters rise in one by one, then the copy reveals,
+  // followed by a scroll-driven exit
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const setupScrollEffect = () => {
-        const mm = gsap.matchMedia();
+      const mm = gsap.matchMedia();
 
-        mm.add(
-          {
-            isDesktop: "(min-width: 1025px)",
-            reduceMotion: "(prefers-reduced-motion: reduce)",
-          },
-          (context) => {
-            const { isDesktop, reduceMotion } = context.conditions!;
-            if (reduceMotion) return;
+      mm.add(
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          if (context.conditions!.reduceMotion) return;
 
-            const tl = gsap.timeline({
+          const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+          // The spiral runs its own reveal wave, so only the copy is staged here
+          intro
+            .fromTo(
+              ".hero-wordmark__letter",
+              { yPercent: 60, opacity: 0, filter: "blur(12px)" },
+              {
+                yPercent: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                duration: 1.1,
+                stagger: 0.07,
+              },
+              0.2,
+            )
+            .fromTo(
+              "[data-hero-reveal]",
+              { y: 24, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.9,
+                stagger: 0.1,
+                ease: "power3.out",
+              },
+              "-=0.6",
+            );
+
+          gsap
+            .timeline({
               defaults: { ease: "none" },
               scrollTrigger: {
                 trigger: heroRef.current,
@@ -59,165 +80,113 @@ const SynthEraHero = () => {
                 end: "bottom top",
                 scrub: 0.6,
               },
-            });
-
-            // Headline drifts down slower than the page, grows and blurs out
-            tl.to(
-              headlineRef.current,
-              {
-                yPercent: 60,
-                scale: isDesktop ? 1.15 : 1.05,
-                opacity: 0,
-                filter: "blur(8px)",
-                duration: 1,
-                ease: "power1.in",
-              },
-              0,
-            )
-              // Tagline + CTA lift away faster than the headline
-              .to(subRef.current, { y: -80, opacity: 0, duration: 0.5 }, 0)
-              .to(".scroll-indicator", { opacity: 0, duration: 0.15 }, 0);
-
-            if (isDesktop) {
-              tl.to(".tech-card", { x: -80, opacity: 0, duration: 0.6 }, 0).to(
-                ".hero-right",
-                { x: 80, opacity: 0, duration: 0.6 },
-                0,
-              );
-            }
-          },
-        );
-      };
-
-      const tl = gsap.timeline({
-        onComplete: () => ctx.add(setupScrollEffect),
-      });
-
-      tl.fromTo(
-        headlineRef.current,
-        { opacity: 0, y: 100, scale: 0.8 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power4.out" },
-      )
-        .fromTo(
-          taglineRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-          "-=0.6",
-        )
-        .fromTo(
-          ctaRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-          "-=0.4",
-        )
-        .fromTo(
-          ".tech-card",
-          { opacity: 0, x: -50 },
-          { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-          "-=0.6",
-        )
-        .fromTo(
-          ".social-links",
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-          "-=0.4",
-        )
-        .fromTo(
-          ".hero-blog-card",
-          { opacity: 0, x: 50 },
-          { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-          "-=0.5",
-        );
+            })
+            .to(".hero-copy", { y: -120, opacity: 0, duration: 1 }, 0)
+            .to(".hero-vortex", { opacity: 0, duration: 1 }, 0);
+        },
+      );
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Calculate 3D transform values based on mouse position
-  const getTransformStyle = () => {
-    const moveX = (mousePosition.x - 0.5) * 100; // Max 20px movement
-    const moveY = (mousePosition.y - 0.5) * 100; // Max 20px movement
-    return {
-      transform: `translate(${moveX}px, ${moveY}px) scale(1.05)`,
-    };
-  };
-
   return (
-    <section className="hero" id="hero" ref={heroRef}>
-      <div className="hero-bg" style={getTransformStyle()}>
-        {/* <video
-          className="hero-bg-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-hidden="true"
-        >
-          <source src="/videos/bg.mp4" type="video/mp4" />
-        </video> */}
-        <div className="hero-bg-overlay"></div>
-      </div>
-      {/* Main Content */}
-      <div className="content" id="content">
-        {/* Tech Stack Card - Absolute Position */}
-        <div className="tech-card card-absolute">
-          <h3 className="card-title">TECH STACK</h3>
-          <p className="card-description">{techStack.join(" • ")}</p>
-        </div>
+    <>
+      <section className="hero" id="hero" ref={heroRef}>
+        <HeroVortex />
 
-        {/* Center Content */}
-        <div className="center">
-          <h1 className="headline" ref={headlineRef}>
-            <span className="headline-armor">SACHITH</span>
-          </h1>
-          <div className="hero-sub" ref={subRef}>
-            <p className="tagline" ref={taglineRef}>
-              Computer Science Undergraduate.
-            </p>
-            {/* Call-to-action buttons */}
-            <div className="cta-group" ref={ctaRef}>
-              {/* <a href="#projects" className="see-more-btn">
-                View Projects
-                <span className="btn-arrow">→</span>
-              </a> */}
-              <button
-                className="blog-cta-btn"
-                onClick={() => navigate("/blog")}
-              >
-                READ MY BLOG
-                <LuExternalLink size={16} className="blog-cta-icon" />
-              </button>
-            </div>
+        <div className="hero-copy">
+          <div className="hero-copy__glow" aria-hidden="true" />
+
+          <div className="hero-wordmark">
+            <div className="hero-wordmark__blur" aria-hidden="true" />
+            <h1 className="hero-wordmark__text" aria-label={WORDMARK}>
+              {WORDMARK.split("").map((letter, i) => (
+                <span
+                  key={i}
+                  className="hero-wordmark__letter"
+                  aria-hidden="true"
+                >
+                  {letter}
+                </span>
+              ))}
+            </h1>
           </div>
-          <div className="scroll-indicator">
-            <svg width="20" height="30" viewBox="0 0 20 30" fill="none">
-              <rect x="1" y="1" width="18" height="28" rx="9" strokeWidth="2" />
-              <circle cx="10" cy="10" r="3" />
-            </svg>
-            <span>Explore more</span>
-          </div>
-        </div>
-        {/* Social links + latest blog post preview - bottom right */}
-        <div className="hero-right">
-          {latestPost && (
-            <Link to={`/blog/${latestPost.slug}`} className="hero-blog-card">
-              <span className="hero-blog-card__label">
-                LATEST POST
-                <LuArrowUpRight size={14} className="hero-blog-card__icon" />
-              </span>
-              <span className="hero-blog-card__title">{latestPost.title}</span>
-              <span className="hero-blog-card__meta">
-                {formatDate(latestPost.date)}
-                {latestPost.readTime && ` • ${latestPost.readTime}`}
-              </span>
+
+          <h2 className="hero-title" data-hero-reveal>
+            Software engineer{" "}
+            <span className="hero-title__serif">& CS undergrad.</span>
+          </h2>
+
+          <p className="hero-lede" data-hero-reveal>
+            I design and build reliable, scalable software, from full-stack web
+            apps to cloud-backed platforms.
+          </p>
+
+          <div className="hero-actions" data-hero-reveal>
+            <Link to="/blog" className="hero-btn hero-btn--solid">
+              <LuBookOpen size={16} />
+              Read my blog
             </Link>
-          )}
-          <div className="social-links">
-            <SocialLinks />
+            <a href="#projects" className="hero-btn hero-btn--outline">
+              View projects
+            </a>
+          </div>
+
+          <div className="hero-meta" data-hero-reveal>
+            {latestPost && (
+              <Link to={`/blog/${latestPost.slug}`} className="hero-meta__item">
+                <LuArrowUpRight size={14} />
+                <span className="hero-meta__clamp">
+                  Latest: {latestPost.title}
+                </span>
+              </Link>
+            )}
+            <a
+              href="https://www.github.com/sachithdh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-meta__item"
+            >
+              <FaGithub size={14} />
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/sachithdh/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-meta__item"
+            >
+              <FaLinkedin size={14} />
+              LinkedIn
+            </a>
+            <a href="mailto:sachith.devx@gmail.com" className="hero-meta__item">
+              <MdOutlineEmail size={15} />
+              Email
+            </a>
           </div>
         </div>
+      </section>
+
+      <div className="hero-marquee" aria-label="Tech stack">
+        {[0, 1].map((track) => (
+          <ul
+            key={track}
+            className="hero-marquee__track"
+            aria-hidden={track === 1 || undefined}
+          >
+            {techStack.map((tech) => (
+              <li key={tech} className="hero-marquee__item">
+                <span className="hero-marquee__dot" aria-hidden="true">
+                  ▪
+                </span>
+                {tech}
+              </li>
+            ))}
+          </ul>
+        ))}
       </div>
-    </section>
+    </>
   );
 };
 
