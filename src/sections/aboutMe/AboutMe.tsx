@@ -18,20 +18,13 @@ const pillars = [
     key: "B",
     label: "Experience",
     title: "Intern Software Engineer",
-    lines: [
-      "Xeptagon · Nov 2025 – May 2026",
-      "Previously Associate Software Engineer (part time) at TheWeb Agency · Oct 2024 – Nov 2025",
-    ],
+    lines: ["Xeptagon · Nov 2025 - May 2026"],
   },
   {
     key: "C",
-    label: "Project highlights",
-    title: "brainMap, LearnHub & Eventer",
-    lines: [
-      "brainMap — project management & mentoring (Java, Spring Boot, Next.js, Supabase, Docker, AWS)",
-      "LearnHub — custom PHP MVC e-learning platform (PHP, MySQL)",
-      "Eventer — event management system (MERN + Material UI)",
-    ],
+    label: "Experience",
+    title: "Associate Software Engineer",
+    lines: ["TheWeb Agency · Oct 2024 - Nov 2025"],
   },
 ];
 
@@ -85,7 +78,9 @@ const AboutMe = () => {
           <span>
             <span className="ac-bar__index">01 /</span> About me
           </span>
-          <span className="ac-bar__aside">Software engineer · CS undergrad</span>
+          <span className="ac-bar__aside">
+            Software engineer · CS undergrad
+          </span>
         </div>
 
         <div className="ac-intro">
@@ -96,9 +91,9 @@ const AboutMe = () => {
             <p className="ac-lede about-lede">
               Software Engineer and Computer Science undergraduate with hands-on
               experience designing and developing software solutions. Skilled in
-              modern development frameworks and cloud technologies, with a strong
-              interest in solving complex problems and building reliable, scalable
-              systems that provide a great user experience.
+              modern development frameworks and cloud technologies, with a
+              strong interest in solving complex problems and building reliable,
+              scalable systems that provide a great user experience.
             </p>
           </div>
         </div>

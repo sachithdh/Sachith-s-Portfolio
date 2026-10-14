@@ -12,7 +12,7 @@ As a team of 4 second-year students, we identified a gap in Sri Lanka's tutoring
 
 In Sri Lanka, the tuition industry is tough. A few big-name tutors dominate the scene, and it’s really hard for new or independent tutors to get noticed. Most of them rely on posters, word of mouth, or social media just to attract a handful of students.
 
-On the flip side, students often don’t have much choice – they follow the crowd and hope for the best. We wanted to change that.
+On the flip side, students often don’t have much choice - they follow the crowd and hope for the best. We wanted to change that.
 
 With LearnHub, our goal was to:
 
@@ -21,7 +21,7 @@ With LearnHub, our goal was to:
 
 # **How We Built It**
 
-Now, here's the thing – for this project, **we weren’t allowed to use any frameworks**.
+Now, here's the thing - for this project, **we weren’t allowed to use any frameworks**.
 
 At first, I was like, “Wait, what? Why not?”
 
