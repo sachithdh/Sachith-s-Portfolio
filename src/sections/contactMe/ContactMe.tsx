@@ -1,23 +1,27 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { LuArrowUpRight, LuCopy, LuCheck, LuMail, LuArrowUp } from "react-icons/lu";
+import { useGsap, revealLines, fadeLines, EASE_OUT, REVEAL_START } from "../../utils/gsapAnimations";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./ContactMe.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const EMAIL = "sachith.devx@gmail.com";
+
 const MARQUEE_ITEMS = [
   { text: "LET'S CONNECT", style: "filled" },
-  { text: "✦", style: "sep" },
+  { text: "▪", style: "sep" },
   { text: "LET'S CONNECT", style: "outline" },
-  { text: "✦", style: "sep" },
+  { text: "▪", style: "sep" },
   { text: "LET'S CONNECT", style: "filled" },
-  { text: "✦", style: "sep" },
+  { text: "▪", style: "sep" },
   { text: "LET'S CONNECT", style: "outline" },
-  { text: "✦", style: "sep" },
+  { text: "▪", style: "sep" },
   { text: "LET'S CONNECT", style: "filled" },
-  { text: "✦", style: "sep" },
+  { text: "▪", style: "sep" },
   { text: "LET'S CONNECT", style: "outline" },
-  { text: "✦", style: "sep" },
+  { text: "▪", style: "sep" },
 ];
 
 const MarqueeList = () => (
@@ -83,10 +87,6 @@ const MarqueeBanner = () => {
 
   return (
     <div className="cm-marquee-banner">
-      {/* edge gradient masks */}
-      <div className="cm-marquee-fade cm-marquee-fade--left" />
-      <div className="cm-marquee-fade cm-marquee-fade--right" />
-
       {/* Track 1 — scrolls left */}
       <div className="cm-marquee-row">
         <div className="cm-marquee-track" ref={track1Ref}>
@@ -107,145 +107,115 @@ const MarqueeBanner = () => {
 };
 
 const socialLinks = [
-  { label: "GitHub", href: "https://www.github.com/sachithdh" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/sachithdh/" },
-  { label: "X", href: "https://x.com/_Sachith__" },
-  { label: "Instagram", href: "https://www.instagram.com/sachee.10" },
+  { label: "GitHub", handle: "sachithdh", href: "https://www.github.com/sachithdh" },
+  { label: "LinkedIn", handle: "in/sachithdh", href: "https://www.linkedin.com/in/sachithdh/" },
+  { label: "X", handle: "@_Sachith__", href: "https://x.com/_Sachith__" },
+  { label: "Instagram", handle: "@sachee.10", href: "https://www.instagram.com/sachee.10" },
 ];
 
 const ContactMe = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const btnRef = useRef<HTMLAnchorElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      });
+  const sectionRef = useGsap<HTMLElement>(() => {
+    gsap.from(".ac-bar, .cm-cells, .cm-foot", {
+      clipPath: "inset(0 100% 0 0)",
+      duration: 1.2,
+      stagger: 0.12,
+      ease: EASE_OUT,
+      scrollTrigger: { trigger: ".ac-frame", start: REVEAL_START, once: true },
+    });
+    revealLines(".cm-title", ".cm-title", { duration: 1.3 });
+    fadeLines(".cm-lede", ".cm-title", { delay: 0.3 });
+    gsap.from(".cm-email > *, .cm-social", {
+      opacity: 0,
+      y: 24,
+      duration: 1,
+      stagger: 0.06,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".cm-cells", start: REVEAL_START, once: true },
+    });
+  });
 
-      tl.fromTo(
-        headingRef.current,
-        { opacity: 0, y: 80, skewY: 4 },
-        { opacity: 1, y: 0, skewY: 0, duration: 1, ease: "power4.out" }
-      )
-        .fromTo(
-          subtitleRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-          "-=0.5"
-        )
-        .fromTo(
-          btnRef.current,
-          { opacity: 0, scale: 0.85 },
-          { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.5)" },
-          "-=0.4"
-        )
-        .fromTo(
-          ".cm-social-item",
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" },
-          "-=0.2"
-        );
-
-      // The giant heading drifts up and tightens slightly as you scroll on
-      gsap.fromTo(
-        ".cm-heading-wrap",
-        { yPercent: 30, scale: 1.06 },
-        {
-          yPercent: -10,
-          scale: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "center center",
-            scrub: 0.8,
-          },
-        }
-      );
-
-      gsap.from(".cm-divider", {
-        opacity: 0,
-        scaleX: 0,
-        duration: 1.2,
-        ease: "expo.out",
-        scrollTrigger: { trigger: ".cm-divider", start: "top 90%", once: true },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${EMAIL}`;
+    }
+  };
 
   return (
-    <section className="cm-section" id="contact" ref={sectionRef}>
-      {/* Decorative noise/grain overlay */}
-      <div className="cm-bg-noise" />
-
-      {/* Ambient glows */}
-      <div className="cm-glow cm-glow--left" />
-      <div className="cm-glow cm-glow--right" />
-
-      {/* ── Infinite Marquee Banner ── */}
+    <section className="ac-section cm-section" id="contact" ref={sectionRef}>
       <MarqueeBanner />
 
-      <div className="cm-container">
-        {/* Big heading */}
-        <div className="cm-heading-wrap">
-          <h2 className="cm-heading" ref={headingRef}>
-            GET IN TOUCH
+      <div className="ac-frame">
+        <div className="ac-bar">
+          <span>
+            <span className="ac-bar__index">06 /</span> Contact
+          </span>
+          <span className="ac-bar__aside">Colombo, Sri Lanka</span>
+        </div>
+
+        <div className="ac-intro">
+          <h2 className="ac-title cm-title">
+            Get in <em>touch.</em>
           </h2>
+          <p className="ac-lede cm-lede">
+            Looking for a developer? Whether it's a role, a project or just a
+            question, my inbox is open.
+          </p>
         </div>
 
-        {/* Subtitle */}
-        <p className="cm-subtitle" ref={subtitleRef}>
-          LOOKING FOR A DEVELOPER? JUST GET IN TOUCH.
-        </p>
-
-        {/* CTA Button */}
-        <a
-          href="mailto:sachith.devx@gmail.com"
-          className="cm-btn"
-          ref={btnRef}
-        >
-          <span className="cm-btn-text">Contact Me</span>
-          <span className="cm-btn-shimmer" />
-        </a>
-
-        {/* Divider */}
-        <div className="cm-divider">
-          <span className="cm-divider-label">FOLLOW ALL MY ACCOUNTS</span>
-        </div>
-
-        {/* Social links grid */}
-        <div className="cm-social-grid" ref={linksRef}>
-          {socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="cm-social-item"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="cm-social-label">{link.label}</span>
-              <span className="cm-social-arrow">↗</span>
+        <div className="cm-cells">
+          <div className="cm-email">
+            <span className="ac-label ac-faint">A · Email</span>
+            <a href={`mailto:${EMAIL}`} className="ac-heading cm-email__address ac-focus">
+              {EMAIL}
             </a>
-          ))}
-        </div>
-      </div>
+            <div className="cm-email__actions">
+              <a href={`mailto:${EMAIL}`} className="ac-btn ac-btn--solid">
+                <LuMail size={14} />
+                Contact me
+              </a>
+              <button type="button" className="ac-btn ac-btn--outline" onClick={copyEmail}>
+                {copied ? <LuCheck size={14} /> : <LuCopy size={14} />}
+                {copied ? "Copied" : "Copy address"}
+              </button>
+            </div>
+          </div>
 
-      {/* Bottom tagline */}
-      <div className="cm-footer-strip">
-        <span className="cm-footer-text">
-          Sachith Dhanushka &nbsp;·&nbsp; Software Engineer &nbsp;·&nbsp;{" "}
-          {new Date().getFullYear()}
-        </span>
+          <div className="cm-socials">
+            <span className="ac-label ac-faint cm-socials__label">B · Follow all my accounts</span>
+            <ul className="cm-social-list">
+              {socialLinks.map((link, i) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="cm-social ac-focus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="ac-label ac-faint">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="cm-social__name">{link.label}</span>
+                    <span className="ac-label ac-faint cm-social__handle">{link.handle}</span>
+                    <LuArrowUpRight size={16} className="cm-social__arrow" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="ac-label cm-foot">
+          <span>
+            Sachith Dhanushka <span className="ac-faint">· Software engineer · {new Date().getFullYear()}</span>
+          </span>
+          <a href="#hero" className="cm-foot__top ac-focus">
+            Back to top <LuArrowUp size={13} />
+          </a>
+        </div>
       </div>
     </section>
   );
