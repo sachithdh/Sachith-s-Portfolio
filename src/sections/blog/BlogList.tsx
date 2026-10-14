@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { LuArrowLeft, LuSun, LuMoon } from "react-icons/lu";
 import { useTheme } from "../../utils/ThemeContext";
-import { useBlogPosts, type BlogPostMeta } from "./useBlogPosts";
+import { useBlogPosts, formatDate, type BlogPostMeta } from "./useBlogPosts";
 import "./Blog.css";
 
 export default function BlogList() {
@@ -21,7 +21,9 @@ export default function BlogList() {
         <button
           className="theme-toggle"
           onClick={toggleTheme}
-          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          aria-label={
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          }
           title={theme === "dark" ? "Light mode" : "Dark mode"}
         >
           {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
@@ -80,17 +82,4 @@ export default function BlogList() {
       </div>
     </div>
   );
-}
-
-function formatDate(dateStr: string): string {
-  try {
-    const date = new Date(dateStr + "T00:00:00");
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
 }

@@ -1,8 +1,9 @@
 import "./SynthEraHero.css";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { LuExternalLink } from "react-icons/lu";
+import { useNavigate, Link } from "react-router-dom";
+import { LuExternalLink, LuArrowUpRight } from "react-icons/lu";
 import SocialLinks from "../../components/socialLinks/SocialLinks";
+import { useBlogPosts, formatDate } from "../blog/useBlogPosts";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -18,6 +19,7 @@ const SynthEraHero = () => {
   const subRef = useRef<HTMLDivElement>(null);
 
   const techStack = ["React", "Node.js", "Nest.js", "SpringBoot", "Next.js"];
+  const [latestPost] = useBlogPosts();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -78,7 +80,7 @@ const SynthEraHero = () => {
 
             if (isDesktop) {
               tl.to(".tech-card", { x: -80, opacity: 0, duration: 0.6 }, 0).to(
-                ".social-links",
+                ".hero-right",
                 { x: 80, opacity: 0, duration: 0.6 },
                 0,
               );
@@ -119,6 +121,12 @@ const SynthEraHero = () => {
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
           "-=0.4",
+        )
+        .fromTo(
+          ".hero-blog-card",
+          { opacity: 0, x: 50 },
+          { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
+          "-=0.5",
         );
     }, heroRef);
 
@@ -172,7 +180,10 @@ const SynthEraHero = () => {
                 View Projects
                 <span className="btn-arrow">→</span>
               </a> */}
-              <button className="blog-cta-btn" onClick={() => navigate("/blog")}>
+              <button
+                className="blog-cta-btn"
+                onClick={() => navigate("/blog")}
+              >
                 READ MY BLOG
                 <LuExternalLink size={16} className="blog-cta-icon" />
               </button>
@@ -186,8 +197,24 @@ const SynthEraHero = () => {
             <span>Explore more</span>
           </div>
         </div>
-        <div className="social-links">
-          <SocialLinks />
+        {/* Social links + latest blog post preview - bottom right */}
+        <div className="hero-right">
+          {latestPost && (
+            <Link to={`/blog/${latestPost.slug}`} className="hero-blog-card">
+              <span className="hero-blog-card__label">
+                LATEST POST
+                <LuArrowUpRight size={14} className="hero-blog-card__icon" />
+              </span>
+              <span className="hero-blog-card__title">{latestPost.title}</span>
+              <span className="hero-blog-card__meta">
+                {formatDate(latestPost.date)}
+                {latestPost.readTime && ` • ${latestPost.readTime}`}
+              </span>
+            </Link>
+          )}
+          <div className="social-links">
+            <SocialLinks />
+          </div>
         </div>
       </div>
     </section>

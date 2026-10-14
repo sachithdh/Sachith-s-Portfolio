@@ -115,3 +115,19 @@ export function useBlogPosts(): BlogPostMeta[] {
 
   return posts;
 }
+
+/**
+ * Formats a "YYYY-MM-DD" date as e.g. "September 10, 2026".
+ */
+export function formatDate(dateStr: string): string {
+  try {
+    const date = new Date(dateStr + "T00:00:00");
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  } catch {
+    return dateStr;
+  }
+}
