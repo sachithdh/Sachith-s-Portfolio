@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LuExternalLink, LuSun, LuMoon } from "react-icons/lu";
 import { useTheme } from "../../utils/ThemeContext";
+import { scrollToTarget } from "../../utils/smoothScroll";
 import "./TopNavBar.css";
 
 interface NavLink {
@@ -31,10 +32,7 @@ export default function TopNavBar() {
     // If we just navigated to the home page with a hash, perform the scroll
     if (location.pathname === "/" && location.hash) {
       setTimeout(() => {
-        const el = document.querySelector(location.hash);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
+        scrollToTarget(location.hash);
       }, 100);
     }
   }, [location.pathname, location.hash]);
@@ -84,7 +82,7 @@ export default function TopNavBar() {
         setActiveLink(link.label);
         const target = document.querySelector(hash);
         if (target) {
-          target.scrollIntoView({ behavior: "smooth" });
+          scrollToTarget(hash);
         } else {
           navigate(link.href);
         }

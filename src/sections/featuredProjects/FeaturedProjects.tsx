@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { useFadeInUp, useStaggerChildren } from "../../utils/gsapAnimations";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  useGsap,
+  revealLines,
+  pauseTransitions,
+  EASE_OUT,
+  REVEAL_START,
+} from "../../utils/gsapAnimations";
+import { setScrollLocked } from "../../utils/smoothScroll";
 import "./FeaturedProjects.css";
 import { LuExternalLink, LuCodeXml } from "react-icons/lu";
 
@@ -99,8 +108,74 @@ const projects: Project[] = [
 export default function FeaturedProjects() {
   // const [activeTab, setActiveTab] = useState<FilterTab>("exploration");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const headerRef = useFadeInUp(0);
-  const gridRef = useStaggerChildren(0.2, 0.15);
+  const sectionRef = useGsap<HTMLElement>(() => {
+    revealLines(".fp-heading", ".fp-heading");
+
+    const cards = gsap.utils.toArray<HTMLElement>(".fp-card");
+    gsap.set(cards, { opacity: 0, y: 80 });
+
+    // Cards entering together (one grid row) stagger in as a group,
+    // each image wiping up from the bottom while it settles from a zoom
+    ScrollTrigger.batch(cards, {
+      start: REVEAL_START,
+      once: true,
+      onEnter: (batch) => {
+        const images = batch.map((card) => card.querySelector(".fp-card__image"));
+        const wrappers = batch.map((card) =>
+          card.querySelector(".fp-card__image-wrapper"),
+        );
+
+        gsap
+          .timeline()
+          .to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 1.1,
+            stagger: 0.15,
+            ease: EASE_OUT,
+            ...pauseTransitions(batch),
+            // hand transform back to the stylesheet so hover lift still works
+            clearProps: "transition,transform",
+          })
+          .fromTo(
+            wrappers,
+            { clipPath: "inset(100% 0% 0% 0% round 16px)" },
+            {
+              clipPath: "inset(0% 0% 0% 0% round 16px)",
+              duration: 1.3,
+              stagger: 0.15,
+              ease: "power4.inOut",
+              clearProps: "clipPath",
+            },
+            0,
+          )
+          .from(
+            images,
+            {
+              scale: 1.3,
+              duration: 1.6,
+              stagger: 0.15,
+              ease: EASE_OUT,
+              ...pauseTransitions(images),
+              clearProps: "transition,transform",
+            },
+            0.1,
+          );
+      },
+    });
+
+    gsap.from(".fp-see-more-wrapper", {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: EASE_OUT,
+      scrollTrigger: {
+        trigger: ".fp-see-more-wrapper",
+        start: "top 95%",
+        once: true,
+      },
+    });
+  });
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -109,8 +184,10 @@ export default function FeaturedProjects() {
     } else {
       document.body.style.overflow = "";
     }
+    setScrollLocked(!!selectedProject);
     return () => {
       document.body.style.overflow = "";
+      setScrollLocked(false);
     };
   }, [selectedProject]);
 
@@ -124,10 +201,10 @@ export default function FeaturedProjects() {
   }, []);
 
   return (
-    <section className="fp-section" id="projects">
+    <section className="fp-section" id="projects" ref={sectionRef}>
       <div className="fp-container">
         {/* Heading */}
-        <h2 className="fp-heading" ref={headerRef as any}>
+        <h2 className="fp-heading">
           FEATURED PROJECTS
         </h2>
 
@@ -148,7 +225,7 @@ export default function FeaturedProjects() {
                 </div> */}
 
         {/* Projects Grid */}
-        <div className="fp-grid" ref={gridRef as any}>
+        <div className="fp-grid">
           {projects.map((project) => (
             <div className="fp-card" key={project.id}>
               <div
@@ -220,6 +297,7 @@ export default function FeaturedProjects() {
         <div
           className="fp-modal-overlay"
           onClick={() => setSelectedProject(null)}
+          data-lenis-prevent
         >
           <div className="fp-modal" onClick={(e) => e.stopPropagation()}>
             {/* Close Button */}

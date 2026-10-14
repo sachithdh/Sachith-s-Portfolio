@@ -1,5 +1,13 @@
 import "./WorkExperience.css";
-import { useFadeInUp, useStaggerChildren } from "../../utils/gsapAnimations";
+import gsap from "gsap";
+import {
+  useGsap,
+  revealLines,
+  fadeLines,
+  pauseTransitions,
+  EASE_OUT,
+  REVEAL_START,
+} from "../../utils/gsapAnimations";
 
 const experiences = [
   {
@@ -33,12 +41,48 @@ const experiences = [
 ];
 
 export default function WorkExperience() {
-  const headerRef = useFadeInUp(0);
-  const workListRef = useStaggerChildren(0.2, 0.2);
+  const sectionRef = useGsap<HTMLElement>(() => {
+    revealLines(".work-heading", ".work-header");
+    fadeLines(".work-intro-text", ".work-header", { delay: 0.3 });
+
+    // Each role reveals on its own as it scrolls into view
+    gsap.utils.toArray<HTMLElement>(".work-item").forEach((item) => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: item, start: REVEAL_START, once: true },
+      });
+
+      tl.from(item.querySelectorAll(".work-item-left > * > *"), {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        stagger: 0.08,
+        ease: EASE_OUT,
+      });
+
+      const badges = item.querySelectorAll(".work-skill-badge");
+      tl.from(
+        badges,
+        {
+          opacity: 0,
+          scale: 0.6,
+          y: 10,
+          duration: 0.6,
+          stagger: 0.04,
+          ease: "back.out(2)",
+          ...pauseTransitions(badges),
+        },
+        0.25,
+      );
+    });
+  });
 
   return (
-    <section className="work-section section-container" id="experience">
-      <div className="work-header" ref={headerRef as any}>
+    <section
+      className="work-section section-container"
+      id="experience"
+      ref={sectionRef}
+    >
+      <div className="work-header">
         <div className="work-header-top">
           <div className="work-header-left">
             <h2 className="work-heading">
@@ -57,7 +101,7 @@ export default function WorkExperience() {
         </div>
       </div>
 
-      <div className="work-list" ref={workListRef as any}>
+      <div className="work-list">
         {experiences.map((exp) => (
           <div key={exp.id} className="work-item">
             <div className="work-item-left">

@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { useFadeInUp, useStaggerChildren, useFadeInLeft, useFadeInRight } from "../../utils/gsapAnimations";
+import {
+    useGsap,
+    revealLines,
+    pauseTransitions,
+    EASE_OUT,
+    REVEAL_START,
+} from "../../utils/gsapAnimations";
 import "./SkillsTechnologies.css";
 import { FaReact, FaNodeJs, FaVuejs, FaDocker, FaGitAlt } from "react-icons/fa";
 import { RiNextjsFill } from "react-icons/ri";
@@ -149,10 +155,78 @@ function ShowcaseCard({ fw }: { fw: typeof frameworkShowcases[number] }) {
 }
 
 export default function SkillsTechnologies() {
-    const headerRef = useFadeInUp(0);
-    const leftColRef = useFadeInLeft(0.2);
-    const rightColRef = useFadeInRight(0.2);
-    const colorBarRef = useStaggerChildren(0.1, 0.08);
+    const sectionRef = useGsap<HTMLElement>(() => {
+        revealLines(".st-main-title", ".st-main-title");
+
+        // Columns: header and copy rise in, then the tags pop in one by one
+        gsap.utils.toArray<HTMLElement>(".st-col, .st-tools-bar").forEach((block) => {
+            const tags = block.querySelectorAll(".st-tag");
+            gsap.timeline({
+                scrollTrigger: { trigger: block, start: REVEAL_START, once: true },
+            })
+                .from(block.querySelectorAll(".st-col-header, .st-text"), {
+                    opacity: 0,
+                    y: 40,
+                    duration: 1,
+                    stagger: 0.1,
+                    ease: EASE_OUT,
+                })
+                .from(
+                    tags,
+                    {
+                        opacity: 0,
+                        y: 16,
+                        scale: 0.85,
+                        duration: 0.6,
+                        stagger: 0.03,
+                        ease: "back.out(2)",
+                        ...pauseTransitions(tags),
+                        clearProps: "transition,transform",
+                    },
+                    0.3,
+                );
+        });
+
+        // Language bars grow from the left while their percentages count up
+        const bars = gsap.timeline({
+            scrollTrigger: { trigger: ".st-color-bar", start: REVEAL_START, once: true },
+        });
+        gsap.utils.toArray<HTMLElement>(".st-color-swatch").forEach((swatch, i) => {
+            const label = swatch.querySelector<HTMLElement>(".st-swatch-hex")!;
+            const level = Number(label.dataset.level);
+            const counter = { value: 0 };
+            label.textContent = "0%";
+
+            bars.fromTo(
+                swatch.querySelector(".st-swatch-line"),
+                { scaleX: 0 },
+                { scaleX: 1, duration: 1.4, ease: "power4.out" },
+                i * 0.08,
+            )
+                .from(swatch.querySelector(".st-swatch-name"), { opacity: 0, x: -12, duration: 0.8, ease: EASE_OUT }, i * 0.08)
+                .to(
+                    counter,
+                    {
+                        value: level,
+                        duration: 1.4,
+                        ease: "power4.out",
+                        onUpdate: () => {
+                            label.textContent = `${Math.round(counter.value)}%`;
+                        },
+                    },
+                    i * 0.08,
+                );
+        });
+
+        gsap.from(".st-techstack-title, .st-carousel-wrapper", {
+            opacity: 0,
+            y: 50,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: EASE_OUT,
+            scrollTrigger: { trigger: ".st-techstack-title", start: REVEAL_START, once: true },
+        });
+    });
 
     const carouselTrackRef = useRef<HTMLDivElement>(null);
     const tweenRef = useRef<gsap.core.Tween | null>(null);
@@ -472,15 +546,15 @@ export default function SkillsTechnologies() {
     }, []);
 
     return (
-        <section className="st-section" id="skills">
+        <section className="st-section" id="skills" ref={sectionRef}>
             <div className="st-container">
-                <h2 className="st-main-title" ref={headerRef as any}>
+                <h2 className="st-main-title">
                     SKILLS & TECH
                 </h2>
 
                 <div className="st-content">
                     <div className="st-columns">
-                        <div className="st-col" ref={leftColRef as any}>
+                        <div className="st-col">
                             <h3 className="st-col-header">[FRONTEND & BACKEND]</h3>
                             <div className="st-text-block">
                                 <p className="st-text">
@@ -504,7 +578,7 @@ export default function SkillsTechnologies() {
                         </div>
 
                         {/* Right Column */}
-                        <div className="st-col" ref={rightColRef as any}>
+                        <div className="st-col">
                             <h3 className="st-col-header">[DATABASE & DEVOPS]</h3>
                             <div className="st-text-block">
                                 <p className="st-text">
@@ -529,7 +603,7 @@ export default function SkillsTechnologies() {
                     </div>
 
                     {/* Right Color Bar (Programming Languages) */}
-                    <div className="st-color-bar" ref={colorBarRef as any}>
+                    <div className="st-color-bar">
                         {languageColors.map((lang, i) => (
                             <div className="st-color-swatch" key={i}>
                                 <div
@@ -543,7 +617,9 @@ export default function SkillsTechnologies() {
                                 />
                                 <div className="st-swatch-info">
                                     <span className="st-swatch-name">{lang.name}</span>
-                                    <span className="st-swatch-hex">{lang.level}%</span>
+                                    <span className="st-swatch-hex" data-level={lang.level}>
+                                        {lang.level}%
+                                    </span>
                                 </div>
                             </div>
                         ))}

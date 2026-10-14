@@ -178,7 +178,8 @@
 .tech-card {
   padding: 2rem;
   max-width: 240px;
-  transition: all 0.3s ease;
+  /* transform/opacity are driven by GSAP on scroll, so keep them out of the transition */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .tech-card:hover {
@@ -286,6 +287,13 @@
 
 .see-more-btn:hover .btn-arrow {
   transform: translateX(3px);
+}
+
+/* Tagline + CTA wrapper, animated as one layer on scroll */
+.hero-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* CTA group */

@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { LuExternalLink } from "react-icons/lu";
 import SocialLinks from "../../components/socialLinks/SocialLinks";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const SynthEraHero = () => {
   const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -11,6 +15,7 @@ const SynthEraHero = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const subRef = useRef<HTMLDivElement>(null);
 
   const techStack = ["React", "Node.js", "Nest.js", "SpringBoot", "Next.js"];
 
@@ -29,45 +34,95 @@ const SynthEraHero = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // GSAP entrance animations
+  // GSAP entrance animations, followed by scroll-driven exit
   useEffect(() => {
-    const tl = gsap.timeline();
+    const ctx = gsap.context(() => {
+      const setupScrollEffect = () => {
+        const mm = gsap.matchMedia();
 
-    tl.fromTo(
-      headlineRef.current,
-      { opacity: 0, y: 100, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power4.out" },
-    )
-      .fromTo(
-        taglineRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.6",
+        mm.add(
+          {
+            isDesktop: "(min-width: 1025px)",
+            reduceMotion: "(prefers-reduced-motion: reduce)",
+          },
+          (context) => {
+            const { isDesktop, reduceMotion } = context.conditions!;
+            if (reduceMotion) return;
+
+            const tl = gsap.timeline({
+              defaults: { ease: "none" },
+              scrollTrigger: {
+                trigger: heroRef.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: 0.6,
+              },
+            });
+
+            // Headline drifts down slower than the page, grows and blurs out
+            tl.to(
+              headlineRef.current,
+              {
+                yPercent: 60,
+                scale: isDesktop ? 1.15 : 1.05,
+                opacity: 0,
+                filter: "blur(8px)",
+                duration: 1,
+                ease: "power1.in",
+              },
+              0,
+            )
+              // Tagline + CTA lift away faster than the headline
+              .to(subRef.current, { y: -80, opacity: 0, duration: 0.5 }, 0)
+              .to(".scroll-indicator", { opacity: 0, duration: 0.15 }, 0);
+
+            if (isDesktop) {
+              tl.to(".tech-card", { x: -80, opacity: 0, duration: 0.6 }, 0).to(
+                ".social-links",
+                { x: 80, opacity: 0, duration: 0.6 },
+                0,
+              );
+            }
+          },
+        );
+      };
+
+      const tl = gsap.timeline({
+        onComplete: () => ctx.add(setupScrollEffect),
+      });
+
+      tl.fromTo(
+        headlineRef.current,
+        { opacity: 0, y: 100, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power4.out" },
       )
-      .fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.4",
-      )
-      .fromTo(
-        ".tech-card",
-        { opacity: 0, x: -50 },
-        { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.6",
-      )
-      .fromTo(
-        ".role-card-absolute",
-        { opacity: 0, x: 50 },
-        { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.6",
-      )
-      .fromTo(
-        ".social-links",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-        "-=0.4",
-      );
+        .fromTo(
+          taglineRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+          "-=0.6",
+        )
+        .fromTo(
+          ctaRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+          "-=0.4",
+        )
+        .fromTo(
+          ".tech-card",
+          { opacity: 0, x: -50 },
+          { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
+          "-=0.6",
+        )
+        .fromTo(
+          ".social-links",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+          "-=0.4",
+        );
+    }, heroRef);
+
+    return () => ctx.revert();
   }, []);
 
   // Calculate 3D transform values based on mouse position
@@ -107,19 +162,21 @@ const SynthEraHero = () => {
           <h1 className="headline" ref={headlineRef}>
             <span className="headline-armor">SACHITH</span>
           </h1>
-          <p className="tagline" ref={taglineRef}>
-            Computer Science Undergraduate.
-          </p>
-          {/* Call-to-action buttons */}
-          <div className="cta-group" ref={ctaRef}>
-            {/* <a href="#projects" className="see-more-btn">
-              View Projects
-              <span className="btn-arrow">→</span>
-            </a> */}
-            <button className="blog-cta-btn" onClick={() => navigate("/blog")}>
-              READ MY BLOG
-              <LuExternalLink size={16} className="blog-cta-icon" />
-            </button>
+          <div className="hero-sub" ref={subRef}>
+            <p className="tagline" ref={taglineRef}>
+              Computer Science Undergraduate.
+            </p>
+            {/* Call-to-action buttons */}
+            <div className="cta-group" ref={ctaRef}>
+              {/* <a href="#projects" className="see-more-btn">
+                View Projects
+                <span className="btn-arrow">→</span>
+              </a> */}
+              <button className="blog-cta-btn" onClick={() => navigate("/blog")}>
+                READ MY BLOG
+                <LuExternalLink size={16} className="blog-cta-icon" />
+              </button>
+            </div>
           </div>
           <div className="scroll-indicator">
             <svg width="20" height="30" viewBox="0 0 20 30" fill="none">

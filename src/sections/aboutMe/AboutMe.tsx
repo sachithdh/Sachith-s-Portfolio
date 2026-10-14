@@ -1,22 +1,66 @@
 import "./AboutMe.css";
 import ScrollAnimation from "../../utils/scrollAnimation";
-import { useFadeInUp, useExitAnimation } from "../../utils/gsapAnimations";
+import gsap from "gsap";
+import {
+  useGsap,
+  useExitAnimation,
+  revealLines,
+  fadeLines,
+  EASE_OUT,
+} from "../../utils/gsapAnimations";
 
 const AboutMe = () => {
-  const titleRef = useFadeInUp(0);
-  const profileRef = useFadeInUp(0.2);
+  const sectionRef = useGsap(() => {
+    const onView = (trigger: string, start = "top 70%") => ({
+      scrollTrigger: { trigger, start, once: true },
+    });
+
+    revealLines(".about-title", ".about-title", {
+      duration: 1.4,
+      stagger: 0.15,
+      ...onView(".about-title"),
+    });
+    fadeLines(".about-profile .info-text", ".about-profile", {
+      y: 30,
+      filter: "blur(6px)",
+      duration: 1.2,
+      delay: 0.3,
+      ...onView(".about-title"),
+    });
+
+    const columns = [
+      { selector: ".left-content .info-block > *", x: -60 },
+      { selector: ".right-content .stat-block > *", x: 60 },
+    ];
+    columns.forEach(({ selector, x }) => {
+      gsap.from(selector, {
+        opacity: 0,
+        x,
+        duration: 1.2,
+        stagger: 0.08,
+        ease: EASE_OUT,
+        ...onView(".about-layout", "top 75%"),
+      });
+    });
+
+    gsap.from(".about-content > .scroll-indicator", {
+      opacity: 0,
+      duration: 1,
+      ...onView(".about-content > .scroll-indicator", "top 90%"),
+    });
+  });
   const leftExitRef = useExitAnimation("left");
   const rightExitRef = useExitAnimation("right");
 
   return (
-    <div className="about-me-section" id="about">
+    <div className="about-me-section" id="about" ref={sectionRef}>
       <div className="about-content">
-        <h1 className="about-title" ref={titleRef as any}>
+        <h1 className="about-title">
           Software Engineer &
           <br />
           Computer Science Undergraduate
         </h1>
-        <div className="about-profile" ref={profileRef as any}>
+        <div className="about-profile">
           <p className="info-text">
             Software Engineer and Computer Science undergraduate with hands-on
             experience designing and developing software solutions. Skilled in
@@ -26,7 +70,7 @@ const AboutMe = () => {
           </p>
         </div>
         <div className="about-layout">
-          <div className="left-content" ref={leftExitRef as any}>
+          <div className="left-content" ref={leftExitRef}>
             <div className="info-block">
               <h3 className="info-label">UNDERGRADUATE</h3>
               <p className="info-text">
@@ -55,7 +99,7 @@ const AboutMe = () => {
               </p>
             </div>
           </div>
-          <div className="right-content" ref={rightExitRef as any}>
+          <div className="right-content" ref={rightExitRef}>
             <div className="stat-block">
               <h3 className="stat-label">GPA</h3>
               <p className="stat-value">3.8 / 4.0</p>

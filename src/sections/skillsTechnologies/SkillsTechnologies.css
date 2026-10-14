@@ -187,6 +187,7 @@
 }
 
 .st-swatch-line {
+    transform-origin: left center;
     height: 10px;
     width: var(--swatch-width, 80%);
     border-radius: 5px;
