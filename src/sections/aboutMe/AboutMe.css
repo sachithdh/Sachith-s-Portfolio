@@ -1,118 +1,4 @@
-.about-me-section {
-  position: relative;
-  padding: 0 1.5rem;
-  background: var(--ac-bg);
-  color: var(--ac-ink);
-  font-family: 'Inter', sans-serif;
-}
-
-/* Framed column with hairline side rules, like an instrument panel */
-.about-frame {
-  position: relative;
-  max-width: 1280px;
-  margin: 0 auto;
-  border-left: 1px solid var(--ac-line);
-  border-right: 1px solid var(--ac-line);
-}
-
-.about-frame__cross {
-  position: absolute;
-  top: -6px;
-  width: 11px;
-  height: 11px;
-  pointer-events: none;
-}
-
-.about-frame__cross::before,
-.about-frame__cross::after {
-  content: '';
-  position: absolute;
-  background: var(--ac-line-strong);
-}
-
-.about-frame__cross::before {
-  left: 5px;
-  top: 0;
-  width: 1px;
-  height: 100%;
-}
-
-.about-frame__cross::after {
-  top: 5px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-}
-
-.about-frame__cross--tl {
-  left: -6px;
-}
-
-.about-frame__cross--tr {
-  right: -6px;
-}
-
-/* Mono header strip: "01 / About me" … aside */
-.about-frame__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.85rem 2.5rem;
-  border-bottom: 1px solid var(--ac-line);
-  font-family: var(--ac-font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ac-ink);
-}
-
-.about-frame__index {
-  margin-right: 0.35rem;
-  color: var(--ac-faint);
-}
-
-.about-frame__aside {
-  color: var(--ac-faint);
-  text-align: right;
-}
-
-/* Headline + lede */
-.about-intro {
-  padding: 5rem 2.5rem;
-}
-
-.about-title {
-  max-width: 44rem;
-  margin: 0;
-  font-family: var(--ac-font-wide);
-  font-stretch: 112%;
-  font-variation-settings: 'wdth' 112;
-  font-size: clamp(2.25rem, 4.6vw, 3.6rem);
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--ac-ink-strong);
-}
-
-.about-title em {
-  font-family: var(--ac-font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-stretch: normal;
-  font-variation-settings: normal;
-  font-size: 1.08em;
-  letter-spacing: -0.01em;
-}
-
-.about-lede {
-  max-width: 38rem;
-  margin: 1.75rem 0 0;
-  font-size: 1.125rem;
-  line-height: 1.65;
-  color: var(--ac-muted);
-}
+/* Frame, bar, title, lede, labels: see styles/panel.css */
 
 /* A / B / C pillars */
 .about-cells {
@@ -132,25 +18,8 @@
   border-right: none;
 }
 
-.about-cell__key {
-  font-family: var(--ac-font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ac-faint);
-}
-
 .about-cell__title {
-  margin: 2rem 0 0;
-  font-family: var(--ac-font-wide);
-  font-stretch: 112%;
-  font-variation-settings: 'wdth' 112;
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--ac-ink-strong);
+  margin-top: 2rem;
 }
 
 .about-cell__list {
@@ -160,9 +29,6 @@
   margin: 0.9rem 0 0;
   padding: 0;
   list-style: none;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--ac-muted);
 }
 
 /* Spec strip: label bar + value per cell */
@@ -171,7 +37,6 @@
   grid-template-columns: repeat(4, 1fr);
   margin: 0;
   border-top: 1px solid var(--ac-line);
-  border-bottom: 1px solid var(--ac-line);
 }
 
 .about-spec {
@@ -190,16 +55,6 @@
   gap: 1rem;
   padding: 0.7rem 2rem;
   border-bottom: 1px solid var(--ac-line);
-  font-family: var(--ac-font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ac-ink);
-}
-
-.about-spec__num {
-  color: var(--ac-faint);
 }
 
 .about-spec__value {
@@ -252,33 +107,12 @@
 }
 
 @media (max-width: 640px) {
-  .about-me-section {
-    padding: 0 1rem;
-  }
-
-  .about-frame__bar {
-    padding: 0.75rem 1.25rem;
-  }
-
-  .about-frame__aside {
-    display: none;
-  }
-
-  .about-intro {
-    padding: 3.5rem 1.25rem;
-  }
-
-  .about-lede {
-    font-size: 1rem;
-  }
-
   .about-cell {
     padding: 2rem 1.25rem 2.25rem;
   }
 
   .about-cell__title {
     margin-top: 1.25rem;
-    font-size: 1.3rem;
   }
 
   .about-specs {

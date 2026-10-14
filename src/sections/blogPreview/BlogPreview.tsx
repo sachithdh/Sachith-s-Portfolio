@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import gsap from "gsap";
-import { LuArrowRight } from "react-icons/lu";
+import { LuArrowUpRight } from "react-icons/lu";
 import {
   useGsap,
   revealLines,
@@ -15,83 +15,94 @@ export default function BlogPreview() {
   const posts = useBlogPosts().slice(0, 2);
 
   const sectionRef = useGsap<HTMLElement>(() => {
-    revealLines(".bp-heading", ".bp-heading");
-
-    const cards = gsap.utils.toArray<HTMLElement>(".bp-card");
-    gsap.from(cards, {
-      opacity: 0,
-      y: 60,
-      duration: 1.1,
+    gsap.from(".ac-bar, .bp-grid", {
+      clipPath: "inset(0 100% 0 0)",
+      duration: 1.2,
       stagger: 0.15,
       ease: EASE_OUT,
-      ...pauseTransitions(cards),
-      // hand transform back to the stylesheet so hover lift still works
-      clearProps: "transition,transform",
-      scrollTrigger: { trigger: ".bp-grid", start: REVEAL_START, once: true },
+      scrollTrigger: { trigger: ".ac-frame", start: REVEAL_START, once: true },
     });
+    revealLines(".bp-title", ".bp-title");
 
-    gsap.from(".bp-see-all-wrapper", {
+    const cards = gsap.utils.toArray<HTMLElement>(".bp-card__body > *");
+    gsap.from(cards, {
       opacity: 0,
       y: 30,
       duration: 1,
+      stagger: 0.05,
       ease: EASE_OUT,
-      scrollTrigger: {
-        trigger: ".bp-see-all-wrapper",
-        start: "top 95%",
-        once: true,
-      },
+      ...pauseTransitions(cards),
+      scrollTrigger: { trigger: ".bp-grid", start: REVEAL_START, once: true },
     });
   });
 
   if (posts.length === 0) return null;
 
   return (
-    <section className="bp-section" id="blog" ref={sectionRef}>
-      <div className="bp-container">
-        <h2 className="bp-heading">LATEST FROM THE BLOG</h2>
+    <section className="ac-section" id="blog" ref={sectionRef}>
+      <div className="ac-frame">
+        <div className="ac-bar">
+          <span>
+            <span className="ac-bar__index">03 /</span> Writing
+          </span>
+          <span className="ac-bar__aside">Latest from the blog</span>
+        </div>
+
+        <div className="ac-intro">
+          <h2 className="ac-title bp-title">
+            Latest from the <em>blog.</em>
+          </h2>
+        </div>
 
         <div className="bp-grid">
-          {posts.map((post) => (
-            <Link to={`/blog/${post.slug}`} className="bp-card" key={post.slug}>
-              <div className="bp-card__meta">
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
-                {post.readTime && (
-                  <>
-                    <span className="bp-card__meta-dot" aria-hidden="true" />
-                    <span>{post.readTime}</span>
-                  </>
-                )}
+          {posts.map((post, i) => (
+            <Link
+              to={`/blog/${post.slug}`}
+              className="bp-card ac-focus"
+              key={post.slug}
+            >
+              <div className="ac-label bp-card__bar">
+                <span>
+                  <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  {post.readTime && (
+                    <span className="ac-faint"> · {post.readTime}</span>
+                  )}
+                </span>
+                <span className="ac-faint">{String(i + 1).padStart(2, "0")}</span>
               </div>
 
-              <h3 className="bp-card__title">{post.title}</h3>
+              <div className="bp-card__body">
+                <h3 className="ac-heading bp-card__title">{post.title}</h3>
 
-              {post.description && (
-                <p className="bp-card__desc">{post.description}</p>
-              )}
+                {post.description && (
+                  <p className="ac-body bp-card__desc">{post.description}</p>
+                )}
 
-              {post.tags.length > 0 && (
-                <div className="bp-card__tags">
-                  {post.tags.map((tag) => (
-                    <span key={tag} className="bp-card__tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+                {post.tags.length > 0 && (
+                  <div className="ac-chips">
+                    {post.tags.map((tag) => (
+                      <span key={tag} className="ac-chip">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-              <span className="bp-card__read">
-                Read post
-                <LuArrowRight size={16} className="bp-card__read-icon" />
-              </span>
+                <span className="ac-label bp-card__read">
+                  Read post
+                  <LuArrowUpRight size={14} />
+                </span>
+              </div>
             </Link>
           ))}
         </div>
 
-        <div className="bp-see-all-wrapper">
-          <Link to="/blog" className="bp-see-all-btn">
-            View All Posts
-          </Link>
-        </div>
+        <Link to="/blog" className="ac-label ac-link-row">
+          <span>
+            All posts <span className="ac-faint">· /blog</span>
+          </span>
+          <LuArrowUpRight size={16} />
+        </Link>
       </div>
     </section>
   );

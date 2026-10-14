@@ -10,7 +10,7 @@ import {
 } from "../../utils/gsapAnimations";
 import { setScrollLocked } from "../../utils/smoothScroll";
 import "./FeaturedProjects.css";
-import { LuExternalLink, LuCodeXml } from "react-icons/lu";
+import { LuArrowUpRight, LuCodeXml, LuX } from "react-icons/lu";
 
 interface Project {
   id: number;
@@ -103,29 +103,39 @@ const projects: Project[] = [
   },
 ];
 
-// type FilterTab = "exploration" | "case-study";
+// "LearnHub - Tutor & Student Discovery Platform" → ["LearnHub", "Tutor & …"]
+const splitTitle = (title: string): [string, string | null] => {
+  const at = title.indexOf(" - ");
+  return at === -1 ? [title, null] : [title.slice(0, at), title.slice(at + 3)];
+};
 
 export default function FeaturedProjects() {
-  // const [activeTab, setActiveTab] = useState<FilterTab>("exploration");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const sectionRef = useGsap<HTMLElement>(() => {
-    revealLines(".fp-heading", ".fp-heading");
+    gsap.from(".ac-bar, .fp-grid", {
+      clipPath: "inset(0 100% 0 0)",
+      duration: 1.2,
+      stagger: 0.15,
+      ease: EASE_OUT,
+      scrollTrigger: { trigger: ".ac-frame", start: REVEAL_START, once: true },
+    });
+    revealLines(".fp-title", ".fp-title");
 
     const cards = gsap.utils.toArray<HTMLElement>(".fp-card");
-    gsap.set(cards, { opacity: 0, y: 80 });
+    gsap.set(cards, { opacity: 0, y: 60 });
 
     // Cards entering together (one grid row) stagger in as a group,
-    // each image wiping up from the bottom while it settles from a zoom
+    // each screenshot wiping up from the bottom while it settles from a zoom
     ScrollTrigger.batch(cards, {
       start: REVEAL_START,
       once: true,
       onEnter: (batch) => {
-        const images = batch.map((card) =>
-          card.querySelector(".fp-card__image"),
-        );
-        const wrappers = batch.map((card) =>
-          card.querySelector(".fp-card__image-wrapper"),
-        );
+        const images = batch
+          .map((card) => card.querySelector(".fp-card__image"))
+          .filter(Boolean);
+        const media = batch
+          .map((card) => card.querySelector(".fp-card__media"))
+          .filter(Boolean);
 
         gsap
           .timeline()
@@ -133,19 +143,18 @@ export default function FeaturedProjects() {
             opacity: 1,
             y: 0,
             duration: 1.1,
-            stagger: 0.15,
+            stagger: 0.12,
             ease: EASE_OUT,
             ...pauseTransitions(batch),
-            // hand transform back to the stylesheet so hover lift still works
             clearProps: "transition,transform",
           })
           .fromTo(
-            wrappers,
-            { clipPath: "inset(100% 0% 0% 0% round 16px)" },
+            media,
+            { clipPath: "inset(100% 0% 0% 0%)" },
             {
-              clipPath: "inset(0% 0% 0% 0% round 16px)",
+              clipPath: "inset(0% 0% 0% 0%)",
               duration: 1.3,
-              stagger: 0.15,
+              stagger: 0.12,
               ease: "power4.inOut",
               clearProps: "clipPath",
             },
@@ -154,27 +163,15 @@ export default function FeaturedProjects() {
           .from(
             images,
             {
-              scale: 1.3,
+              scale: 1.25,
               duration: 1.6,
-              stagger: 0.15,
+              stagger: 0.12,
               ease: EASE_OUT,
               ...pauseTransitions(images),
               clearProps: "transition,transform",
             },
             0.1,
           );
-      },
-    });
-
-    gsap.from(".fp-see-more-wrapper", {
-      opacity: 0,
-      y: 30,
-      duration: 1,
-      ease: EASE_OUT,
-      scrollTrigger: {
-        trigger: ".fp-see-more-wrapper",
-        start: "top 95%",
-        once: true,
       },
     });
   });
@@ -203,91 +200,101 @@ export default function FeaturedProjects() {
   }, []);
 
   return (
-    <section className="fp-section" id="projects" ref={sectionRef}>
-      <div className="fp-container">
-        {/* Heading */}
-        <h2 className="fp-heading">FEATURED PROJECTS</h2>
+    <section className="ac-section" id="projects" ref={sectionRef}>
+      <div className="ac-frame">
+        <div className="ac-bar">
+          <span>
+            <span className="ac-bar__index">04 /</span> Featured projects
+          </span>
+          <span className="ac-bar__aside">Selected work · built from scratch</span>
+        </div>
 
-        {/* Filter Tabs */}
-        {/* <div className="fp-tabs">
-                    <button
-                        className={`fp-tab ${activeTab === "exploration" ? "fp-tab--active" : ""}`}
-                        onClick={() => setActiveTab("exploration")}
-                    >
-                        Exploration
-                    </button>
-                    <button
-                        className={`fp-tab ${activeTab === "case-study" ? "fp-tab--active" : ""}`}
-                        onClick={() => setActiveTab("case-study")}
-                    >
-                        Research Study
-                    </button>
-                </div> */}
+        <div className="ac-intro">
+          <h2 className="ac-title fp-title">
+            Things I've <em>built.</em>
+          </h2>
+        </div>
 
-        {/* Projects Grid */}
         <div className="fp-grid">
-          {projects.map((project) => (
-            <div className="fp-card" key={project.id}>
-              <div
-                className="fp-card__image-wrapper"
-                onClick={() => setSelectedProject(project)}
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="fp-card__image"
-                />
-              </div>
-              <div className="fp-card__content">
-                <h3
-                  className="fp-card__title"
+          {projects.map((project, i) => {
+            const [name, tagline] = splitTitle(project.title);
+            return (
+              <article className="fp-card" key={project.id}>
+                <div className="ac-label fp-card__bar">
+                  <span>{project.subtitle}</span>
+                  <span className="ac-faint">{String(i + 1).padStart(2, "0")}</span>
+                </div>
+
+                <button
+                  type="button"
+                  className="fp-card__media ac-focus"
                   onClick={() => setSelectedProject(project)}
-                  style={{ cursor: "pointer" }}
+                  aria-label={`View details for ${name}`}
                 >
-                  {project.title}
-                </h3>
-                {/* Tech badges – flat list of all tech values */}
-                {Object.keys(project.technologies).length > 0 && (
-                  <div className="fp-card__tech-stack">
-                    {Object.values(project.technologies).map((tech) => (
-                      <span key={tech} className="fp-card__tech-badge">
+                  <img
+                    src={project.image}
+                    alt=""
+                    className="fp-card__image"
+                    loading="lazy"
+                  />
+                </button>
+
+                <div className="fp-card__body">
+                  <h3 className="ac-heading">
+                    {name}
+                    {tagline && <span className="fp-card__tagline">{tagline}</span>}
+                  </h3>
+                  <p className="ac-body fp-card__desc">{project.description}</p>
+                  <div className="ac-chips">
+                    {project.technologies.map((tech) => (
+                      <span key={tech} className="ac-chip">
                         {tech}
                       </span>
                     ))}
                   </div>
-                )}
-                <p className="fp-card__desc">{project.description}</p>
-                <div className="fp-card__actions">
-                  <button
-                    className="fp-card__btn fp-card__btn--primary"
-                    onClick={() => setSelectedProject(project)}
-                  >
-                    View More
-                    <LuExternalLink size={12} className="blog-cta-icon" />
-                  </button>
-                  <a
-                    href={project.codeLink}
-                    className="fp-card__btn fp-card__btn--secondary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    View Code
-                    <LuCodeXml size={16} className="blog-cta-icon" />
-                  </a>
+                  <div className="fp-card__actions">
+                    <button
+                      type="button"
+                      className="ac-btn ac-btn--solid"
+                      onClick={() => setSelectedProject(project)}
+                    >
+                      View details
+                      <LuArrowUpRight size={14} />
+                    </button>
+                    <a
+                      href={project.codeLink}
+                      className="ac-btn ac-btn--outline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View code
+                      <LuCodeXml size={14} />
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </article>
+            );
+          })}
 
-        {/* See More Button */}
-        <div className="fp-see-more-wrapper">
+          {/* Closing cell: everything else lives on GitHub */}
           <a
             href="https://github.com/sachithdh?tab=repositories"
-            className="fp-see-more-btn"
+            className="fp-card fp-card--more ac-focus"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            See More
+            <div className="ac-label fp-card__bar">
+              <span>More on GitHub</span>
+              <span className="ac-faint">
+                {String(projects.length + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="fp-more">
+              <span className="fp-more__box" aria-hidden="true">
+                <LuArrowUpRight size={18} />
+              </span>
+              <span className="ac-label ac-faint">github.com/sachithdh</span>
+            </div>
           </a>
         </div>
       </div>
@@ -299,21 +306,20 @@ export default function FeaturedProjects() {
           onClick={() => setSelectedProject(null)}
           data-lenis-prevent
         >
-          <div className="fp-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="fp-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedProject.title}
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Close Button */}
             <button
               className="fp-modal__close"
               onClick={() => setSelectedProject(null)}
               aria-label="Close project detail"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M15 5L5 15M5 5L15 15"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <LuX size={18} />
             </button>
 
             {(() => {
@@ -327,18 +333,18 @@ export default function FeaturedProjects() {
                 >
                   {/* ── Info panel ── */}
                   <div className="fp-modal__info">
-                    <h3 className="fp-modal__title">{selectedProject.title}</h3>
-                    <span className="fp-modal__subtitle">
+                    <span className="ac-label ac-faint">
                       {selectedProject.subtitle}
                     </span>
+                    <h3 className="fp-modal__title">{selectedProject.title}</h3>
 
                     <p className="fp-modal__desc">
                       {selectedProject.description}
                     </p>
 
                     <div className="fp-modal__features">
-                      <h4 className="fp-modal__features-heading">
-                        Key Features
+                      <h4 className="ac-label ac-faint fp-modal__features-heading">
+                        Key features
                       </h4>
                       <ul className="fp-modal__features-list">
                         {selectedProject.keyFeatures.map((feat, i) => (
@@ -350,29 +356,27 @@ export default function FeaturedProjects() {
                     {/* Technologies */}
                     {Object.keys(selectedProject.technologies).length > 0 && (
                       <div className="fp-modal__tech">
-                        <h4 className="fp-modal__features-heading">
+                        <h4 className="ac-label ac-faint fp-modal__features-heading">
                           Technologies
                         </h4>
-                        <div className="fp-modal__tech-badges">
-                          <ul className="fp-modal__features-list">
-                            {Object.values(selectedProject.technologies)
-                              .flat()
-                              .map((tech, i) => (
-                                <li key={i}>{tech}</li>
-                              ))}
-                          </ul>
+                        <div className="ac-chips">
+                          {selectedProject.technologies.map((tech) => (
+                            <span key={tech} className="ac-chip">
+                              {tech}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     )}
 
                     <a
                       href={selectedProject.codeLink}
-                      className="fp-modal__cta"
+                      className="ac-btn ac-btn--solid fp-modal__cta"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      See Code
-                      <LuExternalLink size={12} className="blog-cta-icon" />
+                      View code
+                      <LuCodeXml size={14} />
                     </a>
                   </div>
 

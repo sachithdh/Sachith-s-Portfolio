@@ -52,12 +52,12 @@ const AboutMe = () => {
     });
 
     // Frame rules draw in, then the copy reveals inside them
-    gsap.from(".about-frame__bar, .about-cells, .about-specs", {
+    gsap.from(".ac-bar, .about-cells, .about-specs", {
       clipPath: "inset(0 100% 0 0)",
       duration: 1.2,
       stagger: 0.15,
       ease: EASE_OUT,
-      ...onView(".about-frame"),
+      ...onView(".ac-frame"),
     });
     revealLines(".about-title", ".about-title", {
       duration: 1.3,
@@ -79,39 +79,38 @@ const AboutMe = () => {
   });
 
   return (
-    <section className="about-me-section" id="about" ref={sectionRef}>
-      <div className="about-frame">
-        <span className="about-frame__cross about-frame__cross--tl" aria-hidden="true" />
-        <span className="about-frame__cross about-frame__cross--tr" aria-hidden="true" />
-
-        <div className="about-frame__bar">
+    <section className="ac-section" id="about" ref={sectionRef}>
+      <div className="ac-frame">
+        <div className="ac-bar">
           <span>
-            <span className="about-frame__index">01 /</span> About me
+            <span className="ac-bar__index">01 /</span> About me
           </span>
-          <span className="about-frame__aside">Software engineer · CS undergrad</span>
+          <span className="ac-bar__aside">Software engineer · CS undergrad</span>
         </div>
 
-        <div className="about-intro">
-          <h2 className="about-title">
-            Turning <em>complex</em> problems into reliable systems.
-          </h2>
-          <p className="about-lede">
-            Software Engineer and Computer Science undergraduate with hands-on
-            experience designing and developing software solutions. Skilled in
-            modern development frameworks and cloud technologies, with a strong
-            interest in solving complex problems and building reliable, scalable
-            systems that provide a great user experience.
-          </p>
+        <div className="ac-intro">
+          <div>
+            <h2 className="ac-title about-title">
+              Turning <em>complex</em> problems into reliable systems.
+            </h2>
+            <p className="ac-lede about-lede">
+              Software Engineer and Computer Science undergraduate with hands-on
+              experience designing and developing software solutions. Skilled in
+              modern development frameworks and cloud technologies, with a strong
+              interest in solving complex problems and building reliable, scalable
+              systems that provide a great user experience.
+            </p>
+          </div>
         </div>
 
         <div className="about-cells">
           {pillars.map((pillar) => (
             <article className="about-cell" key={pillar.key}>
-              <span className="about-cell__key">
+              <span className="ac-label ac-faint">
                 {pillar.key} · {pillar.label}
               </span>
-              <h3 className="about-cell__title">{pillar.title}</h3>
-              <ul className="about-cell__list">
+              <h3 className="ac-heading about-cell__title">{pillar.title}</h3>
+              <ul className="ac-body about-cell__list">
                 {pillar.lines.map((line) => (
                   <li key={line}>{line}</li>
                 ))}
@@ -123,9 +122,9 @@ const AboutMe = () => {
         <dl className="about-specs">
           {specs.map((spec, i) => (
             <div className="about-spec" key={spec.label}>
-              <dt className="about-spec__bar">
+              <dt className="ac-label about-spec__bar">
                 <span>{spec.label}</span>
-                <span className="about-spec__num">
+                <span className="ac-faint">
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </dt>
