@@ -8,6 +8,7 @@ import SkillsTechnologies from "./sections/skillsTechnologies/SkillsTechnologies
 import ContactMe from "./sections/contactMe/ContactMe";
 import BlogList from "./sections/blog/BlogList";
 import BlogPost from "./sections/blog/BlogPost";
+import { useSmoothScroll } from "./utils/smoothScroll";
 
 function Portfolio() {
   return (
@@ -26,6 +27,8 @@ function Portfolio() {
 }
 
 function App() {
+  useSmoothScroll();
+
   return (
     <Routes>
       <Route path="/" element={<Portfolio />} />
