@@ -188,3 +188,24 @@
         justify-content: flex-start;
     }
 }
+
+/* Light Theme */
+
+[data-theme="light"] .work-label {
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .work-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .work-skill-badge {
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .work-item:hover .work-skill-badge {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.15);
+}

@@ -1,16 +1,32 @@
 import "./WorkExperience.css";
-import { useFadeInUp, useStaggerChildren } from "../../utils/gsapAnimations";
+import gsap from "gsap";
+import {
+  useGsap,
+  revealLines,
+  fadeLines,
+  pauseTransitions,
+  EASE_OUT,
+  REVEAL_START,
+} from "../../utils/gsapAnimations";
 
 const experiences = [
   {
     id: 1,
-    date: "NOVEMBER 2025 - PRESENT",
+    date: "NOVEMBER 2025 - MAY 2026",
     role: "Intern Software Engineer",
     company: "Xeptogon",
     location: "Port City, Colombo, SL",
     description:
       "Developing digital infrastructure for climate markets, carbon finance and Article 6 implementation.",
-    skills: ["React.js", "NestJs", "Cloud Services"],
+    skills: [
+      "React.js",
+      "NestJs",
+      "Docker",
+      "Block Chain",
+      "KeyCloak",
+      "RabbitMQ",
+      "PostgreSQL",
+    ],
   },
   {
     id: 2,
@@ -20,22 +36,57 @@ const experiences = [
     location: "Kandy, SL",
     description:
       "Designing and delivering scalable software solutions for global clients.",
-    skills: ["React.js", "PHP", "Cloud Services"],
+    skills: ["React.js", "PHP", "Wordpress", "Cloud Services"],
   },
 ];
 
 export default function WorkExperience() {
-  const headerRef = useFadeInUp(0);
-  const workListRef = useStaggerChildren(0.2, 0.2);
+  const sectionRef = useGsap<HTMLElement>(() => {
+    revealLines(".work-heading", ".work-header");
+    fadeLines(".work-intro-text", ".work-header", { delay: 0.3 });
+
+    // Each role reveals on its own as it scrolls into view
+    gsap.utils.toArray<HTMLElement>(".work-item").forEach((item) => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: item, start: REVEAL_START, once: true },
+      });
+
+      tl.from(item.querySelectorAll(".work-item-left > * > *"), {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        stagger: 0.08,
+        ease: EASE_OUT,
+      });
+
+      const badges = item.querySelectorAll(".work-skill-badge");
+      tl.from(
+        badges,
+        {
+          opacity: 0,
+          scale: 0.6,
+          y: 10,
+          duration: 0.6,
+          stagger: 0.04,
+          ease: "back.out(2)",
+          ...pauseTransitions(badges),
+        },
+        0.25,
+      );
+    });
+  });
 
   return (
-    <section className="work-section section-container" id="work">
-      <div className="work-header" ref={headerRef as any}>
+    <section
+      className="work-section section-container"
+      id="experience"
+      ref={sectionRef}
+    >
+      <div className="work-header">
         <div className="work-header-top">
           <div className="work-header-left">
-            <span className="work-label">• Experiences</span>
             <h2 className="work-heading">
-              Explore My Work
+              Explore My Working
               <br />
               Journey
             </h2>
@@ -46,14 +97,11 @@ export default function WorkExperience() {
               range of projects, collaborating with diverse teams and clients to
               deliver innovative software solutions.
             </p>
-            <a href="#contact" className="work-cta-link">
-              Schedule a Call ↗
-            </a>
           </div>
         </div>
       </div>
 
-      <div className="work-list" ref={workListRef as any}>
+      <div className="work-list">
         {experiences.map((exp) => (
           <div key={exp.id} className="work-item">
             <div className="work-item-left">

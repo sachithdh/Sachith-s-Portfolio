@@ -5,7 +5,6 @@ import "./ContactMe.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── marquee items rendered inside each track ─── */
 const MARQUEE_ITEMS = [
   { text: "LET'S CONNECT", style: "filled" },
   { text: "✦", style: "sep" },
@@ -21,7 +20,6 @@ const MARQUEE_ITEMS = [
   { text: "✦", style: "sep" },
 ];
 
-/* Renders one full copy of the marquee list */
 const MarqueeList = () => (
   <>
     {MARQUEE_ITEMS.map((item, i) => (
@@ -35,41 +33,51 @@ const MarqueeList = () => (
   </>
 );
 
-/* ─── Infinite Marquee Banner component ─── */
 const MarqueeBanner = () => {
   const track1Ref = useRef<HTMLDivElement>(null);
   const track2Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const tracks = [
-      { el: track1Ref.current, dir: -1 },   // scrolls left
-      { el: track2Ref.current, dir: 1 },   // scrolls right
+      { el: track1Ref.current, dir: -1, x: 0 }, // scrolls left
+      { el: track2Ref.current, dir: 1, x: 0 }, // scrolls right
     ];
 
-    const tickerCallbacks: (() => void)[] = [];
-
-    tracks.forEach(({ el, dir }) => {
-      if (!el) return;
-
-      // place the element at half-width so the seam is invisible
-      let xPos = dir === -1 ? 0 : -el.scrollWidth / 2;
-      const speed = 0.6; // px per frame
-
-      const tick = () => {
-        xPos += dir * speed;
-        const half = el.scrollWidth / 2;
-        // reset seamlessly when one full copy has scrolled past
-        if (dir === -1 && xPos <= -half) xPos += half;
-        if (dir === 1 && xPos >= 0) xPos -= half;
-        gsap.set(el, { x: xPos });
-      };
-
-      gsap.ticker.add(tick);
-      tickerCallbacks.push(tick);
+    // place right-moving track at half-width so the seam is invisible
+    tracks.forEach((t) => {
+      if (t.el && t.dir === 1) t.x = -t.el.scrollWidth / 2;
     });
 
+    const baseSpeed = 0.6; // px per frame
+    let boost = 0;
+
+    // Scrolling the page kicks the marquee forward, then it eases back
+    const velocityTrigger = ScrollTrigger.create({
+      onUpdate: (self) => {
+        boost = Math.max(boost, Math.min(Math.abs(self.getVelocity()) / 150, 12));
+      },
+    });
+
+    const tick = () => {
+      const speed = baseSpeed * (1 + boost);
+      boost *= 0.94;
+
+      tracks.forEach((t) => {
+        if (!t.el) return;
+        t.x += t.dir * speed;
+        const half = t.el.scrollWidth / 2;
+        // reset seamlessly when one full copy has scrolled past
+        if (t.dir === -1 && t.x <= -half) t.x += half;
+        if (t.dir === 1 && t.x >= 0) t.x -= half;
+        gsap.set(t.el, { x: t.x });
+      });
+    };
+
+    gsap.ticker.add(tick);
+
     return () => {
-      tickerCallbacks.forEach((cb) => gsap.ticker.remove(cb));
+      gsap.ticker.remove(tick);
+      velocityTrigger.kill();
     };
   }, []);
 
@@ -101,10 +109,8 @@ const MarqueeBanner = () => {
 const socialLinks = [
   { label: "GitHub", href: "https://www.github.com/sachithdh" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/sachithdh/" },
-  { label: "Twitter", href: "https://twitter.com/" },
-  { label: "Instagram", href: "https://instagram.com/" },
-  { label: "Dribbble", href: "https://dribbble.com/" },
-  { label: "Medium", href: "https://medium.com/" },
+  { label: "X", href: "https://x.com/_Sachith__" },
+  { label: "Instagram", href: "https://www.instagram.com/sachee.10" },
 ];
 
 const ContactMe = () => {
@@ -115,37 +121,66 @@ const ContactMe = () => {
   const linksRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 75%",
-        toggleActions: "play none none none",
-      },
-    });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          toggleActions: "play none none none",
+        },
+      });
 
-    tl.fromTo(
-      headingRef.current,
-      { opacity: 0, y: 80, skewY: 4 },
-      { opacity: 1, y: 0, skewY: 0, duration: 1, ease: "power4.out" }
-    )
-      .fromTo(
-        subtitleRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.5"
+      tl.fromTo(
+        headingRef.current,
+        { opacity: 0, y: 80, skewY: 4 },
+        { opacity: 1, y: 0, skewY: 0, duration: 1, ease: "power4.out" }
       )
-      .fromTo(
-        btnRef.current,
-        { opacity: 0, scale: 0.85 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.5)" },
-        "-=0.4"
-      )
-      .fromTo(
-        ".cm-social-item",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" },
-        "-=0.2"
+        .fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+          "-=0.5"
+        )
+        .fromTo(
+          btnRef.current,
+          { opacity: 0, scale: 0.85 },
+          { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.5)" },
+          "-=0.4"
+        )
+        .fromTo(
+          ".cm-social-item",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" },
+          "-=0.2"
+        );
+
+      // The giant heading drifts up and tightens slightly as you scroll on
+      gsap.fromTo(
+        ".cm-heading-wrap",
+        { yPercent: 30, scale: 1.06 },
+        {
+          yPercent: -10,
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "center center",
+            scrub: 0.8,
+          },
+        }
       );
+
+      gsap.from(".cm-divider", {
+        opacity: 0,
+        scaleX: 0,
+        duration: 1.2,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ".cm-divider", start: "top 90%", once: true },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -175,7 +210,7 @@ const ContactMe = () => {
 
         {/* CTA Button */}
         <a
-          href="mailto:sachithdhanushka@gmail.com"
+          href="mailto:sachith.devx@gmail.com"
           className="cm-btn"
           ref={btnRef}
         >
@@ -208,7 +243,7 @@ const ContactMe = () => {
       {/* Bottom tagline */}
       <div className="cm-footer-strip">
         <span className="cm-footer-text">
-          Sachith Dhanushka &nbsp;·&nbsp; Full Stack Developer &nbsp;·&nbsp;{" "}
+          Sachith Dhanushka &nbsp;·&nbsp; Software Engineer &nbsp;·&nbsp;{" "}
           {new Date().getFullYear()}
         </span>
       </div>

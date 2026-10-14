@@ -1,22 +1,66 @@
 import "./AboutMe.css";
 import ScrollAnimation from "../../utils/scrollAnimation";
-import { useFadeInUp, useExitAnimation } from "../../utils/gsapAnimations";
+import gsap from "gsap";
+import {
+  useGsap,
+  useExitAnimation,
+  revealLines,
+  fadeLines,
+  EASE_OUT,
+} from "../../utils/gsapAnimations";
 
 const AboutMe = () => {
-  const titleRef = useFadeInUp(0);
-  const profileRef = useFadeInUp(0.2);
+  const sectionRef = useGsap(() => {
+    const onView = (trigger: string, start = "top 70%") => ({
+      scrollTrigger: { trigger, start, once: true },
+    });
+
+    revealLines(".about-title", ".about-title", {
+      duration: 1.4,
+      stagger: 0.15,
+      ...onView(".about-title"),
+    });
+    fadeLines(".about-profile .info-text", ".about-profile", {
+      y: 30,
+      filter: "blur(6px)",
+      duration: 1.2,
+      delay: 0.3,
+      ...onView(".about-title"),
+    });
+
+    const columns = [
+      { selector: ".left-content .info-block > *", x: -60 },
+      { selector: ".right-content .stat-block > *", x: 60 },
+    ];
+    columns.forEach(({ selector, x }) => {
+      gsap.from(selector, {
+        opacity: 0,
+        x,
+        duration: 1.2,
+        stagger: 0.08,
+        ease: EASE_OUT,
+        ...onView(".about-layout", "top 75%"),
+      });
+    });
+
+    gsap.from(".about-content > .scroll-indicator", {
+      opacity: 0,
+      duration: 1,
+      ...onView(".about-content > .scroll-indicator", "top 90%"),
+    });
+  });
   const leftExitRef = useExitAnimation("left");
   const rightExitRef = useExitAnimation("right");
 
   return (
-    <div className="about-me-section">
+    <div className="about-me-section" id="about" ref={sectionRef}>
       <div className="about-content">
-        <h1 className="about-title" ref={titleRef as any}>
+        <h1 className="about-title">
           Software Engineer &
           <br />
           Computer Science Undergraduate
         </h1>
-        <div className="about-profile" ref={profileRef as any}>
+        <div className="about-profile">
           <p className="info-text">
             Software Engineer and Computer Science undergraduate with hands-on
             experience designing and developing software solutions. Skilled in
@@ -26,36 +70,36 @@ const AboutMe = () => {
           </p>
         </div>
         <div className="about-layout">
-          <div className="left-content" ref={leftExitRef as any}>
+          <div className="left-content" ref={leftExitRef}>
             <div className="info-block">
               <h3 className="info-label">UNDERGRADUATE</h3>
               <p className="info-text">
-                University of Colombo School of Computing — BSc (Hons) in
+                University of Colombo School of Computing - BSc (Hons) in
                 Computer Science
               </p>
             </div>
             <div className="info-block">
               <h3 className="info-label">PROFESSIONAL EXPERIENCE</h3>
               <p className="info-text">
-                Intern Software Engineer — Xeptagon (Nov 2025 - Present)
+                Intern Software Engineer - Xeptagon (Nov 2025 - May 2026)
                 <br />
-                Associate Software Engineer (Part time) — TheWeb Agency (Oct
+                Associate Software Engineer (Part time) - TheWeb Agency (Oct
                 2024 - Nov 2025)
               </p>
             </div>
             <div className="info-block">
               <h3 className="info-label">PROJECT HIGHLIGHTS</h3>
               <p className="info-text">
-                brainMap — Project Management & Mentoring (Java, Spring Boot,
+                brainMap - Project Management & Mentoring (Java, Spring Boot,
                 Next.js, Supabase, Docker, AWS)
                 <br />
-                LearnHub — Custom PHP MVC e-learning platform (PHP, MySQL)
+                LearnHub - Custom PHP MVC e-learning platform (PHP, MySQL)
                 <br />
-                Eventer — Event management system (MERN + Material-UI)
+                Eventer - Event management system (MERN + Material-UI)
               </p>
             </div>
           </div>
-          <div className="right-content" ref={rightExitRef as any}>
+          <div className="right-content" ref={rightExitRef}>
             <div className="stat-block">
               <h3 className="stat-label">GPA</h3>
               <p className="stat-value">3.8 / 4.0</p>
