@@ -145,7 +145,6 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} Sachith Dhanushka. All rights
               reserved.
             </p>
-            <p className="footer-tagline">Crafted with ❤️ and React</p>
           </div>
         </div>
       </div>

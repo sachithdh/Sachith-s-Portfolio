@@ -247,6 +247,10 @@
     letter-spacing: 0.18em;
     color: var(--text-muted);
     text-transform: uppercase;
+    text-align: center;
+    line-height: 1.8;
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .cm-marquee-banner {
@@ -358,6 +362,15 @@
     .cm-social-item {
         font-size: 0.75rem;
     }
+
+    .cm-footer-strip {
+        padding: 20px 5%;
+    }
+
+    .cm-footer-text {
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+    }
 }
 
 @media (max-width: 480px) {
@@ -367,6 +380,11 @@
 
     .cm-social-grid {
         gap: 12px 16px;
+    }
+
+    .cm-footer-text {
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
     }
 }
 
