@@ -216,10 +216,73 @@
   z-index: 10;
 }
 
-.social-links {
+.hero-right {
   position: absolute;
-  bottom: 4rem;
-  right: 1%;
+  bottom: 3rem;
+  right: 2rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
+/* Latest blog post preview */
+.hero-blog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 280px;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  background: rgba(20, 20, 20, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-decoration: none;
+  /* transform/opacity are driven by GSAP, so keep them out of the transition */
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-blog-card:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(30, 30, 30, 0.7);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hero-blog-card__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}
+
+.hero-blog-card__icon {
+  transition: transform 0.3s ease;
+}
+
+.hero-blog-card:hover .hero-blog-card__icon {
+  transform: translate(2px, -2px);
+}
+
+.hero-blog-card__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-blog-card__meta {
+  font-size: 0.75rem;
+  color: #b0b0b0;
+  font-weight: 300;
 }
 
 .card-right {
@@ -526,13 +589,23 @@
     order: 1;
   }
 
-  .social-links {
+  .hero-right {
     position: static;
     order: 3;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .social-links {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 1rem;
+  }
+
+  .hero-blog-card {
+    width: 100%;
+    max-width: 420px;
   }
 
   .card-left,
@@ -715,6 +788,26 @@
 }
 
 [data-theme="light"] .card-description {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .hero-blog-card {
+  background: rgba(250, 248, 245, 0.8);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .hero-blog-card:hover {
+  background: rgba(250, 248, 245, 0.95);
+  border-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .hero-blog-card__label,
+[data-theme="light"] .hero-blog-card__title {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .hero-blog-card__meta {
   color: var(--text-muted);
 }
 

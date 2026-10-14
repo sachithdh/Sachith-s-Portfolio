@@ -2,7 +2,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import Markdown, { type Components } from "react-markdown";
 import { LuArrowLeft, LuSun, LuMoon } from "react-icons/lu";
 import { useTheme } from "../../utils/ThemeContext";
-import { useBlogPosts, blogImageMap } from "./useBlogPosts";
+import { useBlogPosts, blogImageMap, formatDate } from "./useBlogPosts";
 import "./Blog.css";
 
 /**
@@ -130,17 +130,4 @@ export default function BlogPost() {
       </div>
     </div>
   );
-}
-
-function formatDate(dateStr: string): string {
-  try {
-    const date = new Date(dateStr + "T00:00:00");
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
 }

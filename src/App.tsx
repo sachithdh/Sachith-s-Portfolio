@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import TopNavBar from "./components/topNavBar/TopNavBar";
 import WorkExperience from "./sections/workExperience/WorkExperience";
 import FeaturedProjects from "./sections/featuredProjects/FeaturedProjects";
+import BlogPreview from "./sections/blogPreview/BlogPreview";
 import SynthEraHero from "./sections/hero/SynthEraHero";
 import AboutMe from "./sections/aboutMe/AboutMe";
 import SkillsTechnologies from "./sections/skillsTechnologies/SkillsTechnologies";
@@ -18,6 +19,7 @@ function Portfolio() {
         <SynthEraHero />
         <AboutMe />
         <WorkExperience />
+        <BlogPreview />
         <FeaturedProjects />
         <SkillsTechnologies />
         <ContactMe />
