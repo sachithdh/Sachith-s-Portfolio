@@ -94,7 +94,7 @@ const LAYOUT = {
   birthFrac: 0.08, // where tiles are born, as a fraction of the outer winding
   cardN: 64,
   tunedMpx: 1.65, // viewport area the tile count was tuned at
-  cardHFrac: 0.17, // tile size ceiling as a fraction of viewport height
+  cardHFrac: 0.12, // tile size ceiling as a fraction of viewport height
   density: 0.82, // share of the gap to the nearest neighbour a tile may fill
 };
 const MOBILE = {
@@ -104,7 +104,7 @@ const MOBILE = {
   rMaxFrac: 0.8,
   birthFrac: 0.08,
   cardN: 14,
-  cardHFrac: 0.2,
+  cardHFrac: 0.14,
   density: 0.94,
 };
 const MAX_CARDS = LAYOUT.cardN;
@@ -187,14 +187,17 @@ const buildGeometry = (width: number, height: number): Geometry => {
     ? MOBILE.cardN
     : Math.max(
         6,
-        Math.min(LAYOUT.cardN, Math.round((LAYOUT.cardN * mpx) / LAYOUT.tunedMpx)),
+        Math.min(
+          LAYOUT.cardN,
+          Math.round((LAYOUT.cardN * mpx) / LAYOUT.tunedMpx),
+        ),
       );
   const halfDiag = Math.hypot(width, height) / 2;
   const rMax = p.rMaxFrac * halfDiag;
   const thetaMax = p.turns * Math.PI * 2;
   // Archimedean spiral r = b·θ
   const b = rMax / thetaMax;
-  const cardCap = Math.min(180, Math.max(56, height * p.cardHFrac));
+  const cardCap = Math.min(128, Math.max(44, height * p.cardHFrac));
   return {
     arms,
     cardN,
@@ -294,7 +297,8 @@ const HeroVortex = () => {
 
     const readTheme = () => {
       const cs = getComputedStyle(root);
-      colors.line = cs.getPropertyValue("--ac-line-strong").trim() || colors.line;
+      colors.line =
+        cs.getPropertyValue("--ac-line-strong").trim() || colors.line;
       colors.accent = cs.getPropertyValue("--hv-pulse").trim() || colors.accent;
       colors.ink = cs.getPropertyValue("--ac-ink").trim() || colors.ink;
       colors.light =
@@ -381,7 +385,8 @@ const HeroVortex = () => {
           const r = b * (t0 + aT * (thetaExit - t0));
           g *= clamp01((waveR - r) / MOTION.waveBand);
           if (g < 0.02) continue;
-          ctx.globalAlpha = LOOK.pulseAlpha * g * instr * (colors.light ? 0.62 : 1);
+          ctx.globalAlpha =
+            LOOK.pulseAlpha * g * instr * (colors.light ? 0.62 : 1);
           ctx.lineWidth = LOOK.lineW * 0.6 + LOOK.pulseW * g;
           ctx.beginPath();
           ctx.moveTo(pts[s][0], pts[s][1]);
@@ -446,7 +451,12 @@ const HeroVortex = () => {
       state.lastP = P;
 
       const hasTarget = state.target >= 0;
-      state.holdTarget = ease(state.holdTarget, +hasTarget, dt, POINTER.holdTau);
+      state.holdTarget = ease(
+        state.holdTarget,
+        +hasTarget,
+        dt,
+        POINTER.holdTau,
+      );
       state.holdRest = ease(state.holdRest, +hasTarget, dt, POINTER.restTau);
 
       const cos = Math.cos(state.spin);
@@ -467,11 +477,17 @@ const HeroVortex = () => {
             : state.holdRest);
         const p = Math.max(
           0,
-          fract((slot + 0.5 + arm * MOTION.armJitter) / slotsPerArm + P + holdOffset[i]) +
-            roll,
+          fract(
+            (slot + 0.5 + arm * MOTION.armJitter) / slotsPerArm +
+              P +
+              holdOffset[i],
+          ) + roll,
         );
         // Wrapped back to the centre: hand it the least recently used logo
-        if (!Number.isNaN(prevJourney[i]) && Math.abs(p - prevJourney[i]) > 0.5) {
+        if (
+          !Number.isNaN(prevJourney[i]) &&
+          Math.abs(p - prevJourney[i]) > 0.5
+        ) {
           let best = 0;
           for (let l = 1; l < LOGOS.length; l++) {
             if (logoUse[l] < logoUse[best]) best = l;
@@ -503,7 +519,8 @@ const HeroVortex = () => {
           const dy = pointer.y - cy - y;
           const d2 = dx * dx + dy * dy;
           const k =
-            (POINTER.tugPx * Math.exp(-d2 / (POINTER.fieldPx * POINTER.fieldPx)) *
+            (POINTER.tugPx *
+              Math.exp(-d2 / (POINTER.fieldPx * POINTER.fieldPx)) *
               (1 - held[i])) /
             Math.max(1, Math.sqrt(d2));
           x += dx * k;
@@ -518,7 +535,8 @@ const HeroVortex = () => {
       if (pointer.active) {
         let best = -1;
         for (let i = 0; i < cardN; i++) {
-          const half = (size[i] * (i === state.target ? POINTER.heldScale : 1)) / 2;
+          const half =
+            (size[i] * (i === state.target ? POINTER.heldScale : 1)) / 2;
           if (journey[i] < 0.04 || half < 6) continue;
           if (
             Math.abs(pointer.x - cx - posX[i]) <= half &&
@@ -570,14 +588,19 @@ const HeroVortex = () => {
           clamp01(p / LOOK.fadeBand) * reveal * Math.max(copyDim, held[i]);
         const blur =
           LOOK.blurPx *
-          Math.max((1 - smoothstep(0, LOOK.blurEnd, p)) * (1 - held[i]), 1 - reveal);
+          Math.max(
+            (1 - smoothstep(0, LOOK.blurEnd, p)) * (1 - held[i]),
+            1 - reveal,
+          );
 
         el.style.transform = `translate3d(${cx + posX[i] - BASE_PX / 2}px, ${
           cy + posY[i] - BASE_PX / 2
         }px, 0) scale(${scale})`;
         el.style.opacity = alpha.toFixed(3);
         el.style.filter = blur > 0.3 ? `blur(${blur.toFixed(2)}px)` : "";
-        el.style.zIndex = String(10 + Math.round(100 * p) + Math.round(500 * held[i]));
+        el.style.zIndex = String(
+          10 + Math.round(100 * p) + Math.round(500 * held[i]),
+        );
         el.classList.toggle("is-held", held[i] > 0.5);
       }
 
@@ -614,9 +637,7 @@ const HeroVortex = () => {
       pointer.x = e.clientX - rect.left;
       pointer.y = e.clientY - rect.top;
       pointer.active =
-        e.pointerType === "mouse" &&
-        pointer.y >= 0 &&
-        pointer.y <= rect.height;
+        e.pointerType === "mouse" && pointer.y >= 0 && pointer.y <= rect.height;
     };
     const onPointerLeave = () => {
       pointer.active = false;
@@ -662,7 +683,10 @@ const HeroVortex = () => {
       mo.disconnect();
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
-      document.documentElement.removeEventListener("pointerleave", onPointerLeave);
+      document.documentElement.removeEventListener(
+        "pointerleave",
+        onPointerLeave,
+      );
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
