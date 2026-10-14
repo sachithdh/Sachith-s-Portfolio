@@ -1,4 +1,4 @@
-import "./SynthEraHero.css";
+import "./Hero.css";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { LuArrowUpRight, LuBookOpen } from "react-icons/lu";
@@ -26,7 +26,7 @@ const techStack = [
   "Supabase",
 ];
 
-const SynthEraHero = () => {
+const Hero = () => {
   const heroRef = useRef<HTMLElement>(null);
   const [latestPost] = useBlogPosts();
 
@@ -190,4 +190,4 @@ const SynthEraHero = () => {
   );
 };
 
-export default SynthEraHero;
+export default Hero;

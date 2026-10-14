@@ -3,7 +3,7 @@ import TopNavBar from "./components/topNavBar/TopNavBar";
 import WorkExperience from "./sections/workExperience/WorkExperience";
 import FeaturedProjects from "./sections/featuredProjects/FeaturedProjects";
 import BlogPreview from "./sections/blogPreview/BlogPreview";
-import SynthEraHero from "./sections/hero/SynthEraHero";
+import Hero from "./sections/hero/Hero";
 import AboutMe from "./sections/aboutMe/AboutMe";
 import SkillsTechnologies from "./sections/skillsTechnologies/SkillsTechnologies";
 import ContactMe from "./sections/contactMe/ContactMe";
@@ -16,7 +16,7 @@ function Portfolio() {
     <>
       <TopNavBar />
       <main className="app-container">
-        <SynthEraHero />
+        <Hero />
         <AboutMe />
         <WorkExperience />
         <BlogPreview />
@@ -41,4 +41,3 @@ function App() {
 }
 
 export default App;
-
