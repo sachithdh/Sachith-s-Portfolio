@@ -11,6 +11,8 @@ import {
 import { useBlogPosts, formatDate } from "../blog/useBlogPosts";
 import "./BlogPreview.css";
 
+const SECTION = "04";
+
 export default function BlogPreview() {
   const posts = useBlogPosts().slice(0, 2);
 
@@ -43,7 +45,7 @@ export default function BlogPreview() {
       <div className="ac-frame">
         <div className="ac-bar">
           <span>
-            <span className="ac-bar__index">03 /</span> Writing
+            <span className="ac-bar__index">{SECTION} /</span> Writing
           </span>
           <span className="ac-bar__aside">Latest from the blog</span>
         </div>
@@ -68,7 +70,7 @@ export default function BlogPreview() {
                     <span className="ac-faint"> · {post.readTime}</span>
                   )}
                 </span>
-                <span className="ac-faint">{String(i + 1).padStart(2, "0")}</span>
+                <span className="ac-faint">{`${SECTION}.${i + 1}`}</span>
               </div>
 
               <div className="bp-card__body">
