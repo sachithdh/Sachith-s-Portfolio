@@ -45,11 +45,11 @@
 .about-spec {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--ac-line);
+  border-bottom: 1px solid var(--ac-line);
 }
 
 .about-spec:last-child {
-  border-right: none;
+  border-bottom: none;
 }
 
 .about-spec__bar {
@@ -60,24 +60,26 @@
   border-bottom: 1px solid var(--ac-line);
 }
 
+/* Highlighted figures: GPA and Director's List */
 .about-spec__value {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  gap: 0.6rem;
   margin: 0;
   padding: 1.5rem 2rem 1.75rem;
   font-family: var(--ac-font-wide);
   font-stretch: 108%;
-  font-variation-settings: 'wdth' 108;
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
+  font-variation-settings: "wdth" 108;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--ac-ink-strong);
 }
 
-.about-spec:first-child .about-spec__value {
-  font-size: 1.75rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+.about-spec__note {
+  letter-spacing: 0.15em;
 }
 
 /* ── Responsive ── */

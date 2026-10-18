@@ -14,7 +14,7 @@ import { RiNextjsFill } from "react-icons/ri";
 import { BiLogoSpringBoot } from "react-icons/bi";
 import { SiNestjs, SiDjango, SiExpress, SiMongodb, SiKeycloak } from "react-icons/si";
 
-const SECTION = "06";
+const SECTION = "05";
 
 const languageColors = [
     { name: "JavaScript", color: "#F7DF1E", level: 95 },

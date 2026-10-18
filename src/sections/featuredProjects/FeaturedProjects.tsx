@@ -24,7 +24,7 @@ interface Project {
   gallery?: string[];
 }
 
-const SECTION = "05";
+const SECTION = "04";
 
 const projects: Project[] = [
   {
