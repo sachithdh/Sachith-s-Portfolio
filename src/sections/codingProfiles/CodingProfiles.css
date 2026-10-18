@@ -1,0 +1,138 @@
+/* Frame, bar, title, link styles: see styles/panel.css */
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--ac-line);
+}
+
+.cp-card {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+  border-right: 1px solid var(--ac-line);
+  transition: background-color 0.2s ease;
+}
+
+.cp-card:last-child {
+  border-right: none;
+}
+
+.cp-card:hover {
+  background: color-mix(in srgb, var(--ac-ink) 4%, transparent);
+}
+
+.cp-card__bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 2rem;
+  border-bottom: 1px solid var(--ac-line);
+}
+
+.cp-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.5rem 2rem 2.25rem;
+}
+
+.cp-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cp-card__icon {
+  flex-shrink: 0;
+  font-size: 1.75rem;
+  color: var(--ac-ink-strong);
+  transition: color 0.2s ease;
+}
+
+.cp-card:hover .cp-card__icon {
+  color: var(--cp-accent);
+}
+
+.cp-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  border: 1px solid var(--ac-line);
+}
+
+.cp-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  min-width: 0;
+}
+
+.cp-stat + .cp-stat {
+  border-left: 1px solid var(--ac-line);
+}
+
+.cp-stat__value {
+  margin: 0;
+  font-family: var(--ac-font-wide);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ac-ink-strong);
+}
+
+.cp-card__visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  color: var(--ac-faint);
+  transition: color 0.2s ease;
+}
+
+.cp-card__visit svg {
+  transition: transform 0.2s ease;
+}
+
+.cp-card:hover .cp-card__visit {
+  color: var(--ac-ink);
+}
+
+.cp-card:hover .cp-card__visit svg {
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 900px) {
+  .cp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-card {
+    border-right: none;
+  }
+
+  .cp-card + .cp-card {
+    border-top: 1px solid var(--ac-line);
+  }
+}
+
+@media (max-width: 640px) {
+  .cp-card__bar {
+    padding: 0.7rem 1.25rem;
+  }
+
+  .cp-card__body {
+    padding: 2rem 1.25rem 1.75rem;
+  }
+
+  .cp-stat {
+    padding: 0.75rem;
+  }
+
+  .cp-stat__value {
+    font-size: 1.1rem;
+  }
+}

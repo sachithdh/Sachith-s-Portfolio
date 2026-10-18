@@ -155,7 +155,7 @@ const ContactMe = () => {
       <div className="ac-frame">
         <div className="ac-bar">
           <span>
-            <span className="ac-bar__index">{SECTION} /</span> Contact
+            <span className="ac-bar__index">07 /</span> Contact
           </span>
           <span className="ac-bar__aside">Colombo, Sri Lanka</span>
         </div>

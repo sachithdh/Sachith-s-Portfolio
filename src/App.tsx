@@ -7,6 +7,7 @@ import BlogPreview from "./sections/blogPreview/BlogPreview";
 import Hero from "./sections/hero/Hero";
 import AboutMe from "./sections/aboutMe/AboutMe";
 import SkillsTechnologies from "./sections/skillsTechnologies/SkillsTechnologies";
+import CodingProfiles from "./sections/codingProfiles/CodingProfiles";
 import ContactMe from "./sections/contactMe/ContactMe";
 import BlogList from "./sections/blog/BlogList";
 import BlogPost from "./sections/blog/BlogPost";
@@ -24,6 +25,7 @@ function Portfolio() {
         <BlogPreview />
         <FeaturedProjects />
         <SkillsTechnologies />
+        <CodingProfiles />
         <ContactMe />
       </main>
     </>
