@@ -1,10 +1,15 @@
 /* Frame, bar, title, lede, labels: see styles/panel.css */
 
-/* A / B / C pillars */
+/* Education + GPA, side by side */
+.about-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  border-top: 1px solid var(--ac-line);
+}
+
 .about-cells {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--ac-line);
+  border-right: 1px solid var(--ac-line);
 }
 
 .about-cell {
@@ -34,9 +39,7 @@
 /* Spec strip: label bar + value per cell */
 .about-specs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   margin: 0;
-  border-top: 1px solid var(--ac-line);
 }
 
 .about-spec {
@@ -79,29 +82,13 @@
 
 /* ── Responsive ── */
 
-@media (max-width: 1024px) {
-  .about-cells {
+@media (max-width: 768px) {
+  .about-row {
     grid-template-columns: 1fr;
   }
 
-  .about-cell {
+  .about-cells {
     border-right: none;
-    border-bottom: 1px solid var(--ac-line);
-  }
-
-  .about-cell:last-child {
-    border-bottom: none;
-  }
-
-  .about-specs {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .about-spec:nth-child(2) {
-    border-right: none;
-  }
-
-  .about-spec:nth-child(-n + 2) {
     border-bottom: 1px solid var(--ac-line);
   }
 }
@@ -113,19 +100,6 @@
 
   .about-cell__title {
     margin-top: 1.25rem;
-  }
-
-  .about-specs {
-    grid-template-columns: 1fr;
-  }
-
-  .about-spec {
-    border-right: none;
-    border-bottom: 1px solid var(--ac-line);
-  }
-
-  .about-spec:last-child {
-    border-bottom: none;
   }
 
   .about-spec__bar,

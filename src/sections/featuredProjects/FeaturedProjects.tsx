@@ -24,6 +24,8 @@ interface Project {
   gallery?: string[];
 }
 
+const SECTION = "05";
+
 const projects: Project[] = [
   {
     id: 1,
@@ -204,7 +206,7 @@ export default function FeaturedProjects() {
       <div className="ac-frame">
         <div className="ac-bar">
           <span>
-            <span className="ac-bar__index">04 /</span> Featured projects
+            <span className="ac-bar__index">{SECTION} /</span> Featured projects
           </span>
           <span className="ac-bar__aside">Selected work · built from scratch</span>
         </div>
@@ -222,7 +224,7 @@ export default function FeaturedProjects() {
               <article className="fp-card" key={project.id}>
                 <div className="ac-label fp-card__bar">
                   <span>{project.subtitle}</span>
-                  <span className="ac-faint">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="ac-faint">{`${SECTION}.${i + 1}`}</span>
                 </div>
 
                 <button
@@ -286,7 +288,7 @@ export default function FeaturedProjects() {
             <div className="ac-label fp-card__bar">
               <span>More on GitHub</span>
               <span className="ac-faint">
-                {String(projects.length + 1).padStart(2, "0")}
+                {`${SECTION}.${projects.length + 1}`}
               </span>
             </div>
             <div className="fp-more">

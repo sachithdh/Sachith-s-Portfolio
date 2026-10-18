@@ -14,6 +14,8 @@ import { RiNextjsFill } from "react-icons/ri";
 import { BiLogoSpringBoot } from "react-icons/bi";
 import { SiNestjs, SiDjango, SiExpress, SiMongodb, SiKeycloak } from "react-icons/si";
 
+const SECTION = "06";
+
 const languageColors = [
     { name: "JavaScript", color: "#F7DF1E", level: 95 },
     { name: "TypeScript", color: "#3178C6", level: 90 },
@@ -549,7 +551,6 @@ export default function SkillsTechnologies() {
 
     const categories = [
         {
-            key: "A",
             label: "Frontend & backend",
             title: "Modern web applications",
             body: "Clean architecture and scalable design patterns, from component-based frontends to server-side rendering and APIs.",
@@ -559,7 +560,6 @@ export default function SkillsTechnologies() {
             ],
         },
         {
-            key: "B",
             label: "Database & DevOps",
             title: "Data and delivery",
             body: "SQL and NoSQL schemas tuned for query performance, deployed and managed in containerised cloud environments.",
@@ -575,7 +575,7 @@ export default function SkillsTechnologies() {
             <div className="ac-frame">
                 <div className="ac-bar">
                     <span>
-                        <span className="ac-bar__index">05 /</span> Skills & tech
+                        <span className="ac-bar__index">{SECTION} /</span> Skills & tech
                     </span>
                     <span className="ac-bar__aside">Languages · stack · tooling</span>
                 </div>
@@ -592,10 +592,10 @@ export default function SkillsTechnologies() {
                 </div>
 
                 <div className="st-cells">
-                    {categories.map((cat) => (
-                        <article className="st-cell" key={cat.key}>
+                    {categories.map((cat, i) => (
+                        <article className="st-cell" key={cat.label}>
                             <span className="ac-label ac-faint">
-                                {cat.key} · {cat.label}
+                                {`${SECTION}.${i + 1}`} · {cat.label}
                             </span>
                             <h3 className="ac-heading st-cell__title">{cat.title}</h3>
                             <p className="ac-body">{cat.body}</p>
