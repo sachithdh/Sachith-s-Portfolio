@@ -9,6 +9,8 @@ import {
   REVEAL_START,
 } from "../../utils/gsapAnimations";
 
+const SECTION = "02";
+
 const experiences = [
   {
     id: 1,
@@ -88,7 +90,7 @@ export default function WorkExperience() {
       <div className="ac-frame">
         <div className="ac-bar">
           <span>
-            <span className="ac-bar__index">02 /</span> Experience
+            <span className="ac-bar__index">{SECTION} /</span> Experience
           </span>
           <span className="ac-bar__aside">
             2+ years · {experiences.length} roles
@@ -111,9 +113,7 @@ export default function WorkExperience() {
             <li key={exp.id} className="work-item">
               <div className="ac-label work-item__bar">
                 <span>
-                  <span className="ac-faint">
-                    {String(i + 1).padStart(2, "0")} /
-                  </span>{" "}
+                  <span className="ac-faint">{`${SECTION}.${i + 1}`} /</span>{" "}
                   {exp.company}
                   <span className="ac-faint work-item__location">
                     {" "}

@@ -7,6 +7,8 @@ import "./ContactMe.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const SECTION = "07";
+
 const EMAIL = "sachith.devx@gmail.com";
 
 const MARQUEE_ITEMS = [
@@ -197,7 +199,7 @@ const ContactMe = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className="ac-label ac-faint">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="ac-label ac-faint">{`${SECTION}.${i + 1}`}</span>
                     <span className="cm-social__name">{link.label}</span>
                     <span className="ac-label ac-faint cm-social__handle">{link.handle}</span>
                     <LuArrowUpRight size={16} className="cm-social__arrow" />

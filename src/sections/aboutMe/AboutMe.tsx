@@ -7,35 +7,18 @@ import {
   EASE_OUT,
 } from "../../utils/gsapAnimations";
 
+const SECTION = "01";
+
 const pillars = [
   {
-    key: "A",
     label: "Education",
     title: "BSc (Hons) Computer Science",
     lines: ["University of Colombo School of Computing"],
-  },
-  {
-    key: "B",
-    label: "Experience",
-    title: "Intern Software Engineer",
-    lines: ["Xeptagon · Nov 2025 - May 2026"],
-  },
-  {
-    key: "C",
-    label: "Experience",
-    title: "Associate Software Engineer",
-    lines: ["TheWeb Agency · Oct 2024 - Nov 2025"],
   },
 ];
 
 const specs = [
   { label: "GPA", value: "3.8 / 4.0" },
-  { label: "Tech stack", value: "MERN, Nest, Spring Boot, Next" },
-  { label: "Languages", value: "Python, C, C++, JavaScript, Java, PHP, SQL" },
-  {
-    label: "Tools & concepts",
-    value: "CI/CD, Docker, GitHub Actions, PostgreSQL, Supabase",
-  },
 ];
 
 const AboutMe = () => {
@@ -76,7 +59,7 @@ const AboutMe = () => {
       <div className="ac-frame">
         <div className="ac-bar">
           <span>
-            <span className="ac-bar__index">01 /</span> About me
+            <span className="ac-bar__index">{SECTION} /</span> About me
           </span>
           <span className="ac-bar__aside">
             Software engineer · CS undergrad
@@ -98,35 +81,37 @@ const AboutMe = () => {
           </div>
         </div>
 
-        <div className="about-cells">
-          {pillars.map((pillar) => (
-            <article className="about-cell" key={pillar.key}>
-              <span className="ac-label ac-faint">
-                {pillar.key} · {pillar.label}
-              </span>
-              <h3 className="ac-heading about-cell__title">{pillar.title}</h3>
-              <ul className="ac-body about-cell__list">
-                {pillar.lines.map((line) => (
-                  <li key={line}>{line}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-
-        <dl className="about-specs">
-          {specs.map((spec, i) => (
-            <div className="about-spec" key={spec.label}>
-              <dt className="ac-label about-spec__bar">
-                <span>{spec.label}</span>
-                <span className="ac-faint">
-                  {String(i + 1).padStart(2, "0")}
+        <div className="about-row">
+          <div className="about-cells">
+            {pillars.map((pillar, i) => (
+              <article className="about-cell" key={pillar.label}>
+                <span className="ac-label ac-faint">
+                  {`${SECTION}.${i + 1}`} · {pillar.label}
                 </span>
-              </dt>
-              <dd className="about-spec__value">{spec.value}</dd>
-            </div>
-          ))}
-        </dl>
+                <h3 className="ac-heading about-cell__title">{pillar.title}</h3>
+                <ul className="ac-body about-cell__list">
+                  {pillar.lines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          <dl className="about-specs">
+            {specs.map((spec, i) => (
+              <div className="about-spec" key={spec.label}>
+                <dt className="ac-label about-spec__bar">
+                  <span>{spec.label}</span>
+                  <span className="ac-faint">
+                    {`${SECTION}.${pillars.length + i + 1}`}
+                  </span>
+                </dt>
+                <dd className="about-spec__value">{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );
