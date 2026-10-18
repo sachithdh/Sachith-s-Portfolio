@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import TopNavBar from "./components/topNavBar/TopNavBar";
 import WorkExperience from "./sections/workExperience/WorkExperience";
-import Achievements from "./sections/achievements/Achievements";
 import FeaturedProjects from "./sections/featuredProjects/FeaturedProjects";
 import BlogPreview from "./sections/blogPreview/BlogPreview";
 import Hero from "./sections/hero/Hero";
@@ -21,7 +20,6 @@ function Portfolio() {
         <Hero />
         <AboutMe />
         <WorkExperience />
-        <Achievements />
         <BlogPreview />
         <FeaturedProjects />
         <SkillsTechnologies />

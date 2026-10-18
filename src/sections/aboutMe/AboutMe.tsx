@@ -18,7 +18,8 @@ const pillars = [
 ];
 
 const specs = [
-  { label: "GPA", value: "3.8 / 4.0" },
+  { label: "GPA", value: "3.8 / 4.0", note: "Cumulative" },
+  { label: "Director's List", value: "4 / 5", note: "Semesters selected" },
 ];
 
 const AboutMe = () => {
@@ -107,7 +108,12 @@ const AboutMe = () => {
                     {`${SECTION}.${pillars.length + i + 1}`}
                   </span>
                 </dt>
-                <dd className="about-spec__value">{spec.value}</dd>
+                <dd className="about-spec__value">
+                  {spec.value}
+                  <span className="ac-label ac-faint about-spec__note">
+                    {spec.note}
+                  </span>
+                </dd>
               </div>
             ))}
           </dl>

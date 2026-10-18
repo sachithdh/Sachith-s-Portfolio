@@ -11,7 +11,7 @@ import {
 import { useBlogPosts, formatDate } from "../blog/useBlogPosts";
 import "./BlogPreview.css";
 
-const SECTION = "04";
+const SECTION = "03";
 
 export default function BlogPreview() {
   const posts = useBlogPosts().slice(0, 2);
