@@ -92,12 +92,14 @@ export default function WorkExperience() {
           <span>
             <span className="ac-bar__index">{SECTION} /</span> Experience
           </span>
-          <span className="ac-bar__aside">2+ years · {experiences.length} roles</span>
+          <span className="ac-bar__aside">
+            2+ years · {experiences.length} roles
+          </span>
         </div>
 
         <div className="ac-intro">
           <h2 className="ac-title work-title">
-            Explore my <em>working</em> journey.
+            My <em>working</em> journey.
           </h2>
           <p className="ac-lede work-lede">
             Over the past 2+ years, I've had the opportunity to work on a wide
@@ -113,7 +115,10 @@ export default function WorkExperience() {
                 <span>
                   <span className="ac-faint">{`${SECTION}.${i + 1}`} /</span>{" "}
                   {exp.company}
-                  <span className="ac-faint work-item__location"> · {exp.location}</span>
+                  <span className="ac-faint work-item__location">
+                    {" "}
+                    · {exp.location}
+                  </span>
                 </span>
                 <span className="ac-faint">{exp.date}</span>
               </div>
