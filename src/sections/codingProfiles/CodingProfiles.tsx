@@ -32,7 +32,7 @@ const profiles: Profile[] = [
     icon: SiLeetcode,
     accent: "#FFA116",
     stats: [
-      { label: "Solved", value: "48" },
+      { label: "Solved", value: "53" },
       // { label: "Contest rating", value: "—" },
       // { label: "Top", value: "—" },
     ],
@@ -45,8 +45,8 @@ const profiles: Profile[] = [
     icon: SiHackthebox,
     accent: "#9FEF00",
     stats: [
-      { label: "Level", value: "23" },
-      { label: "Machines owned", value: "12" },
+      { label: "Level", value: "24" },
+      { label: "Machines owned", value: "13" },
       // { label: "Challenges", value: "—" },
     ],
   },
