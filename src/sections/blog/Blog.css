@@ -322,9 +322,14 @@
   height: auto;
 }
 
+.blog-reader__table-wrap {
+  margin: 2rem 0;
+  overflow-x: auto;
+}
+
 .blog-reader__body table {
   width: 100%;
-  margin: 2rem 0;
+  margin: 0;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
