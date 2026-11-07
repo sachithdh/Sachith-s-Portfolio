@@ -1,0 +1,45 @@
+/* Frame, bar, title, buttons: see styles/panel.css */
+
+.not-found-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--ac-bg);
+  color: var(--ac-ink);
+}
+
+.not-found-main {
+  padding-block: 4rem;
+}
+
+.not-found-intro {
+  align-items: flex-start;
+}
+
+.not-found-code {
+  margin: 0 0 1.5rem;
+  font-family: var(--ac-font-mono);
+  font-size: clamp(4.5rem, 14vw, 9rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ac-line-strong);
+}
+
+.not-found-path {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--ac-line);
+  font-family: var(--ac-font-mono);
+  font-size: 0.875em;
+  color: var(--ac-ink);
+  word-break: break-all;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
