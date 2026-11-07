@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import Markdown, { type Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { LuArrowLeft, LuArrowRight, LuArrowUpRight } from "react-icons/lu";
 import BlogTopbar from "./BlogTopbar";
 import { useBlogPosts, blogImageMap, formatDate } from "./useBlogPosts";
@@ -32,6 +33,12 @@ const markdownComponents: Components = {
       />
       {alt && <figcaption className="blog-reader__figcaption">{alt}</figcaption>}
     </figure>
+  ),
+  // Wrap tables so wide ones scroll horizontally instead of overflowing the page
+  table: ({ node: _node, ...props }) => (
+    <div className="blog-reader__table-wrap">
+      <table {...props} />
+    </div>
   ),
 };
 
@@ -105,7 +112,7 @@ export default function BlogPost() {
           </header>
 
           <article className="blog-reader__body">
-            <Markdown components={markdownComponents}>{post.content}</Markdown>
+            <Markdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{post.content}</Markdown>
           </article>
 
           <nav className="blog-pager" aria-label="More posts">
