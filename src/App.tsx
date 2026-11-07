@@ -10,6 +10,7 @@ import CodingProfiles from "./sections/codingProfiles/CodingProfiles";
 import ContactMe from "./sections/contactMe/ContactMe";
 import BlogList from "./sections/blog/BlogList";
 import BlogPost from "./sections/blog/BlogPost";
+import NotFound from "./sections/notFound/NotFound";
 import { useSmoothScroll } from "./utils/smoothScroll";
 
 function Portfolio() {
@@ -38,6 +39,7 @@ function App() {
       <Route path="/" element={<Portfolio />} />
       <Route path="/blog" element={<BlogList />} />
       <Route path="/blog/:id" element={<BlogPost />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
