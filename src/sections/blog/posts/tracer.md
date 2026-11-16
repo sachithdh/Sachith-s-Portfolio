@@ -29,6 +29,16 @@ You type in a domain and tracer checks several public sources at the same time:
 
 tracer then combines everything into one clean list with duplicates removed.
 
+## Why not just use existing tools?
+
+There are already good tools for this. waybackurls, gau and others pull URLs from public archives, and crawlers like katana map what’s live. I’ve used all of them. But each one covers only part of the job.
+
+Archive tools usually skip the site’s own robots.txt and sitemaps. Crawlers see what’s live today but miss what used to be there, and they send real traffic to the target. So in practice you end up chaining several tools and merging and deduplicating the results yourself.
+
+Even then, you’re left with one long list of URLs and no context. You can’t tell whether a path was reported by four sources or by one snapshot from 2014. Directories, files and subdomains are all mixed together. And if one archive is slow or down, you’re stuck waiting or starting over.
+
+tracer brings all of this together in one place. You get every source at once, results as they arrive, each result tagged with where it came from, and nothing to install.
+
 ## How quiet is it, really?
 
 This was important to me, so here it is plainly. Almost everything tracer finds comes from third-party archives and indexes, and none of that touches the target website.
