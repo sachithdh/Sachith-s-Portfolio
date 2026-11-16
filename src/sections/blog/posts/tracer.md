@@ -57,14 +57,9 @@ tracer doesn't replace active testing. Think of it as the first look before anyt
 
 ## Try it
 
-tracer is live here: **https://sachithdh.github.io/tracer/**
+tracer is live here: **https://trac3r.pages.dev**
 
-It's open source too, so you're welcome to look around: **[GitHub repo link]**
 
 One important note: only use tracer on domains you own or have permission to test. Even passive recon should stay within the scope you're authorized for.
 
 If you have ideas for other public sources it should check, or something isn't working the way you expect, I'd like to hear about it.
-
----
-
-Two things to fill in before you post: replace **[GitHub repo link]** with your repo URL, and if there's a real reason you started building tracer, add it near the top in a sentence or two. A true personal detail will make the post sound more like you than anything I could write.
