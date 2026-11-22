@@ -29,6 +29,35 @@ const SECTION = "04";
 const projects: Project[] = [
   {
     id: 1,
+    title: "trac3r - Passive Directory & Subdomain Discovery Tool",
+    subtitle: "Security Tool",
+    description:
+      "trac3r is a reconnaissance tool that finds directories, files and subdomains for a domain using only public archives, with no brute-forcing and no noisy traffic to the target. It queries several intelligence sources in parallel, then merges and deduplicates the results. Results stream back in real time as each source responds. It's built as a FastAPI backend with a React + TypeScript frontend, deployed on GitHub Pages with the API behind nginx.",
+    image: "/images/projects/trac3r.png",
+    codeLink: "https://github.com/sachithdh/spider",
+    keyFeatures: [
+      "Passive discovery from Wayback Machine, Common Crawl, AlienVault OTX and urlscan.io",
+      "Optional robots.txt and sitemap parsing (off by default, since it contacts the target)",
+      "Directory, subdomain or combined search modes",
+      "Real-time per-source results streamed via Server-Sent Events (SSE)",
+      "Merged, deduplicated output exported as JSON or plain text",
+      "Async concurrent fetching with per-source timeouts and in-memory result caching",
+      "Per-IP rate limiting and concurrency caps to prevent abuse",
+      "Public REST API with auto-generated OpenAPI docs",
+      "CI/CD deploy of the frontend to GitHub Pages via GitHub Actions",
+    ],
+    technologies: [
+      "Python",
+      "FastAPI",
+      "React",
+      "TypeScript",
+      "Vite",
+      "NGINX",
+      "GitHub Actions",
+    ],
+  },
+  {
+    id: 2,
     title: "LearnHub - Tutor & Student Discovery Platform",
     subtitle: "Web Platform",
     description:
@@ -47,7 +76,7 @@ const projects: Project[] = [
     technologies: ["PHP", "MYSQL", "NGINX", "HTML", "CSS", "JAVASCRIPT", "GIT"],
   },
   {
-    id: 2,
+    id: 3,
     title: "brainMap - Project Management & Mentoring Platform",
     subtitle: "Web Platform",
     description:
@@ -75,7 +104,7 @@ const projects: Project[] = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     title: "Swift Logistics - Logistics & Courier Management Platform",
     subtitle: "Web Platform",
     description:
@@ -208,7 +237,9 @@ export default function FeaturedProjects() {
           <span>
             <span className="ac-bar__index">{SECTION} /</span> Featured projects
           </span>
-          <span className="ac-bar__aside">Selected work · built from scratch</span>
+          <span className="ac-bar__aside">
+            Selected work · built from scratch
+          </span>
         </div>
 
         <div className="ac-intro">
@@ -244,7 +275,9 @@ export default function FeaturedProjects() {
                 <div className="fp-card__body">
                   <h3 className="ac-heading">
                     {name}
-                    {tagline && <span className="fp-card__tagline">{tagline}</span>}
+                    {tagline && (
+                      <span className="fp-card__tagline">{tagline}</span>
+                    )}
                   </h3>
                   <p className="ac-body fp-card__desc">{project.description}</p>
                   <div className="ac-chips">
