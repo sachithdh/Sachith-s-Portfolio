@@ -155,54 +155,20 @@ export default function FeaturedProjects() {
     const cards = gsap.utils.toArray<HTMLElement>(".fp-card");
     gsap.set(cards, { opacity: 0, y: 60 });
 
-    // Cards entering together (one grid row) stagger in as a group,
-    // each screenshot wiping up from the bottom while it settles from a zoom
+    // Cards entering together (one grid row) stagger in as a group
     ScrollTrigger.batch(cards, {
       start: REVEAL_START,
       once: true,
       onEnter: (batch) => {
-        const images = batch
-          .map((card) => card.querySelector(".fp-card__image"))
-          .filter(Boolean);
-        const media = batch
-          .map((card) => card.querySelector(".fp-card__media"))
-          .filter(Boolean);
-
-        gsap
-          .timeline()
-          .to(batch, {
-            opacity: 1,
-            y: 0,
-            duration: 1.1,
-            stagger: 0.12,
-            ease: EASE_OUT,
-            ...pauseTransitions(batch),
-            clearProps: "transition,transform",
-          })
-          .fromTo(
-            media,
-            { clipPath: "inset(100% 0% 0% 0%)" },
-            {
-              clipPath: "inset(0% 0% 0% 0%)",
-              duration: 1.3,
-              stagger: 0.12,
-              ease: "power4.inOut",
-              clearProps: "clipPath",
-            },
-            0,
-          )
-          .from(
-            images,
-            {
-              scale: 1.25,
-              duration: 1.6,
-              stagger: 0.12,
-              ease: EASE_OUT,
-              ...pauseTransitions(images),
-              clearProps: "transition,transform",
-            },
-            0.1,
-          );
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          duration: 1.1,
+          stagger: 0.12,
+          ease: EASE_OUT,
+          ...pauseTransitions(batch),
+          clearProps: "transition,transform",
+        });
       },
     });
   });
@@ -257,20 +223,6 @@ export default function FeaturedProjects() {
                   <span>{project.subtitle}</span>
                   <span className="ac-faint">{`${SECTION}.${i + 1}`}</span>
                 </div>
-
-                <button
-                  type="button"
-                  className="fp-card__media ac-focus"
-                  onClick={() => setSelectedProject(project)}
-                  aria-label={`View details for ${name}`}
-                >
-                  <img
-                    src={project.image}
-                    alt=""
-                    className="fp-card__image"
-                    loading="lazy"
-                  />
-                </button>
 
                 <div className="fp-card__body">
                   <h3 className="ac-heading">
@@ -368,6 +320,12 @@ export default function FeaturedProjects() {
                 >
                   {/* ── Info panel ── */}
                   <div className="fp-modal__info">
+                    <div className="fp-modal__thumb">
+                      <img
+                        src={selectedProject.image}
+                        alt={`${splitTitle(selectedProject.title)[0]} screenshot`}
+                      />
+                    </div>
                     <span className="ac-label ac-faint">
                       {selectedProject.subtitle}
                     </span>
