@@ -33,30 +33,6 @@
   border-bottom: 1px solid var(--ac-line);
 }
 
-/* Screenshot well: near-black media panel, like the reference footage */
-.fp-card__media {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  padding: 0;
-  overflow: hidden;
-  border: none;
-  border-bottom: 1px solid var(--ac-line);
-  background: color-mix(in srgb, var(--ac-bg) 70%, black);
-  cursor: pointer;
-}
-
-.fp-card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.fp-card__media:hover .fp-card__image {
-  transform: scale(1.04);
-}
-
 .fp-card__body {
   display: flex;
   flex: 1;
@@ -229,6 +205,7 @@
   align-items: start;
 }
 
+.fp-modal__body--no-gallery .fp-modal__thumb,
 .fp-modal__body--no-gallery .fp-modal__info > .ac-label,
 .fp-modal__body--no-gallery .fp-modal__title,
 .fp-modal__body--no-gallery .fp-modal__desc,
@@ -239,6 +216,22 @@
 .fp-modal__info {
   display: flex;
   flex-direction: column;
+}
+
+/* Screenshot well: near-black media panel */
+.fp-modal__thumb {
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+  border: 1px solid var(--ac-line);
+  background: color-mix(in srgb, var(--ac-bg) 70%, black);
+}
+
+.fp-modal__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fp-modal__title {
